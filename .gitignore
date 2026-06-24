@@ -1,0 +1,36 @@
+# Rust
+/target
+/packages/app-dashboard/src-tauri/target
+**/*.rs.bk
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+/packages/app-dashboard/dist/
+/packages/app-dashboard/.svelte-kit/
+/packages/app-dashboard/.next/
+
+# macOS / Xcode
+.DS_Store
+DerivedData/
+.build/
+*.xcuserstate
+*.xcworkspace
+!default.xcworkspace
+
+# System databases & Secrets
+*.db
+*.sqlite
+*.key
+*.env
+.env.local
+/artifacts/
+
+# Vercel
+.vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
