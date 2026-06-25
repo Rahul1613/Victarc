@@ -86,7 +86,7 @@ export default function LoginPage() {
   return (
     <>
       {showAfterLoginIntro && (
-        <VideoIntroOverlay src="/after_login.mp4" onComplete={handleLoginIntroComplete} />
+        <VideoIntroOverlay src="/after_login.mp4" onComplete={handleLoginIntroComplete} shrinkOnMobile={true} />
       )}
       <div
         className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden"
