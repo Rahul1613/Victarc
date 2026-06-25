@@ -91,6 +91,11 @@ export default async function DashboardPage() {
     }
   }
 
+  // Redirect admin users straight to admin panel
+  if (finalUser?.is_admin) {
+    redirect('/admin')
+  }
+
   // Fetch all active challenges
   const { data: challenges } = await supabase
     .from('challenges')
