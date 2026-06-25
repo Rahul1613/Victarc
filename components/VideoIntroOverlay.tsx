@@ -83,17 +83,17 @@ export default function VideoIntroOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out"
+      className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out"
       style={{
         opacity: fading ? 0 : 1,
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      {/* Absolute fullscreen video - object-contain on mobile, object-cover on desktop */}
+      {/* Absolute fullscreen video - object-cover on all screens to fill phone display */}
       <video
         ref={videoRef}
         src={src}
-        className="w-full h-full object-contain md:object-cover"
+        className="w-full h-full object-cover"
         playsInline
         autoPlay
         muted={isMuted}
