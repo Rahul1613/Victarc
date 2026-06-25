@@ -251,3 +251,14 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(124, 58, 237, 0.1) !important;
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
 }
+
+/* =============================================
+   CUSTOM SOLO LEVELING DAGGER CURSOR
+   ============================================= */
+html, body, * {
+  cursor: url('/dagger-cursor.png') 0 0, auto !important;
+}
+
+a, button, input, select, textarea, [role="button"], .cursor-pointer {
+  cursor: url('/dagger-pointer.png') 0 0, pointer !important;
+}
