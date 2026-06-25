@@ -45,7 +45,7 @@ export default function LoginPage() {
           }
         }
 
-        setSuccess('Account created! Check your email to confirm, then sign in.')
+        setSuccess('Account created successfully! You can now sign in.')
         setMode('signin')
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
