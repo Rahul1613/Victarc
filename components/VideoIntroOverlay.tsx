@@ -84,18 +84,18 @@ export default function VideoIntroOverlay({
   }
 
   const videoClass = shrinkOnMobile
-    ? "w-full h-[90dvh] md:h-full object-cover"
+    ? "w-[135vw] max-w-none h-auto md:w-full md:h-full md:object-cover object-contain"
     : "w-full h-full object-cover"
 
   return (
     <div
-      className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out"
+      className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-[9999] flex items-center justify-center bg-black overflow-hidden transition-opacity duration-500 ease-in-out"
       style={{
         opacity: fading ? 0 : 1,
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      {/* Absolute fullscreen video - object-cover with h-[88dvh] on mobile if shrinkOnMobile is true to reduce zoom/crop */}
+      {/* Centered video with custom width to scale height while preserving sides */}
       <video
         ref={videoRef}
         src={src}
