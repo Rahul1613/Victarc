@@ -89,11 +89,11 @@ export default function VideoIntroOverlay({
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      {/* Absolute fullscreen video - object-cover on all screens to fill phone display */}
+      {/* Absolute fullscreen video - object-cover with h-[80dvh] on mobile to reduce zoom/crop */}
       <video
         ref={videoRef}
         src={src}
-        className="w-full h-full object-cover"
+        className="w-full h-[80dvh] md:h-full object-cover"
         playsInline
         autoPlay
         muted={isMuted}
