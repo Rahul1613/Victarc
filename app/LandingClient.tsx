@@ -45,7 +45,7 @@ export default function LandingClient() {
   return (
     <>
       {showIntro && (
-        <VideoIntroOverlay src="/starting.mp4" onComplete={handleIntroComplete} defaultMuted={true} />
+        <VideoIntroOverlay src="/starting.mp4" onComplete={handleIntroComplete} defaultMuted={true} shrinkOnMobile={true} />
       )}
 
       <main className="min-h-screen overflow-hidden">

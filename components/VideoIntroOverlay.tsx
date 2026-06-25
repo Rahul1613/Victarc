@@ -6,12 +6,14 @@ interface VideoIntroOverlayProps {
   src: string
   onComplete: () => void
   defaultMuted?: boolean
+  shrinkOnMobile?: boolean
 }
 
 export default function VideoIntroOverlay({
   src,
   onComplete,
   defaultMuted = false,
+  shrinkOnMobile = false,
 }: VideoIntroOverlayProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [fading, setFading] = useState(false)
@@ -81,6 +83,10 @@ export default function VideoIntroOverlay({
     }, 500) // 0.5s transition
   }
 
+  const videoClass = shrinkOnMobile
+    ? "w-full h-[88dvh] md:h-full object-cover"
+    : "w-full h-full object-cover"
+
   return (
     <div
       className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out"
@@ -89,11 +95,11 @@ export default function VideoIntroOverlay({
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      {/* Absolute fullscreen video - object-cover with h-[80dvh] on mobile to reduce zoom/crop */}
+      {/* Absolute fullscreen video - object-cover with h-[88dvh] on mobile if shrinkOnMobile is true to reduce zoom/crop */}
       <video
         ref={videoRef}
         src={src}
-        className="w-full h-[80dvh] md:h-full object-cover"
+        className={videoClass}
         playsInline
         autoPlay
         muted={isMuted}
