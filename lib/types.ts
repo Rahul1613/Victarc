@@ -65,3 +65,23 @@ export interface XPProgress {
   currentRank: Rank
   nextRank: Rank | null
 }
+
+export interface CommittedQuest {
+  id: string
+  user_id: string
+  challenge_id: string
+  committed_at: string
+  expires_at: string
+  status: 'active' | 'completed' | 'failed'
+  challenges?: Challenge
+}
+
+export interface PenaltyQuest {
+  id: string
+  user_id: string
+  issued_at: string
+  deadline: string
+  challenge_text: string
+  xp_loss: number
+  status: 'active' | 'completed' | 'failed'
+}

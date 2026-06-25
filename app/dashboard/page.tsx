@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
-import type { User, Challenge } from '@/lib/types'
+import type { User, Challenge, CommittedQuest, PenaltyQuest } from '@/lib/types'
 import DashboardClient from './DashboardClient'
 
 export const metadata: Metadata = {
@@ -117,12 +117,105 @@ export default async function DashboardPage() {
     .filter((c: { status: string }) => c.status === 'pending')
     .map((c: { challenge_id: string }) => c.challenge_id)
 
+  // Fetch committed quest (ignore error if table does not exist yet)
+  const { data: committed, error: committedErr } = await supabase
+    .from('committed_quests')
+    .select('*, challenges(*)')
+    .eq('user_id', authUser.id)
+    .eq('status', 'active')
+
+  // Fetch active penalty (ignore error if table does not exist yet)
+  const { data: penalties, error: penaltiesErr } = await supabase
+    .from('penalty_quests')
+    .select('*')
+    .eq('user_id', authUser.id)
+    .eq('status', 'active')
+
+  let activeCommit: CommittedQuest | null = committed && committed[0] ? (committed[0] as unknown as CommittedQuest) : null
+  let activePenalty: PenaltyQuest | null = penalties && penalties[0] ? (penalties[0] as unknown as PenaltyQuest) : null
+
+  // Run expiration logic only if tables exist
+  if (!committedErr && !penaltiesErr) {
+    const now = new Date()
+
+    // 1. Check if the active commit has expired
+    if (activeCommit && new Date(activeCommit.expires_at) < now) {
+      await supabase
+        .from('committed_quests')
+        .update({ status: 'failed' })
+        .eq('id', activeCommit.id)
+
+      const xpReward = (activeCommit as { challenges?: { xp_reward?: number } }).challenges?.xp_reward || 100
+      let xpLoss = 100
+      let penaltyText = 'Perform 80 pushups + 1km run in 3 hours'
+      let durationHours = 3
+
+      if (xpReward < 150) {
+        xpLoss = 30
+        penaltyText = 'Perform 40 pushups in 2 hours'
+        durationHours = 2
+      } else if (xpReward > 300) {
+        xpLoss = 200
+        penaltyText = 'Perform 150 pushups + 2km run in 4 hours'
+        durationHours = 4
+      }
+
+      const deadline = new Date()
+      deadline.setHours(deadline.getHours() + durationHours)
+
+      const { data: newPenalty } = await supabase
+        .from('penalty_quests')
+        .insert({
+          user_id: authUser.id,
+          challenge_text: penaltyText,
+          xp_loss: xpLoss,
+          deadline: deadline.toISOString(),
+          status: 'active',
+        })
+        .select()
+        .single()
+
+      activeCommit = null
+      if (newPenalty) {
+        activePenalty = newPenalty as unknown as PenaltyQuest
+      }
+    }
+
+    // 2. Check if active penalty has expired/failed
+    if (activePenalty && new Date(activePenalty.deadline) < now) {
+      await supabase
+        .from('penalty_quests')
+        .update({ status: 'failed' })
+        .eq('id', activePenalty.id)
+
+      const xpLoss = activePenalty.xp_loss
+      const newXp = Math.max(0, finalUser.xp - xpLoss)
+      const newLevel = Math.floor(newXp / 100) + 1
+
+      await supabase
+        .from('users')
+        .update({
+          xp: newXp,
+          level: newLevel,
+          streak: 0,
+        })
+        .eq('id', authUser.id)
+
+      finalUser.xp = newXp
+      finalUser.level = newLevel
+      finalUser.streak = 0
+      activePenalty = null
+    }
+  }
+
   return (
     <DashboardClient
       user={finalUser as User}
       challenges={(challenges || []) as Challenge[]}
       completedIds={completedChallengeIds}
       pendingIds={pendingChallengeIds}
+      activeCommit={activeCommit}
+      activePenalty={activePenalty}
     />
   )
 }

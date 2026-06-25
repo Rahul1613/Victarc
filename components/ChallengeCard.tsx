@@ -10,6 +10,9 @@ interface ChallengeCardProps {
   completed?: boolean
   pending?: boolean
   index?: number
+  committed?: boolean
+  onCommit?: (challenge: Challenge) => void
+  hasAnyCommitment?: boolean
 }
 
 export default function ChallengeCard({
@@ -18,6 +21,9 @@ export default function ChallengeCard({
   completed = false,
   pending = false,
   index = 0,
+  committed = false,
+  onCommit,
+  hasAnyCommitment = false,
 }: ChallengeCardProps) {
   const rankColors = RANK_COLORS[challenge.difficulty]
   const categoryIcon = CATEGORY_ICONS[challenge.category]
@@ -155,33 +161,92 @@ export default function ChallengeCard({
             <span className="text-xs text-muted-foreground font-rajdhani uppercase tracking-wider">XP</span>
           </div>
 
-          {/* Accept button */}
+          {/* Action buttons */}
           {!completed && !pending && (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => onAccept?.(challenge)}
-              className="relative px-4 py-2 rounded font-exo2 font-bold text-xs uppercase tracking-widest overflow-hidden"
-              style={{
-                background: isBoss
-                  ? 'linear-gradient(135deg, rgba(245,158,11,0.2), rgba(251,146,60,0.2))'
-                  : 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(37,99,235,0.2))',
-                border: `1px solid ${isBoss ? 'rgba(245,158,11,0.5)' : 'rgba(124,58,237,0.5)'}`,
-                color: isBoss ? '#f59e0b' : '#a78bfa',
-              }}
-            >
-              <span className="relative z-10">Accept Challenge</span>
-              {/* Hover glow overlay */}
-              <motion.div
-                className="absolute inset-0 opacity-0"
-                style={{
-                  background: isBoss
-                    ? 'linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,146,60,0.15))'
-                    : 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(37,99,235,0.3))',
-                }}
-                whileHover={{ opacity: 1 }}
-              />
-            </motion.button>
+            <div className="flex items-center gap-2">
+              {committed ? (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => onAccept?.(challenge)}
+                  className="relative px-3 py-1.5 rounded font-exo2 font-bold text-[10px] uppercase tracking-widest overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25))',
+                    border: '1px solid rgba(245, 158, 11, 0.6)',
+                    color: '#fbbf24',
+                    boxShadow: '0 0 12px rgba(245, 158, 11, 0.3)',
+                  }}
+                >
+                  <span className="relative z-10 flex items-center gap-1">
+                    👑 Complete Quest
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 opacity-0"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(251, 146, 60, 0.35))',
+                    }}
+                    whileHover={{ opacity: 1 }}
+                  />
+                </motion.button>
+              ) : hasAnyCommitment ? (
+                <button
+                  disabled
+                  className="px-3 py-1.5 rounded font-exo2 font-bold text-[10px] uppercase tracking-widest border border-dashed border-neutral-800 text-neutral-600 cursor-not-allowed opacity-50"
+                >
+                  Locked
+                </button>
+              ) : (
+                <>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => onAccept?.(challenge)}
+                    className="relative px-3 py-1.5 rounded font-exo2 font-bold text-[10px] uppercase tracking-widest overflow-hidden"
+                    style={{
+                      background: isBoss
+                        ? 'linear-gradient(135deg, rgba(245,158,11,0.2), rgba(251,146,60,0.2))'
+                        : 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(37,99,235,0.2))',
+                      border: `1px solid ${isBoss ? 'rgba(245,158,11,0.5)' : 'rgba(124,58,237,0.5)'}`,
+                      color: isBoss ? '#f59e0b' : '#a78bfa',
+                    }}
+                  >
+                    <span className="relative z-10">Accept</span>
+                    <motion.div
+                      className="absolute inset-0 opacity-0"
+                      style={{
+                        background: isBoss
+                          ? 'linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,146,60,0.15))'
+                          : 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(37,99,235,0.3))',
+                      }}
+                      whileHover={{ opacity: 1 }}
+                    />
+                  </motion.button>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => onCommit?.(challenge)}
+                    className="relative px-3 py-1.5 rounded font-exo2 font-bold text-[10px] uppercase tracking-widest overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 146, 60, 0.15))',
+                      border: '1px solid rgba(245, 158, 11, 0.4)',
+                      color: '#f59e0b',
+                    }}
+                  >
+                    <span className="relative z-10 flex items-center gap-1">
+                      👑 Commit
+                    </span>
+                    <motion.div
+                      className="absolute inset-0 opacity-0"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(251, 146, 60, 0.35))',
+                      }}
+                      whileHover={{ opacity: 1 }}
+                    />
+                  </motion.button>
+                </>
+              )}
+            </div>
           )}
         </div>
       </div>

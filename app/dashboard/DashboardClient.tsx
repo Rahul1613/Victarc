@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { User, Challenge, Rank } from '@/lib/types'
+import type { User, Challenge, Rank, CommittedQuest, PenaltyQuest } from '@/lib/types'
 import type { Category } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
 import { RANK_COLORS } from '@/lib/constants'
@@ -20,6 +20,8 @@ interface DashboardClientProps {
   challenges: Challenge[]
   completedIds: string[]
   pendingIds: string[]
+  activeCommit: CommittedQuest | null
+  activePenalty: PenaltyQuest | null
 }
 
 export default function DashboardClient({
@@ -27,6 +29,8 @@ export default function DashboardClient({
   challenges,
   completedIds: initialCompletedIds,
   pendingIds: initialPendingIds,
+  activeCommit: initialActiveCommit,
+  activePenalty: initialActivePenalty,
 }: DashboardClientProps) {
   const user = initialUser
   const completedIds = new Set(initialCompletedIds)
@@ -47,6 +51,8 @@ export default function DashboardClient({
     show: false,
     amount: 0,
   })
+  const [activeCommitState, setActiveCommitState] = useState<CommittedQuest | null>(initialActiveCommit)
+  const [activePenaltyState, setActivePenaltyState] = useState<PenaltyQuest | null>(initialActivePenalty)
 
   const supabase = createClient()
 
@@ -106,6 +112,15 @@ export default function DashboardClient({
 
       if (completionError) throw completionError
 
+      // If this challenge is the committed quest, mark it as completed
+      if (activeCommitState && activeCommitState.challenge_id === selectedChallenge.id) {
+        await supabase
+          .from('committed_quests')
+          .update({ status: 'completed' })
+          .eq('id', activeCommitState.id)
+        setActiveCommitState(null)
+      }
+
       // Update local state to mark this quest as pending
       setPendingIds((prev) => new Set(prev).add(selectedChallenge.id))
 
@@ -116,6 +131,50 @@ export default function DashboardClient({
       setSubmitError(err instanceof Error ? err.message : 'Failed to submit completion')
     } finally {
       setSubmitting(false)
+    }
+  }
+
+  async function handleCommitQuest(challenge: Challenge) {
+    try {
+      const expiresAt = new Date()
+      expiresAt.setHours(23, 59, 59, 999)
+
+      const { data: newCommit, error } = await supabase
+        .from('committed_quests')
+        .insert({
+          user_id: user.id,
+          challenge_id: challenge.id,
+          expires_at: expiresAt.toISOString(),
+          status: 'active'
+        })
+        .select('*, challenges(*)')
+        .single()
+
+      if (error) throw error
+
+      if (newCommit) {
+        setActiveCommitState(newCommit as unknown as CommittedQuest)
+      }
+    } catch (err) {
+      console.error('Error committing quest:', err)
+      alert('Failed to commit challenge. Please ensure the penalty system tables exist in your Supabase database.')
+    }
+  }
+
+  async function handleClearPenalty() {
+    if (!activePenaltyState) return
+    try {
+      const { error } = await supabase
+        .from('penalty_quests')
+        .update({ status: 'completed' })
+        .eq('id', activePenaltyState.id)
+
+      if (error) throw error
+
+      setActivePenaltyState(null)
+    } catch (err) {
+      console.error('Error clearing penalty:', err)
+      alert('Failed to log penalty completion. Please try again.')
     }
   }
 
@@ -236,6 +295,41 @@ export default function DashboardClient({
 
             {/* ===================== MAIN FEED ===================== */}
             <main className="flex-1 min-w-0">
+              {/* Penalty Alert Banner */}
+              {activePenaltyState && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-5 rounded-lg border border-red-500 bg-red-950/20 shadow-[0_0_15px_rgba(239,68,68,0.2)] flex flex-col md:flex-row items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">💀</span>
+                    <div>
+                      <h3 className="font-exo2 font-black uppercase text-sm text-red-500 tracking-wider">
+                        [SYSTEM WARNING]: PENALTY QUEST ACTIVE
+                      </h3>
+                      <p className="font-rajdhani text-sm text-neutral-300 mt-1">
+                        Missed committed challenge. You are moved to the Penalty Zone!
+                      </p>
+                      <div className="font-rajdhani text-xs font-semibold text-neutral-400 mt-1.5 flex flex-col sm:flex-row sm:items-center gap-x-3 gap-y-1">
+                        <span>Quest: <strong className="text-red-400">{activePenaltyState.challenge_text}</strong></span>
+                        <span className="hidden sm:inline text-neutral-600">|</span>
+                        <span>Potential Loss: <strong className="text-red-400">-{activePenaltyState.xp_loss} XP</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 w-full md:w-auto">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleClearPenalty}
+                      className="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-exo2 font-black text-xs uppercase tracking-widest rounded shadow-[0_0_10px_rgba(239,68,68,0.4)]"
+                    >
+                      Log Workout & Survive
+                    </motion.button>
+                  </div>
+                </motion.div>
+              )}
               {/* Page title */}
               <div className="mb-6">
                 <h1
@@ -297,6 +391,9 @@ export default function DashboardClient({
                     pending={pendingIds.has(challenge.id)}
                     onAccept={setSelectedChallenge}
                     index={i}
+                    committed={activeCommitState?.challenge_id === challenge.id}
+                    onCommit={handleCommitQuest}
+                    hasAnyCommitment={!!activeCommitState}
                   />
                 ))}
               </div>
