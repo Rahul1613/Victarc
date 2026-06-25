@@ -9,7 +9,6 @@ import { RANK_COLORS } from '@/lib/constants'
 import { createClient } from '@/lib/supabase/client'
 import XPBar from './XPBar'
 import RankBadge from './RankBadge'
-import { useRouter } from 'next/navigation'
 
 interface NavbarProps {
   user: User
@@ -22,14 +21,12 @@ function getInitials(username: string): string {
 export default function Navbar({ user }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [avatarOpen, setAvatarOpen] = useState(false)
-  const router = useRouter()
   const rankColors = RANK_COLORS[user.rank]
 
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/')
-    router.refresh()
+    window.location.href = '/'
   }
 
   return (

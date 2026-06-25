@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
@@ -17,7 +16,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
-  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -55,8 +53,7 @@ export default function LoginPage() {
           password,
         })
         if (signInError) throw signInError
-        router.push('/dashboard')
-        router.refresh()
+        window.location.href = '/dashboard'
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')

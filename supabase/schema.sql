@@ -93,14 +93,24 @@ create policy "Users can insert own profile" on public.users
   for insert with check (auth.uid() = id);
 
 create policy "Admins have full access on users" on public.users
-  for all using (public.is_admin());
+  for all using (
+    exists (
+      select 1 from public.users
+      where id = auth.uid() and is_admin = true
+    )
+  );
 
 -- Challenges: anyone can read
 create policy "Challenges are publicly readable" on public.challenges
   for select using (true);
 
 create policy "Admins have full access on challenges" on public.challenges
-  for all using (public.is_admin());
+  for all using (
+    exists (
+      select 1 from public.users
+      where id = auth.uid() and is_admin = true
+    )
+  );
 
 -- Completions: users can read all, insert own
 create policy "Completions are publicly readable" on public.completions
@@ -110,7 +120,12 @@ create policy "Users can insert own completions" on public.completions
   for insert with check (auth.uid() = user_id);
 
 create policy "Admins have full access on completions" on public.completions
-  for all using (public.is_admin());
+  for all using (
+    exists (
+      select 1 from public.users
+      where id = auth.uid() and is_admin = true
+    )
+  );
 
 -- ============================================================
 -- TRIGGER: Auto-create user row on sign-up
