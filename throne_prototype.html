@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VICTARC — The Monarch's Throne Room</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@800;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #030308;
+      --accent: #8b5cf6;
+      --accent-glow: rgba(139, 92, 246, 0.4);
+      --accent-cyan: #06b6d4;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+      background: rgba(5, 5, 12, 0.6);
+    }
+    h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, #fff, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+    }
+
+    .main-container {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      gap: 30px;
+    }
+
+    /* ============================================================
+       THRONE ROOM STYLES
+       ============================================================ */
+    .throne-stage {
+      flex: 1.3;
+      background: #000;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 50px rgba(124, 58, 237, 0.2);
+      position: relative;
+      overflow: hidden;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 40px;
+    }
+
+    /* The main generated image displaying the actual Shadow Monarch on the gothic throne */
+    .throne-image-container {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .throne-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: all 0.6s ease-in-out;
+    }
+
+    /* Interactive filter animations (lightning rumble, zoom-in impact) */
+    .throne-stage.rumbling .throne-img {
+      transform: scale(1.04);
+      filter: brightness(2) saturate(1.5) contrast(1.2);
+    }
+
+    /* Purple energy pulsing overlay */
+    .purple-pulse-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 80%);
+      pointer-events: none;
+      animation: pulse-glow 3s infinite alternate ease-in-out;
+    }
+    @keyframes pulse-glow {
+      0% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    /* Vignette shadow overlay */
+    .vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(0, 0, 0, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    /* Reigning Banner info card */
+    .reigning-banner {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      background: rgba(12, 8, 24, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.45);
+      border-radius: 8px;
+      padding: 16px 28px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.35);
+      transform: translateY(0);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .reigning-banner.crowned-animation {
+      animation: banner-pop 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
+    @keyframes banner-pop {
+      0% { transform: translateY(40px) scale(0.9); opacity: 0; }
+      70% { transform: translateY(-5px) scale(1.05); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .monarch-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      color: #fbbf24;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+    }
+    .monarch-name {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .monarch-stats {
+      font-size: 13px;
+      color: var(--accent-cyan);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+
+    /* Countdown until next crown */
+    .countdown-box {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 6px;
+      padding: 8px 14px;
+      z-index: 10;
+      font-size: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .countdown-timer {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 800;
+      color: #a78bfa;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    /* Flash effect during transition */
+    .white-flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease-out;
+    }
+
+    /* ============================================================
+       SIMULATOR PANEL STYLES
+       ============================================================ */
+    .simulator-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-card, #090912);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .card-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: #a78bfa;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      padding-bottom: 8px;
+    }
+    
+    /* Simulate candidates */
+    .candidate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .candidate-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(139, 92, 246, 0.12);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .candidate-row:hover {
+      background: rgba(139, 92, 246, 0.05);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+    .candidate-row.selected {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+    }
+    .cand-num {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 800;
+      color: #64748b;
+      width: 20px;
+    }
+    .candidate-row.selected .cand-num { color: #fbbf24; }
+    .cand-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 2px solid #64748b;
+    }
+    .candidate-row.selected .cand-avatar { border-color: #fbbf24; }
+    .cand-info { flex: 1; }
+    .cand-name { font-weight: bold; color: #fff; font-size: 15px; }
+    .cand-meta { font-size: 11px; color: #94a3b8; }
+    .cand-xp { font-family: 'Exo 2', sans-serif; font-size: 13px; color: var(--accent-cyan); font-weight: 800; }
+
+    /* Action button */
+    .btn-crown {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    }
+    .btn-crown:hover {
+      background: linear-gradient(135deg, #9d5cf0, #3b82f6);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+    }
+    .btn-crown:active { transform: translateY(0); }
+
+    /* Explanation list */
+    .explain-step {
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .explain-step strong { color: #a78bfa; }
+    .code-box {
+      background: #000;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #818cf8;
+      overflow-x: auto;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .main-container { flex-direction: column; }
+      .throne-stage { min-height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>THE SHADOW MONARCH'S THRONE</h1>
+    <div class="subtitle">Solo Leveling Monthly Rotation Concept</div>
+  </header>
+
+  <div class="main-container">
+    
+    <!-- 1. THRONE STAGE DISPLAY -->
+    <div class="throne-stage" id="stage">
+      <div class="white-flash" id="flash"></div>
+      
+      <!-- Countdown timer -->
+      <div class="countdown-box">
+        <div>CROWNING ROTATION IN:</div>
+        <div class="countdown-timer" id="countdown">4d 01h 08m 32s</div>
+      </div>
+      
+      <!-- Ambient overlays -->
+      <div class="purple-pulse-overlay"></div>
+      <div class="vignette"></div>
+
+      <!-- Actual Shadow Monarch on Throne Graphic -->
+      <div class="throne-image-container">
+        <img class="throne-img" id="throneImage" src="public/monarch_on_throne.png" alt="Shadow Monarch on Throne"/>
+      </div>
+
+      <!-- Reigning banner card representing the Crowned User -->
+      <div class="reigning-banner" id="reigningBanner">
+        <div class="monarch-title" id="monarchMonth">Reigning Monarch — June 2026</div>
+        <div class="monarch-name" id="monarchName">SUNG JIN-WOO</div>
+        <div class="monarch-stats" id="monarchStats">Level 99 · 25,480 XP · Rank SSS</div>
+      </div>
+
+    </div>
+
+    <!-- 2. SIMULATOR PANEL -->
+    <div class="simulator-panel">
+      
+      <!-- Candidates Card -->
+      <div class="card">
+        <h2 class="card-title">Select Leaderboard Leader (Simulate Month-End)</h2>
+        <div class="candidate-list">
+          
+          <div class="candidate-row selected" onclick="selectCandidate(0, 'SUNG JIN-WOO', 'Level 99 · 25,480 XP · Rank SSS')">
+            <span class="cand-num">#1</span>
+            <div class="cand-avatar">👤</div>
+            <div class="cand-info">
+              <div class="cand-name">SUNG JIN-WOO</div>
+              <div class="cand-meta">Current Reigning Monarch</div>
+            </div>
+            <span class="cand-xp">25,480 XP</span>
+          </div>
+
+          <div class="candidate-row" onclick="selectCandidate(1, 'RAHUL_1613', 'Level 52 · 11,820 XP · Rank SS')">
+            <span class="cand-num">#1</span>
+            <div class="cand-avatar">🔥</div>
+            <div class="cand-info">
+              <div class="cand-name">RAHUL_1613</div>
+              <div class="cand-meta">Leaderboard Top Contender</div>
+            </div>
+            <span class="cand-xp">11,820 XP</span>
+          </div>
+
+          <div class="candidate-row" onclick="selectCandidate(2, 'IRON_SOLDIER', 'Level 35 · 8,400 XP · Rank A')">
+            <span class="cand-num">#1</span>
+            <div class="cand-avatar">🛡️</div>
+            <div class="cand-info">
+              <div class="cand-name">IRON_SOLDIER</div>
+              <div class="cand-meta">Discipline Specialist</div>
+            </div>
+            <span class="cand-xp">8,400 XP</span>
+          </div>
+
+        </div>
+        
+        <button class="btn-crown" onclick="triggerCrowningCeremony()">👑 Crown Selected Monarch</button>
+      </div>
+
+      <!-- Logic Explanation Card -->
+      <div class="card">
+        <h2 class="card-title">How It Works (Technical Design)</h2>
+        <div class="explain-step">
+          1. <strong>Throne Background</strong>: The page displays the epic image of the **Shadow Monarch sitting on his throne** as the central element.
+        </div>
+        <div class="explain-step">
+          2. <strong>Dynamic User Plaque</strong>: The banner card overlaying the bottom of the throne automatically updates to display the name, level, and rank of the user who finished #1 on the leaderboard.
+        </div>
+        <div class="explain-step">
+          3. <strong>Database Cron</strong>: At 11:59 PM on the last day of each month, a Supabase DB function crowns the top user for the upcoming month:
+          <div class="code-box">insert into public.monarchs (user_id, month)
+values ((select id from users order by xp desc limit 1), '2026-07');</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // State of candidates
+    let currentSelectedCandidate = {
+      name: "SUNG JIN-WOO",
+      stats: "Level 99 · 25,480 XP · Rank SSS"
+    };
+
+    // Load initial values
+    document.getElementById('monarchName').textContent = currentSelectedCandidate.name;
+    document.getElementById('monarchStats').textContent = currentSelectedCandidate.stats;
+
+    function selectCandidate(index, name, stats) {
+      // Toggle CSS selection
+      const rows = document.querySelectorAll('.candidate-row');
+      rows.forEach((row, idx) => {
+        if(idx === index) row.classList.add('selected');
+        else row.classList.remove('selected');
+      });
+
+      // Save selection
+      currentSelectedCandidate = { name, stats };
+    }
+
+    function triggerCrowningCeremony() {
+      const flash = document.getElementById('flash');
+      const stage = document.getElementById('stage');
+      const monarchName = document.getElementById('monarchName');
+      const monarchStats = document.getElementById('monarchStats');
+      const reigningBanner = document.getElementById('reigningBanner');
+
+      // 1. Shaking visual effect (system warning rumble)
+      stage.classList.add('rumbling');
+      
+      // 2. White flash (Crowning strike)
+      setTimeout(() => {
+        flash.style.opacity = '1';
+        
+        // 3. Swap the Monarch details while blinded by the flash
+        monarchName.textContent = currentSelectedCandidate.name;
+        monarchStats.textContent = currentSelectedCandidate.stats;
+
+        // Apply drop impact animation
+        reigningBanner.classList.remove('crowned-animation');
+        void reigningBanner.offsetWidth; // Trigger reflow
+        reigningBanner.classList.add('crowned-animation');
+
+        // Update reigning label month dynamically to next month
+        const now = new Date();
+        const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        const nextMonthName = nextMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+        document.getElementById('monarchMonth').textContent = `Reigning Monarch — ${nextMonthName}`;
+
+        setTimeout(() => {
+          flash.style.opacity = '0';
+          stage.classList.remove('rumbling');
+        }, 150);
+
+      }, 350);
+    }
+
+    // Dynamic timer countdown loop (demo tick)
+    let time = 346112; // simulated seconds
+    setInterval(() => {
+      time--;
+      const d = Math.floor(time / (24 * 3600));
+      const h = Math.floor((time % (24 * 3600)) / 3600);
+      const m = Math.floor((time % 3600) / 60);
+      const s = time % 60;
+      document.getElementById('countdown').textContent = `${d}d ${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+    }, 1000);
+  </script>
+</body>
+</html>
