@@ -84,7 +84,7 @@ export default function VideoIntroOverlay({
   }
 
   const videoClass = shrinkOnMobile
-    ? "w-[95vw] aspect-video md:w-full md:h-full md:object-cover object-contain"
+    ? "w-full h-[90dvh] md:h-full object-cover"
     : "w-full h-full object-cover"
 
   return (
