@@ -919,7 +919,7 @@
 
       <!-- Tabs Buttons -->
       <div class="tabs-nav">
-        <button class="tab-btn active" onclick="switchTab('tabQuests', this)">📜 Daily Quests</button>
+        <button class="tab-btn active" onclick="switchTab('tabPenalty', this)">💀 Penalty System</button>
         <button class="tab-btn" onclick="switchTab('tabShadows', this)">👥 Shadow Army</button>
         <button class="tab-btn" onclick="switchTab('tabAura', this)">🔥 Streak Aura</button>
         <button class="tab-btn" onclick="switchTab('tabDungeons', this)">🏰 Dungeon Raids</button>
@@ -931,86 +931,50 @@
       <!-- SYSTEM Notifications Banner -->
       <div class="system-notification" id="systemNotification">
         <span style="font-weight: bold;">[SYSTEM]:</span>
-        <span id="systemNotificationText">Daily Quest available. Choose your trial, Hunter.</span>
+        <span id="systemNotificationText">Daily Reset Complete. Checking quest status, Hunter.</span>
       </div>
 
-      <!-- TAB 1: DAILY QUESTS & PENALTY -->
-      <div class="tab-pane active" id="tabQuests">
+      <!-- TAB 1: PENALTY SYSTEM -->
+      <div class="tab-pane active" id="tabPenalty">
         <div class="feature-card">
-          <div class="card-headline">📅 Daily Quest Board</div>
+          <div class="card-headline">💀 Penalty System Simulation</div>
           <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">
-            Select exactly one quest below. Once committed, you must complete it or face a Penalty Quest!
+            Skipping or failing a daily quest (or system challenge) past the midnight reset triggers an automatic Penalty Quest.
           </p>
 
-          <div class="quest-grid">
-            
-            <!-- Easy Card -->
-            <div class="quest-card" id="questCard-easy">
-              <div>
-                <div class="quest-diff-badge diff-easy">Easy</div>
-                <div class="quest-text">Complete 20 pushups in one session</div>
-              </div>
-              <div>
-                <div class="quest-xp-reward">+50 XP</div>
-                <button class="btn btn-outline" style="width:100%" onclick="commitQuest('easy', 50, 'Complete 20 pushups')">Commit</button>
-              </div>
+          <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+            <div style="font-size:12px; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;">Select Missed Daily Quest</div>
+            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+              <select id="penaltyTargetChallenge" class="input-field" style="flex: 1;">
+                <option value="easy|Complete 20 pushups|30 XP">Easy Quest: Complete 20 pushups (30 XP Loss if ignored)</option>
+                <option value="normal|Run 3km in one session|100 XP" selected>Normal Quest: Run 3km in one session (100 XP Loss if ignored)</option>
+                <option value="hard|Complete a 1 hour gym workout|200 XP">Hard Quest: Complete a 1 hour gym workout (200 XP Loss if ignored)</option>
+              </select>
+              <button class="btn btn-danger" onclick="simulatePenaltyTrigger()">SIMULATE MISSED DEADLINE</button>
             </div>
-
-            <!-- Normal Card -->
-            <div class="quest-card" id="questCard-normal">
-              <div>
-                <div class="quest-diff-badge diff-normal">Normal</div>
-                <div class="quest-text">Log a 3km run/jog today</div>
-              </div>
-              <div>
-                <div class="quest-xp-reward">+150 XP</div>
-                <button class="btn btn-outline" style="width:100%" onclick="commitQuest('normal', 150, 'Log a 3km run')">Commit</button>
-              </div>
-            </div>
-
-            <!-- Hard Card -->
-            <div class="quest-card" id="questCard-hard">
-              <div>
-                <div class="quest-diff-badge diff-hard">Hard</div>
-                <div class="quest-text">Perform 100 squats + 50 pullups</div>
-              </div>
-              <div>
-                <div class="quest-xp-reward">+300 XP</div>
-                <button class="btn btn-outline" style="width:100%" onclick="commitQuest('hard', 300, 'Perform 100 squats + 50 pullups')">Commit</button>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Active committed quest actions -->
-          <div id="questActionsBlock" style="display: none; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-              <div>
-                <div style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); tracking-wider: 0.1em;">COMMITTED QUEST</div>
-                <div style="font-size: 16px; font-weight: bold; color: #fff; margin-top: 4px;" id="activeQuestTitle">No active quest</div>
-              </div>
-              <div style="font-family: monospace; font-size: 14px; color: var(--danger)" id="questCountdownTimer">RESET IN: 01h 45m</div>
-            </div>
-            
-            <div style="display: flex; gap: 12px;">
-              <button class="btn btn-primary" onclick="completeActiveQuest()">LOG PROOF & COMPLETE</button>
-              <button class="btn btn-danger" onclick="triggerPenaltySimulation()">SIMULATE FAILURE (TEST PENALTY)</button>
-            </div>
+            <p style="font-size: 12px; color: var(--text-muted)">
+              [SYSTEM]: Ignored or incomplete quests result in the instant generation of a penalty quest.
+            </p>
           </div>
 
           <!-- Active penalty quest visual -->
-          <div id="penaltyBlock" style="display: none; border: 2px solid var(--danger); background: rgba(239,68,68,0.03); border-radius: 8px; padding: 20px; margin-top: 20px; box-shadow: 0 0 15px rgba(239,68,68,0.15)">
-            <h4 style="color: var(--danger); font-family: 'Exo 2', sans-serif; font-size: 16px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
-              💀 PENALTY QUEST ACTIVE
-            </h4>
-            <p style="font-size: 14px; color: #fff; margin-bottom: 15px;">
-              [SYSTEM]: You skipped your committed Daily Quest. Perform 150 squats immediately to avoid consequences!
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-              <span style="font-size: 13px; color: var(--text-muted);">TIME REMAINING:</span>
-              <span style="font-family: monospace; font-size: 16px; color: var(--danger); font-weight: bold;" id="penaltyCountdown">10s</span>
+          <div id="penaltyBlock" style="display: none; border: 2px solid var(--danger); background: rgba(239,68,68,0.03); border-radius: 8px; padding: 25px; box-shadow: 0 0 25px rgba(239,68,68,0.25); position: relative;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(239,68,68,0.2); padding-bottom: 12px; margin-bottom: 15px;">
+              <h4 style="color: var(--danger); font-family: 'Exo 2', sans-serif; font-size: 18px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+                💀 [SYSTEM WARNING]: PENALTY QUEST ACTIVE
+              </h4>
+              <span style="font-family: monospace; font-size: 18px; color: var(--danger); font-weight: bold; animation: pulse-red 1s infinite alternate;" id="penaltyCountdown">10s</span>
             </div>
-            <button class="btn btn-danger" style="width: 100%" onclick="escapePenalty()">LOG WORKOUT & SURVIVE</button>
+            <div style="font-size: 16px; color: #fff; font-weight: bold; margin-bottom: 10px;" id="penaltyChallengeText">
+              PENALTY QUEST: Missed quest. Perform 150 squats immediately!
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+              Failure to complete the penalty workout before the countdown expires will result in instant XP extraction.
+            </p>
+            <div style="display: flex; gap: 15px;">
+              <button class="btn btn-danger" style="flex: 1;" onclick="escapePenalty()">LOG WORKOUT & SURVIVE</button>
+              <button class="btn btn-outline" style="border-color: rgba(239,68,68,0.3); color: var(--danger);" onclick="failPenalty()">FORCE FAIL (PENALIZE)</button>
+            </div>
           </div>
 
         </div>
@@ -1501,93 +1465,31 @@
     }
 
     // ------------------------------------------------------------
-    // FEATURE 4: QUEST BOARD LOGIC
-    // ------------------------------------------------------------
-    function commitQuest(difficulty, reward, title) {
-      if (userStats.penaltyActive) {
-        spawnToast("[SYSTEM]: You cannot accept daily quests while under Penalty Quest confinement!");
-        return;
-      }
-      
-      userStats.hasActiveQuest = true;
-      userStats.committedQuestDiff = difficulty;
-      userStats.questXpReward = reward;
-      userStats.questTitle = title;
-
-      // Lock other cards
-      const cards = ['easy', 'normal', 'hard'];
-      cards.forEach(c => {
-        const el = document.getElementById(`questCard-${c}`);
-        if (c === difficulty) {
-          el.classList.add('committed');
-        } else {
-          el.classList.add('disabled');
-        }
-      });
-
-      // Show actions block
-      document.getElementById('questActionsBlock').style.display = 'block';
-      document.getElementById('activeQuestTitle').innerText = `${title} (${reward} XP)`;
-
-      triggerSystemNotification(`Quest accepted. Failure is not an option.`);
-      spawnToast(`[SYSTEM]: Quest [${title}] locked in.`);
-    }
-
-    function completeActiveQuest() {
-      if (!userStats.hasActiveQuest) return;
-
-      // Add floating XP animation
-      const btn = document.querySelector('#questActionsBlock button');
-      const rect = btn.getBoundingClientRect();
-      const p = document.createElement('div');
-      p.className = 'xp-float-particle';
-      p.innerText = `+${userStats.questXpReward} XP`;
-      p.style.left = `${rect.left + 50}px`;
-      p.style.top = `${rect.top - 20}px`;
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 1200);
-
-      // Award XP
-      userStats.xp += userStats.questXpReward;
-      spawnToast(`[SYSTEM]: Quest completed. +${userStats.questXpReward} XP awarded.`);
-      
-      resetQuestBoard();
-    }
-
-    function resetQuestBoard() {
-      userStats.hasActiveQuest = false;
-      userStats.committedQuestDiff = "";
-      userStats.questXpReward = 0;
-      userStats.questTitle = "";
-
-      // Unlock card grid
-      const cards = ['easy', 'normal', 'hard'];
-      cards.forEach(c => {
-        const el = document.getElementById(`questCard-${c}`);
-        el.classList.remove('committed', 'disabled');
-      });
-
-      document.getElementById('questActionsBlock').style.display = 'none';
-      document.getElementById('systemNotification').classList.remove('active');
-      
-      updateSidebarDisplay();
-    }
-
-    // ------------------------------------------------------------
     // FEATURE 6: PENALTY SYSTEM LOGIC
     // ------------------------------------------------------------
     let penaltyTimer = null;
-    function triggerPenaltySimulation() {
-      if (!userStats.hasActiveQuest) return;
+    let currentXpLoss = 100;
+
+    function simulatePenaltyTrigger() {
+      if (userStats.penaltyActive) {
+        spawnToast("[SYSTEM]: A Penalty Quest is already active!");
+        return;
+      }
+
+      const selectEl = document.getElementById('penaltyTargetChallenge');
+      const valParts = selectEl.value.split('|');
+      const difficulty = valParts[0];
+      const challengeDesc = valParts[1];
+      const xpLossStr = valParts[2];
       
+      currentXpLoss = parseInt(xpLossStr);
+
       userStats.penaltyActive = true;
-      document.getElementById('questActionsBlock').style.display = 'none';
-      
-      // Grey out committed quest card
-      document.getElementById(`questCard-${userStats.committedQuestDiff}`).classList.add('disabled');
 
       // Show Penalty Card
       document.getElementById('penaltyBlock').style.display = 'block';
+      document.getElementById('penaltyChallengeText').innerText = `PENALTY QUEST: Missed [${challengeDesc}]. Complete 150 squats to escape!`;
+      
       triggerSystemNotification(`PENALTY QUEST ISSUED. Complete immediately or face consequences.`, true);
 
       let sec = 10;
@@ -1601,25 +1503,28 @@
           failPenalty();
         }
       }, 1000);
+      
+      spawnToast(`[SYSTEM]: Missed deadline detected. Penalty quest issued!`);
     }
 
     function failPenalty() {
+      if (!userStats.penaltyActive) return;
+      clearInterval(penaltyTimer);
       userStats.penaltyActive = false;
       document.getElementById('penaltyBlock').style.display = 'none';
       
       // Deduct XP
-      const loss = 100;
-      userStats.xp = Math.max(0, userStats.xp - loss);
+      userStats.xp = Math.max(0, userStats.xp - currentXpLoss);
       
       // Play red XP bar drain
       const bar = document.getElementById('xpBarFill');
       bar.classList.add('red-drain');
       setTimeout(() => bar.classList.remove('red-drain'), 1000);
 
-      spawnToast(`[SYSTEM]: Penalty Quest failed. Consequence: -${loss} XP deducted.`);
+      spawnToast(`[SYSTEM]: Penalty Quest failed. Consequence: -${currentXpLoss} XP extracted.`);
       triggerSystemNotification(`Your aura has faded. The shadows recede.`, true);
       
-      resetQuestBoard();
+      updateSidebarDisplay();
     }
 
     function escapePenalty() {
