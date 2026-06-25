@@ -98,19 +98,26 @@ export default async function DashboardPage() {
     .eq('is_active', true)
     .order('difficulty', { ascending: true })
 
-  // Fetch user's completions (to mark completed challenges)
+  // Fetch user's completions (to mark completed and pending challenges)
   const { data: completions } = await supabase
     .from('completions')
-    .select('challenge_id, completed_at')
+    .select('challenge_id, completed_at, status')
     .eq('user_id', authUser.id)
 
-  const completedChallengeIds = (completions || []).map((c: { challenge_id: string }) => c.challenge_id)
+  const completedChallengeIds = (completions || [])
+    .filter((c: { status: string }) => c.status === 'approved')
+    .map((c: { challenge_id: string }) => c.challenge_id)
+
+  const pendingChallengeIds = (completions || [])
+    .filter((c: { status: string }) => c.status === 'pending')
+    .map((c: { challenge_id: string }) => c.challenge_id)
 
   return (
     <DashboardClient
       user={finalUser as User}
       challenges={(challenges || []) as Challenge[]}
       completedIds={completedChallengeIds}
+      pendingIds={pendingChallengeIds}
     />
   )
 }

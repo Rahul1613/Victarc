@@ -13,6 +13,8 @@ interface CompletionWithDetails {
   user_id: string
   challenge_id: string
   proof_text: string | null
+  proof_image_url: string | null
+  status: 'pending' | 'approved' | 'rejected'
   completed_at: string
   xp_earned: number
   user?: { username: string }
@@ -37,7 +39,7 @@ export default function AdminClient({
   const [activeTab, setActiveTab] = useState<Tab>('challenges')
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [challenges, setChallenges] = useState<Challenge[]>(initialChallenges)
-  const [completions] = useState<CompletionWithDetails[]>(initialCompletions)
+  const [completions, setCompletions] = useState<CompletionWithDetails[]>(initialCompletions)
   const [searchQuery, setSearchQuery] = useState('')
 
   // New challenge form state
@@ -158,6 +160,74 @@ export default function AdminClient({
       alert(err instanceof Error ? err.message : 'Failed to update admin status')
     }
   }
+
+  // Recalculate user stats on approval and update state locally
+  function updateUserStatsLocally(userId: string, xpEarned: number) {
+    setUsers(prevUsers =>
+      prevUsers.map(u => {
+        if (u.id !== userId) return u
+        const newXp = u.xp + xpEarned
+        const newLevel = Math.floor(newXp / 100) + 1
+        let newRank: Rank = 'E'
+        if (newXp >= 50000) newRank = 'SSS'
+        else if (newXp >= 20000) newRank = 'SS'
+        else if (newXp >= 10000) newRank = 'S'
+        else if (newXp >= 5000) newRank = 'A'
+        else if (newXp >= 2500) newRank = 'B'
+        else if (newXp >= 1200) newRank = 'C'
+        else if (newXp >= 500) newRank = 'D'
+        
+        return {
+          ...u,
+          xp: newXp,
+          level: newLevel,
+          rank: newRank,
+        }
+      })
+    )
+  }
+
+  // Approve completion
+  async function handleApproveCompletion(id: string) {
+    const comp = completions.find(c => c.id === id)
+    if (!comp) return
+
+    try {
+      const { error: updateError } = await supabase
+        .from('completions')
+        .update({ status: 'approved' })
+        .eq('id', id)
+
+      if (updateError) throw updateError
+
+      setCompletions(prev =>
+        prev.map(c => (c.id === id ? { ...c, status: 'approved' as const } : c))
+      )
+      
+      updateUserStatsLocally(comp.user_id, comp.xp_earned)
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to approve completion')
+    }
+  }
+
+  // Reject completion (delete completion so the user can re-submit)
+  async function handleRejectCompletion(id: string) {
+    if (!confirm('Are you sure you want to reject this completion? The completion will be deleted, allowing the user to attempt it again.')) return
+
+    try {
+      const { error: deleteError } = await supabase
+        .from('completions')
+        .delete()
+        .eq('id', id)
+
+      if (deleteError) throw deleteError
+
+      setCompletions(prev => prev.filter(c => c.id !== id))
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to reject completion')
+    }
+  }
+
 
   // Filtered users roster
   const filteredUsers = users.filter(u =>
@@ -448,12 +518,18 @@ export default function AdminClient({
                   completions.map((comp, idx) => (
                     <div
                       key={comp.id || idx}
-                      className="p-5 rounded-lg border space-y-3"
+                      className="p-5 rounded-lg border space-y-3 relative overflow-hidden"
                       style={{
                         background: 'rgba(255,255,255,0.01)',
-                        borderColor: 'rgba(255,255,255,0.05)',
+                        borderColor: comp.status === 'pending' ? 'rgba(245,158,11,0.2)' : 'rgba(255,255,255,0.05)',
+                        boxShadow: comp.status === 'pending' ? '0 0 15px rgba(245,158,11,0.05)' : 'none',
                       }}
                     >
+                      {/* Top border glow for pending item */}
+                      {comp.status === 'pending' && (
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500/20 via-amber-500 to-amber-500/20" />
+                      )}
+
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-exo2 font-black text-sm uppercase text-purple-400">
@@ -463,9 +539,26 @@ export default function AdminClient({
                             Quest: {comp.challenge?.title || 'Unknown Quest'}
                           </p>
                         </div>
-                        <span className="text-[10px] font-rajdhani text-muted-foreground">
-                          {new Date(comp.completed_at).toLocaleString()}
-                        </span>
+                        <div className="flex flex-col items-end gap-1.5">
+                          <span className="text-[10px] font-rajdhani text-muted-foreground">
+                            {new Date(comp.completed_at).toLocaleString()}
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded text-[9px] font-exo2 font-black uppercase tracking-wider ${
+                              comp.status === 'approved'
+                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                                : comp.status === 'rejected'
+                                ? 'bg-red-500/10 text-red-400 border border-red-500/30'
+                                : 'bg-amber-500/10 text-amber-400 border border-amber-500/30 animate-pulse'
+                            }`}
+                          >
+                            {comp.status === 'approved'
+                              ? '✓ Approved'
+                              : comp.status === 'rejected'
+                              ? '✗ Rejected'
+                              : '⌛ Pending'}
+                          </span>
+                        </div>
                       </div>
 
                       {comp.proof_text && (
@@ -474,11 +567,55 @@ export default function AdminClient({
                         </p>
                       )}
 
+                      {comp.proof_image_url && (
+                        <div className="relative w-48 h-32 mt-2 rounded border border-white/10 overflow-hidden group">
+                          <a href={comp.proof_image_url} target="_blank" rel="noopener noreferrer">
+                            <img
+                              src={comp.proof_image_url}
+                              alt="Proof image"
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                              <span className="text-[10px] font-exo2 font-black uppercase text-white tracking-wider">
+                                🔍 View Image
+                              </span>
+                            </div>
+                          </a>
+                        </div>
+                      )}
+
                       <div className="flex justify-between items-center text-xs font-rajdhani">
-                        <span className="text-emerald-400 font-bold">
-                          ✓ XP Awarded: +{comp.xp_earned} XP
-                        </span>
+                        {comp.status === 'approved' ? (
+                          <span className="text-emerald-400 font-bold">
+                            ✓ XP Awarded: +{comp.xp_earned} XP
+                          </span>
+                        ) : comp.status === 'rejected' ? (
+                          <span className="text-red-400 font-bold">
+                            ✗ Rejected
+                          </span>
+                        ) : (
+                          <span className="text-amber-400 font-bold animate-pulse">
+                            ⌛ XP Pending: +{comp.xp_earned} XP
+                          </span>
+                        )}
                       </div>
+
+                      {comp.status === 'pending' && (
+                        <div className="flex gap-2 pt-2 border-t border-white/5">
+                          <button
+                            onClick={() => handleApproveCompletion(comp.id)}
+                            className="px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/40 rounded font-exo2 font-black text-[10px] uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                          >
+                            🟢 Approve
+                          </button>
+                          <button
+                            onClick={() => handleRejectCompletion(comp.id)}
+                            className="px-4 py-1.5 bg-red-600/10 border border-red-500/40 rounded font-exo2 font-black text-[10px] uppercase tracking-wider text-red-400 hover:bg-red-600/20 transition-all"
+                          >
+                            🔴 Reject
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ))
                 )}

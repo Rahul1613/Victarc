@@ -9,6 +9,8 @@ interface DbCompletionRow {
   user_id: string
   challenge_id: string
   proof_text: string | null
+  proof_image_url: string | null
+  status: 'pending' | 'approved' | 'rejected'
   completed_at: string
   xp_earned: number
   user: { username: string } | null
@@ -68,6 +70,8 @@ export default async function AdminPage() {
     user_id: c.user_id,
     challenge_id: c.challenge_id,
     proof_text: c.proof_text,
+    proof_image_url: c.proof_image_url,
+    status: c.status,
     completed_at: c.completed_at,
     xp_earned: c.xp_earned,
     challenge: c.challenge ? { title: c.challenge.title } : undefined,

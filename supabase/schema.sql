@@ -39,6 +39,8 @@ create table if not exists public.completions (
   user_id uuid references public.users(id) on delete cascade,
   challenge_id uuid references public.challenges(id) on delete cascade,
   proof_text text,
+  proof_image_url text,
+  status text default 'pending' check (status in ('pending', 'approved', 'rejected')),
   completed_at timestamp default now(),
   xp_earned integer not null
 );
@@ -166,6 +168,83 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- ============================================================
+-- TRIGGER: Handle Completion Approval (Manual Approvals)
+-- ============================================================
+
+create or replace function public.handle_completion_approval()
+returns trigger as $$
+declare
+  old_xp integer;
+  new_xp integer;
+  old_rank text;
+  new_rank text;
+  new_level integer;
+  new_streak integer;
+  last_active_date date;
+  today_date date;
+  yesterday_date date;
+begin
+  -- Only execute if status changed from 'pending' to 'approved'
+  if (old.status = 'pending' and new.status = 'approved') then
+    -- Get current user stats
+    select xp, rank, last_active, streak
+    into old_xp, old_rank, last_active_date, new_streak
+    from public.users
+    where id = new.user_id;
+
+    -- Calculate new XP
+    new_xp := old_xp + new.xp_earned;
+    
+    -- Calculate new level (1 level per 100 XP)
+    new_level := floor(new_xp / 100) + 1;
+    
+    -- Calculate new rank
+    if new_xp >= 50000 then new_rank := 'SSS';
+    elsif new_xp >= 20000 then new_rank := 'SS';
+    elsif new_xp >= 10000 then new_rank := 'S';
+    elsif new_xp >= 5000 then new_rank := 'A';
+    elsif new_xp >= 2500 then new_rank := 'B';
+    elsif new_xp >= 1200 then new_rank := 'C';
+    elsif new_xp >= 500 then new_rank := 'D';
+    else new_rank := 'E';
+    end if;
+
+    -- Streak logic
+    today_date := current_date;
+    yesterday_date := current_date - 1;
+
+    if last_active_date = today_date then
+      -- Streak remains unchanged
+      null;
+    elsif last_active_date = yesterday_date then
+      -- Increment streak
+      new_streak := new_streak + 1;
+    else
+      -- Streak broken / restart at 1
+      new_streak := 1;
+    end if;
+
+    -- Update the user profile
+    update public.users
+    set 
+      xp = new_xp,
+      rank = new_rank,
+      level = new_level,
+      streak = new_streak,
+      last_active = today_date
+    where id = new.user_id;
+  end if;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+drop trigger if exists on_completion_approved on public.completions;
+
+create trigger on_completion_approved
+  after update on public.completions
+  for each row execute procedure public.handle_completion_approval();
 
 -- ============================================================
 -- SEED DATA: Challenges

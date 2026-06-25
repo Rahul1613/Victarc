@@ -8,6 +8,7 @@ interface ChallengeCardProps {
   challenge: Challenge
   onAccept?: (challenge: Challenge) => void
   completed?: boolean
+  pending?: boolean
   index?: number
 }
 
@@ -15,6 +16,7 @@ export default function ChallengeCard({
   challenge,
   onAccept,
   completed = false,
+  pending = false,
   index = 0,
 }: ChallengeCardProps) {
   const rankColors = RANK_COLORS[challenge.difficulty]
@@ -70,6 +72,17 @@ export default function ChallengeCard({
         >
           <span className="text-2xl font-exo2 font-black text-green-400 tracking-wider">
             ✓ COMPLETED
+          </span>
+        </div>
+      )}
+
+      {/* Pending overlay */}
+      {pending && (
+        <div className="absolute inset-0 rounded-lg z-10 flex items-center justify-center"
+          style={{ background: 'rgba(8,8,15,0.7)', backdropFilter: 'blur(2px)' }}
+        >
+          <span className="text-xl font-exo2 font-black text-amber-400 tracking-wider">
+            ⌛ PENDING APPROVAL
           </span>
         </div>
       )}
@@ -143,7 +156,7 @@ export default function ChallengeCard({
           </div>
 
           {/* Accept button */}
-          {!completed && (
+          {!completed && !pending && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}

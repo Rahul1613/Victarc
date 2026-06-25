@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import type { User, Challenge, Rank } from '@/lib/types'
 import type { Category } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
-import { awardXP } from '@/lib/xp'
 import { RANK_COLORS } from '@/lib/constants'
 import Navbar from '@/components/Navbar'
 import ChallengeCard from '@/components/ChallengeCard'
@@ -20,18 +19,23 @@ interface DashboardClientProps {
   user: User
   challenges: Challenge[]
   completedIds: string[]
+  pendingIds: string[]
 }
 
 export default function DashboardClient({
   user: initialUser,
   challenges,
   completedIds: initialCompletedIds,
+  pendingIds: initialPendingIds,
 }: DashboardClientProps) {
-  const [user, setUser] = useState(initialUser)
-  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set(initialCompletedIds))
+  const user = initialUser
+  const completedIds = new Set(initialCompletedIds)
+  const [pendingIds, setPendingIds] = useState<Set<string>>(new Set(initialPendingIds))
+
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null)
   const [proofText, setProofText] = useState('')
+  const [proofImageFile, setProofImageFile] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [rankUpInfo, setRankUpInfo] = useState<{ show: boolean; newRank: Rank; oldRank: Rank }>({
@@ -39,7 +43,7 @@ export default function DashboardClient({
     newRank: 'E',
     oldRank: 'E',
   })
-  const [xpAnimation, setXpAnimation] = useState<{ show: boolean; amount: number }>({
+  const [xpAnimation] = useState<{ show: boolean; amount: number }>({
     show: false,
     amount: 0,
   })
@@ -67,45 +71,47 @@ export default function DashboardClient({
     setSubmitError(null)
 
     try {
-      // Insert completion record
+      let proofImageUrl = null
+
+      // Upload proof photo to storage bucket if selected
+      if (proofImageFile) {
+        const fileExt = proofImageFile.name.split('.').pop()
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`
+
+        const { error: uploadError } = await supabase.storage
+          .from('proofs')
+          .upload(fileName, proofImageFile)
+
+        if (uploadError) {
+          console.error('Upload error:', uploadError)
+          throw new Error('Failed to upload image proof. Please verify that a public bucket named "proofs" is created in Supabase.')
+        }
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('proofs')
+          .getPublicUrl(fileName)
+        proofImageUrl = publicUrl
+      }
+
+      // Insert completion record with status: pending and image URL
       const { error: completionError } = await supabase.from('completions').insert({
         user_id: user.id,
         challenge_id: selectedChallenge.id,
         proof_text: proofText || null,
+        proof_image_url: proofImageUrl,
         xp_earned: selectedChallenge.xp_reward,
+        status: 'pending',
       })
 
       if (completionError) throw completionError
 
-      // Award XP and check for rank up
-      const rankUpResult = await awardXP(user.id, selectedChallenge.xp_reward, supabase)
-
-      // Update local state
-      setCompletedIds((prev) => new Set(Array.from(prev).concat(selectedChallenge.id)))
-      const newXP = user.xp + selectedChallenge.xp_reward
-      setUser((prev) => ({
-        ...prev,
-        xp: newXP,
-        rank: rankUpResult.newRank,
-      }))
-
-      // Show XP animation
-      setXpAnimation({ show: true, amount: selectedChallenge.xp_reward })
-      setTimeout(() => setXpAnimation({ show: false, amount: 0 }), 2000)
-
-      // Show rank up overlay if ranked up
-      if (rankUpResult.rankUp) {
-        setTimeout(() => {
-          setRankUpInfo({
-            show: true,
-            newRank: rankUpResult.newRank,
-            oldRank: rankUpResult.oldRank,
-          })
-        }, 500)
-      }
+      // Update local state to mark this quest as pending
+      setPendingIds((prev) => new Set(prev).add(selectedChallenge.id))
 
       setSelectedChallenge(null)
       setProofText('')
+      setProofImageFile(null)
     } catch (err: unknown) {
       setSubmitError(err instanceof Error ? err.message : 'Failed to submit completion')
     } finally {
@@ -288,6 +294,7 @@ export default function DashboardClient({
                     key={challenge.id}
                     challenge={challenge}
                     completed={completedIds.has(challenge.id)}
+                    pending={pendingIds.has(challenge.id)}
                     onAccept={setSelectedChallenge}
                     index={i}
                   />
@@ -391,6 +398,26 @@ export default function DashboardClient({
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = 'rgba(124,58,237,0.2)'
                     }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="proof-image"
+                    className="text-xs font-rajdhani font-semibold uppercase tracking-wider text-muted-foreground block mb-2"
+                  >
+                    Upload Photo Proof <span className="normal-case text-muted-foreground/50">(optional)</span>
+                  </label>
+                  <input
+                    id="proof-image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setProofImageFile(e.target.files[0])
+                      }
+                    }}
+                    className="w-full text-xs font-rajdhani text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-purple-600/20 file:text-purple-400 file:cursor-pointer hover:file:bg-purple-600/30"
                   />
                 </div>
 
