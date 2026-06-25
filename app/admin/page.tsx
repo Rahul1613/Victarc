@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   description: 'Manage quests, check hunters, and audit quest completions.',
 }
 
+// Always fetch fresh data
+export const revalidate = 0
+
+
 export default async function AdminPage() {
   const supabase = await createClient()
 

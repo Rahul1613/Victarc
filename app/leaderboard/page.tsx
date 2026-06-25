@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description: 'Global VICTARC leaderboard. See who is leading the hunt.',
 }
 
+// Always fetch fresh leaderboard data on every request
+export const revalidate = 0
+
+
 export default async function LeaderboardPage() {
   const supabase = await createClient()
 

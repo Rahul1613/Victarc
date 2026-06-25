@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { User, Challenge, Rank, Category } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
@@ -570,12 +571,14 @@ export default function AdminClient({
                       {comp.proof_image_url && (
                         <div className="relative w-48 h-32 mt-2 rounded border border-white/10 overflow-hidden group">
                           <a href={comp.proof_image_url} target="_blank" rel="noopener noreferrer">
-                            <img
+                            <Image
                               src={comp.proof_image_url}
                               alt="Proof image"
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              unoptimized
                             />
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity z-10">
                               <span className="text-[10px] font-exo2 font-black uppercase text-white tracking-wider">
                                 🔍 View Image
                               </span>
