@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import VideoIntroOverlay from '@/components/VideoIntroOverlay'
 
 type AuthMode = 'signin' | 'signup'
 
@@ -16,6 +17,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [showAfterLoginIntro, setShowAfterLoginIntro] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -53,11 +55,13 @@ export default function LoginPage() {
           password,
         })
         if (signInError) throw signInError
-        window.location.href = '/dashboard'
+        
+        // Stop loading and show the epic after login video splash screen
+        setLoading(false)
+        setShowAfterLoginIntro(true)
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
       setLoading(false)
     }
   }
@@ -75,11 +79,19 @@ export default function LoginPage() {
     }
   }
 
+  function handleLoginIntroComplete() {
+    window.location.href = '/dashboard'
+  }
+
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
-    >
+    <>
+      {showAfterLoginIntro && (
+        <VideoIntroOverlay src="/after_login.mp4" onComplete={handleLoginIntroComplete} />
+      )}
+      <div
+        className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden"
+        style={{ background: 'var(--bg-primary)' }}
+      >
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -368,5 +380,6 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </div>
+    </>
   )
 }
