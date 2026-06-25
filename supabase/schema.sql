@@ -92,8 +92,24 @@ create policy "Users can update own profile" on public.users
 create policy "Users can insert own profile" on public.users
   for insert with check (auth.uid() = id);
 
-create policy "Admins have full access on users" on public.users
-  for all using (
+create policy "Admins can insert users" on public.users
+  for insert with check (
+    exists (
+      select 1 from public.users
+      where id = auth.uid() and is_admin = true
+    )
+  );
+
+create policy "Admins can update users" on public.users
+  for update using (
+    exists (
+      select 1 from public.users
+      where id = auth.uid() and is_admin = true
+    )
+  );
+
+create policy "Admins can delete users" on public.users
+  for delete using (
     exists (
       select 1 from public.users
       where id = auth.uid() and is_admin = true
