@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Check, ChevronDown, ChevronUp, Loader2, LogIn, Sparkles, X,
@@ -679,7 +680,7 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
                         >
                           <div 
                             ref={tcContainerRef}
-                            className="p-4 max-h-40 overflow-y-auto space-y-2 font-rajdhani text-xs text-neutral-400 leading-relaxed"
+                            className="p-4 max-h-60 sm:max-h-40 overflow-y-auto space-y-2 font-rajdhani text-xs text-neutral-400 leading-relaxed"
                           >
                             {text.tcText.map((p, i) => {
                               const isLast = i === text.tcText.length - 1
@@ -714,6 +715,15 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
                       </label>
                     </motion.div>
                   )}
+
+                  {/* Terms / Privacy / Refund quick links */}
+                  <div className="flex justify-center gap-4 mt-2 font-rajdhani text-[10px] text-neutral-500 uppercase tracking-widest">
+                    <Link href="/terms" target="_blank" className="hover:text-purple-400 transition-colors underline underline-offset-2">Terms</Link>
+                    <span>·</span>
+                    <Link href="/privacy" target="_blank" className="hover:text-purple-400 transition-colors underline underline-offset-2">Privacy</Link>
+                    <span>·</span>
+                    <Link href="/refund" target="_blank" className="hover:text-purple-400 transition-colors underline underline-offset-2">Refund</Link>
+                  </div>
                 </>
               )}
             </>
