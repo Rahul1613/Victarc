@@ -10,6 +10,9 @@ export interface User {
   avatar_url: string | null
   is_admin: boolean
   created_at: string
+  coins: number
+  unlocked_items: string[]
+  unlocked_badges: string[]
 }
 
 export interface Challenge {

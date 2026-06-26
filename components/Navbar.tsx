@@ -98,6 +98,14 @@ export default function Navbar({ user }: NavbarProps) {
               {user.xp.toLocaleString()} XP
             </span>
 
+            {/* Coins number */}
+            <span
+              className="text-sm font-exo2 font-bold flex items-center gap-1"
+              style={{ color: '#fbbf24' }}
+            >
+              {(user.coins || 0).toLocaleString()} 🪙
+            </span>
+
             {/* Avatar dropdown */}
             <div className="relative">
               <button
