@@ -661,11 +661,6 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
                     >
                       <span className="flex items-center gap-2">
                         📜 {text.tcHeader}
-                        {!hasScrolledToBottom && (
-                          <span className="text-[10px] font-medium text-purple-400 tracking-wider">
-                            {text.tcScrollPrompt}
-                          </span>
-                        )}
                       </span>
                       {tcExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </button>
@@ -697,24 +692,22 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
                   </div>
 
                   {/* AGREE CHECKBOX */}
-                  {hasScrolledToBottom && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex items-center justify-center gap-2 font-rajdhani text-sm text-neutral-200"
-                    >
-                      <input
-                        type="checkbox"
-                        id="tc-checkbox"
-                        checked={agreed}
-                        onChange={(e) => setAgreed(e.target.checked)}
-                        className="w-4 h-4 rounded border-neutral-600 bg-neutral-900 text-purple-600 accent-purple-600 cursor-pointer"
-                      />
-                      <label htmlFor="tc-checkbox" className="cursor-pointer font-semibold uppercase tracking-wider text-xs select-none">
-                        {text.tcAgree}
-                      </label>
-                    </motion.div>
-                  )}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center justify-center gap-2 font-rajdhani text-sm text-neutral-200 mt-4"
+                  >
+                    <input
+                      type="checkbox"
+                      id="tc-checkbox"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="w-4 h-4 rounded border-neutral-600 bg-neutral-900 text-purple-600 accent-purple-600 cursor-pointer"
+                    />
+                    <label htmlFor="tc-checkbox" className="cursor-pointer font-semibold uppercase tracking-wider text-xs select-none">
+                      {text.tcAgree}
+                    </label>
+                  </motion.div>
 
                   {/* Terms / Privacy / Refund quick links */}
                   <div className="flex justify-center gap-4 mt-2 font-rajdhani text-[10px] text-neutral-500 uppercase tracking-widest">
