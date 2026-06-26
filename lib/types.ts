@@ -13,6 +13,9 @@ export interface User {
   coins: number
   unlocked_items: string[]
   unlocked_badges: string[]
+  plan?: 'demo' | 'basic' | 'premium'
+  payment_id?: string | null
+  paid_at?: string | null
 }
 
 export interface Challenge {

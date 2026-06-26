@@ -32,19 +32,50 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protected routes
+  // Query user plan from database if user is logged in
+  let userPlan = 'demo'
+  if (user) {
+    try {
+      const { data: profile } = await supabase
+        .from('users')
+        .select('plan')
+        .eq('id', user.id)
+        .single()
+      if (profile) {
+        userPlan = profile.plan || 'demo'
+      }
+    } catch (e) {
+      console.error('Error reading plan in middleware:', e)
+    }
+  }
+
+  const publicPaths = ['/login', '/register', '/terms', '/privacy', '/refund', '/api']
+  const isPublic = publicPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path) || request.nextUrl.pathname === '/'
+  )
+
   const protectedPaths = ['/dashboard', '/profile']
   const isProtected = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   )
 
+  // If user has paid plan -> allow full access
+  if (userPlan === 'basic' || userPlan === 'premium') {
+    if (request.nextUrl.pathname === '/login') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
+    return supabaseResponse
+  }
+
+  // Logged out or demo user redirects
   if (isProtected && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // Redirect logged-in users away from login
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'

@@ -6,8 +6,11 @@ import { RANKS } from '@/lib/constants'
 import { RANK_COLORS } from '@/lib/constants'
 import ParticleField from '@/components/ParticleField'
 import RankBadge from '@/components/RankBadge'
-import type { Rank } from '@/lib/types'
+import type { Rank, User } from '@/lib/types'
 import VideoIntroOverlay from '@/components/VideoIntroOverlay'
+import { createClient } from '@/lib/supabase/client'
+import DemoOverlay from '@/components/demo/DemoOverlay'
+import PaywallModal from '@/components/paywall/PaywallModal'
 
 const RANK_DESCRIPTIONS: Record<string, string> = {
   E: 'Beginner. The journey starts.',
@@ -23,6 +26,10 @@ const RANK_DESCRIPTIONS: Record<string, string> = {
 export default function LandingClient() {
   const [showIntro, setShowIntro] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [showPaywall, setShowPaywall] = useState(false)
+  const [userProfile, setUserProfile] = useState<User | null>(null)
+
+  const supabase = createClient()
 
   useEffect(() => {
     setMounted(true)
@@ -30,7 +37,22 @@ export default function LandingClient() {
     if (!hasPlayed) {
       setShowIntro(true)
     }
-  }, [])
+
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single()
+        if (profile) {
+          setUserProfile(profile as User)
+        }
+      }
+    }
+    checkSession()
+  }, [supabase])
 
   const handleIntroComplete = () => {
     sessionStorage.setItem('victarc_landing_intro_played', 'true')
@@ -47,6 +69,21 @@ export default function LandingClient() {
       {showIntro && (
         <VideoIntroOverlay src="/starting.mp4" onComplete={handleIntroComplete} defaultMuted={true} shrinkOnMobile={true} />
       )}
+
+      {/* Demo Tour overlay */}
+      {(!userProfile || userProfile.plan === 'demo') && (
+        <DemoOverlay 
+          user={userProfile} 
+          onTriggerPaywall={() => setShowPaywall(true)} 
+        />
+      )}
+
+      {/* Paywall modal */}
+      <PaywallModal 
+        user={userProfile} 
+        isOpen={showPaywall} 
+        onClose={() => setShowPaywall(false)} 
+      />
 
       <main className="min-h-screen overflow-hidden">
         {/* ===================== HERO SECTION ===================== */}
@@ -401,6 +438,13 @@ export default function LandingClient() {
           <p className="text-xs text-muted-foreground font-rajdhani uppercase tracking-widest">
             VICTARC © 2024 · Arise. Complete. Dominate.
           </p>
+          <div className="flex justify-center gap-6 mt-3 font-rajdhani text-xs text-muted-foreground uppercase tracking-wider">
+            <Link href="/terms" className="hover:text-purple-400 transition-colors duration-150">Terms</Link>
+            <span>·</span>
+            <Link href="/privacy" className="hover:text-purple-400 transition-colors duration-150">Privacy</Link>
+            <span>·</span>
+            <Link href="/refund" className="hover:text-purple-400 transition-colors duration-150">Refund</Link>
+          </div>
         </footer>
       </main>
     </>

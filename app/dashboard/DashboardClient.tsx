@@ -12,6 +12,8 @@ import XPBar from '@/components/XPBar'
 import RankBadge from '@/components/RankBadge'
 import StatsCard from '@/components/StatsCard'
 import RankUpOverlay from '@/components/RankUpOverlay'
+import DemoOverlay from '@/components/demo/DemoOverlay'
+import PaywallModal from '@/components/paywall/PaywallModal'
 
 type FilterTab = 'all' | Category | 'boss'
 
@@ -62,6 +64,8 @@ export default function DashboardClient({
       .map(c => c.challenge_id)
     return new Set(pending)
   })
+
+  const [showPaywall, setShowPaywall] = useState(false)
 
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null)
@@ -356,6 +360,21 @@ export default function DashboardClient({
 
   return (
     <>
+      {/* Demo Tour overlay */}
+      {(!user || user.plan === 'demo') && (
+        <DemoOverlay 
+          user={user} 
+          onTriggerPaywall={() => setShowPaywall(true)} 
+        />
+      )}
+
+      {/* Paywall modal */}
+      <PaywallModal 
+        user={user} 
+        isOpen={showPaywall} 
+        onClose={() => setShowPaywall(false)} 
+      />
+
       <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
         <Navbar user={user} />
 
