@@ -41,7 +41,11 @@ export default async function AdminPage() {
     .single()
 
   // If not admin, redirect to dashboard
-  if (!user || !user.is_admin) {
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL
+  const isEmailAdmin = adminEmail && authUser.email === adminEmail
+  const isDbAdmin = user?.is_admin === true
+
+  if (!isEmailAdmin && !isDbAdmin) {
     redirect('/dashboard')
   }
 

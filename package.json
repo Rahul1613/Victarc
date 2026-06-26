@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.106.0",
     "@base-ui/react": "^1.6.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
@@ -19,6 +20,8 @@
     "jspdf": "^4.2.1",
     "lucide-react": "^1.21.0",
     "next": "^14.2.35",
+    "nodemailer": "^9.0.1",
+    "qrcode.react": "^4.2.0",
     "razorpay": "^2.9.6",
     "react": "^18",
     "react-dom": "^18",
@@ -28,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

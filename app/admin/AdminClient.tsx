@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { User, Challenge, Rank, Category } from '@/lib/types'
+import { Loader2, X } from 'lucide-react'
+import type { User, Challenge, Rank, Category, PaymentRequest } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
 import Navbar from '@/components/Navbar'
 import RankBadge from '@/components/RankBadge'
@@ -29,7 +30,7 @@ interface AdminClientProps {
   currentUser: User
 }
 
-type Tab = 'challenges' | 'users' | 'completions'
+type Tab = 'challenges' | 'users' | 'completions' | 'payments'
 
 export default function AdminClient({
   initialUsers,
@@ -42,6 +43,18 @@ export default function AdminClient({
   const [challenges, setChallenges] = useState<Challenge[]>(initialChallenges)
   const [completions, setCompletions] = useState<CompletionWithDetails[]>(initialCompletions)
   const [searchQuery, setSearchQuery] = useState('')
+
+  // Payment requests state
+  const [paymentRequests, setPaymentRequests] = useState<PaymentRequest[]>([])
+  const [paymentFilter, setPaymentFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all')
+  const [selectedScreenshot, setSelectedScreenshot] = useState<string | null>(null)
+  
+  // Note dialogs
+  const [approvingRequestId, setApprovingRequestId] = useState<string | null>(null)
+  const [rejectingRequestId, setRejectingRequestId] = useState<string | null>(null)
+  const [adminNoteInput, setAdminNoteInput] = useState('')
+  const [rejectReasonInput, setRejectReasonInput] = useState('')
+  const [isActionLoading, setIsActionLoading] = useState(false)
 
   // New challenge form state
   const [showAddModal, setShowAddModal] = useState(false)
@@ -56,6 +69,151 @@ export default function AdminClient({
   const [error, setError] = useState<string | null>(null)
 
   const supabase = createClient()
+
+  // Load and subscribe to payment requests
+  const fetchPaymentRequests = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('payment_requests')
+      .select('*')
+      .order('submitted_at', { ascending: false })
+    if (!error && data) {
+      setPaymentRequests(data)
+    }
+  }, [supabase])
+
+  useEffect(() => {
+    fetchPaymentRequests()
+  }, [fetchPaymentRequests])
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('schema-db-changes-admin')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'payment_requests' },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (payload: any) => {
+          if (payload.eventType === 'INSERT') {
+            setPaymentRequests((prev) => [payload.new as PaymentRequest, ...prev])
+          } else if (payload.eventType === 'UPDATE') {
+            setPaymentRequests((prev) =>
+              prev.map((r) => (r.id === payload.new.id ? (payload.new as PaymentRequest) : r))
+            )
+          } else if (payload.eventType === 'DELETE') {
+            setPaymentRequests((prev) => prev.filter((r) => r.id !== payload.old.id))
+          }
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [supabase])
+
+  // Approve payment request handler
+  const handleApprovePayment = async () => {
+    if (!approvingRequestId) return
+    setIsActionLoading(true)
+    try {
+      const { error: approveError } = await supabase.rpc('approve_payment', {
+        p_request_id: approvingRequestId,
+        p_admin_note: adminNoteInput || 'Manually approved by Administrator'
+      })
+
+      if (approveError) throw approveError
+
+      // Also update verified_by to manual
+      await supabase
+        .from('payment_requests')
+        .update({ verified_by: 'manual' })
+        .eq('id', approvingRequestId)
+
+      // Log action in admin_actions table
+      await supabase.from('admin_actions').insert({
+        action: 'approve',
+        request_id: approvingRequestId,
+        performed_via: 'dashboard'
+      })
+
+      // Get request details to send email confirmation
+      const req = paymentRequests.find(r => r.id === approvingRequestId)
+      if (req) {
+        // trigger email notification asynchronously
+        fetch('/api/notify-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'approved',
+            userName: req.user_name,
+            userEmail: req.user_email,
+            plan: req.plan,
+            amount: req.amount,
+            txnId: req.upi_transaction_id || 'UPI_MANUAL',
+          })
+        }).catch(err => console.error('Failed to notify client of approval:', err))
+      }
+
+      setApprovingRequestId(null)
+      setAdminNoteInput('')
+      fetchPaymentRequests()
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to approve payment')
+    } finally {
+      setIsActionLoading(false)
+    }
+  }
+
+  // Reject payment request handler
+  const handleRejectPayment = async () => {
+    if (!rejectingRequestId || !rejectReasonInput) return
+    setIsActionLoading(true)
+    try {
+      const { error: rejectError } = await supabase.rpc('reject_payment', {
+        p_request_id: rejectingRequestId,
+        p_admin_note: rejectReasonInput
+      })
+
+      if (rejectError) throw rejectError
+
+      // Update verified_by to manual
+      await supabase
+        .from('payment_requests')
+        .update({ verified_by: 'manual' })
+        .eq('id', rejectingRequestId)
+
+      // Log action in admin_actions table
+      await supabase.from('admin_actions').insert({
+        action: 'reject',
+        request_id: rejectingRequestId,
+        performed_via: 'dashboard'
+      })
+
+      const req = paymentRequests.find(r => r.id === rejectingRequestId)
+      if (req) {
+        fetch('/api/notify-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'rejected',
+            userName: req.user_name,
+            userEmail: req.user_email,
+            plan: req.plan,
+            amount: req.amount,
+            reason: rejectReasonInput
+          })
+        }).catch(err => console.error('Failed to notify client of rejection:', err))
+      }
+
+      setRejectingRequestId(null)
+      setRejectReasonInput('')
+      fetchPaymentRequests()
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to reject payment')
+    } finally {
+      setIsActionLoading(false)
+    }
+  }
 
   // Calculate quick stats
   const totalHunters = users.length
@@ -296,7 +454,7 @@ export default function AdminClient({
 
         {/* Navigation Tabs */}
         <div className="flex border-b border-white/5 gap-2">
-          {(['challenges', 'users', 'completions'] as Tab[]).map(tab => (
+          {(['challenges', 'users', 'completions', 'payments'] as Tab[]).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -304,7 +462,13 @@ export default function AdminClient({
                 activeTab === tab ? 'text-white' : 'text-muted-foreground hover:text-white'
               }`}
             >
-              {tab === 'challenges' ? '🛡️ Quest Manager' : tab === 'users' ? '🎴 Hunter Roster' : '📜 System Logs'}
+              {tab === 'challenges' 
+                ? '🛡️ Quest Manager' 
+                : tab === 'users' 
+                ? '🎴 Hunter Roster' 
+                : tab === 'completions' 
+                ? '📜 System Logs' 
+                : '🪙 Payment Requests'}
               {activeTab === tab && (
                 <motion.div
                   layoutId="activeTabGlow"
@@ -624,6 +788,207 @@ export default function AdminClient({
                 )}
               </motion.div>
             )}
+
+            {/* Payment Requests Manager Tab */}
+            {activeTab === 'payments' && (
+              <motion.div
+                key="payments-tab"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-6"
+              >
+                {/* Stats Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                  <div className="p-5 rounded-lg border flex flex-col justify-center bg-white/[0.01] border-white/5 shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+                    <p className="text-[10px] font-rajdhani text-muted-foreground uppercase tracking-widest">Pending Manual Review</p>
+                    <p className="text-3xl font-exo2 font-black text-yellow-500 mt-1">
+                      {paymentRequests.filter((r: PaymentRequest) => r.status === 'pending_manual').length}
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-lg border flex flex-col justify-center bg-white/[0.01] border-white/5 shadow-[0_0_15px_rgba(16,185,129,0.05)]">
+                    <p className="text-[10px] font-rajdhani text-muted-foreground uppercase tracking-widest">Auto-Approved Today 🤖</p>
+                    <p className="text-3xl font-exo2 font-black text-emerald-400 mt-1">
+                      {paymentRequests.filter((r: PaymentRequest) => r.status === 'approved' && r.verified_by === 'ai' && r.reviewed_at && new Date(r.reviewed_at).toDateString() === new Date().toDateString()).length}
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-lg border flex flex-col justify-center bg-white/[0.01] border-white/5 shadow-[0_0_15px_rgba(239,68,68,0.05)]">
+                    <p className="text-[10px] font-rajdhani text-muted-foreground uppercase tracking-widest">Auto-Rejected Today 🤖</p>
+                    <p className="text-3xl font-exo2 font-black text-red-400 mt-1">
+                      {paymentRequests.filter((r: PaymentRequest) => r.status === 'rejected' && r.verified_by === 'ai' && r.reviewed_at && new Date(r.reviewed_at).toDateString() === new Date().toDateString()).length}
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-lg border flex flex-col justify-center bg-white/[0.01] border-white/5 shadow-[0_0_15px_rgba(139,92,246,0.05)]">
+                    <p className="text-[10px] font-rajdhani text-muted-foreground uppercase tracking-widest">Total Revenue Estimate</p>
+                    <p className="text-3xl font-exo2 font-black text-purple-400 mt-1">
+                      ₹{paymentRequests.filter((r: PaymentRequest) => r.status === 'approved').reduce((acc: number, curr: PaymentRequest) => acc + curr.amount, 0).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Filter Selector */}
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { key: 'all', label: 'All Requests' },
+                    { key: 'pending', label: 'Pending Review' },
+                    { key: 'approved', label: 'Approved' },
+                    { key: 'rejected', label: 'Rejected' }
+                  ].map((filter) => (
+                    <button
+                      key={filter.key}
+                      onClick={() => setPaymentFilter(filter.key as 'all' | 'pending' | 'approved' | 'rejected')}
+                      className={`px-4 py-1.5 rounded-full text-xs font-rajdhani font-semibold uppercase tracking-wider transition-all duration-200 border ${
+                        paymentFilter === filter.key
+                          ? 'bg-purple-600/30 border-purple-500 text-white shadow-[0_0_10px_rgba(124,58,237,0.2)]'
+                          : 'bg-white/5 border-white/10 text-muted-foreground hover:text-white'
+                      }`}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Requests Table */}
+                <div className="overflow-x-auto rounded-lg border border-white/5 bg-white/[0.01]">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/5 text-xs font-rajdhani text-muted-foreground uppercase tracking-widest">
+                        <th className="p-4">Time</th>
+                        <th className="p-4">Hunter</th>
+                        <th className="p-4">Plan / Package</th>
+                        <th className="p-4">Amount</th>
+                        <th className="p-4">UPI TXN ID</th>
+                        <th className="p-4">Screenshot</th>
+                        <th className="p-4">Verified By</th>
+                        <th className="p-4">AI Score</th>
+                        <th className="p-4">Status</th>
+                        <th className="p-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-sm font-rajdhani text-white">
+                      {paymentRequests
+                        .filter((r) => {
+                          if (paymentFilter === 'all') return true
+                          if (paymentFilter === 'pending') return r.status === 'pending' || r.status === 'pending_manual'
+                          return r.status === paymentFilter
+                        })
+                        .map((r) => {
+                          const isManualPending = r.status === 'pending_manual'
+                          const isPending = r.status === 'pending'
+                          const isApproved = r.status === 'approved'
+                          const isRejected = r.status === 'rejected'
+
+                          return (
+                            <tr 
+                              key={r.id} 
+                              className={`hover:bg-white/[0.02] transition-colors ${
+                                isManualPending ? 'bg-yellow-500/5' : ''
+                              }`}
+                            >
+                              <td className="p-4 text-xs text-muted-foreground">
+                                {new Date(r.submitted_at).toLocaleString()}
+                              </td>
+                              <td className="p-4">
+                                <div className="font-bold text-white uppercase">{r.user_name}</div>
+                                <div className="text-xs text-muted-foreground">{r.user_email}</div>
+                              </td>
+                              <td className="p-4 uppercase font-bold text-xs text-purple-400">
+                                {r.plan === 'coins' ? `🪙 ${r.coins_amount?.toLocaleString()} Coins` : `${r.plan}-Rank Plan`}
+                              </td>
+                              <td className="p-4 font-mono font-bold text-yellow-500">₹{r.amount}</td>
+                              <td className="p-4 font-mono text-xs">{r.upi_transaction_id || 'N/A'}</td>
+                              <td className="p-4">
+                                <ScreenshotThumbnail path={r.screenshot_url} onClick={setSelectedScreenshot} />
+                              </td>
+                              <td className="p-4">
+                                <span
+                                  className={`px-2 py-0.5 rounded text-[10px] font-exo2 font-black uppercase border ${
+                                    r.verified_by === 'ai'
+                                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                                      : r.verified_by === 'ai_flagged'
+                                      ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30'
+                                      : r.verified_by === 'manual'
+                                      ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+                                      : 'bg-neutral-800 text-neutral-400 border-neutral-700'
+                                  }`}
+                                >
+                                  {r.verified_by === 'ai'
+                                    ? '🤖 AI'
+                                    : r.verified_by === 'ai_flagged'
+                                    ? '🤖 FLAGGED'
+                                    : r.verified_by === 'manual'
+                                    ? '👤 MANUAL'
+                                    : 'PENDING'}
+                                </span>
+                              </td>
+                              <td className="p-4 font-bold text-xs">
+                                {r.ai_confidence !== null ? (
+                                  <span
+                                    style={{
+                                      color: r.ai_confidence >= 90 
+                                        ? '#10b981' 
+                                        : r.ai_confidence >= 70 
+                                        ? '#f59e0b' 
+                                        : '#ef4444'
+                                    }}
+                                  >
+                                    {r.ai_confidence}%
+                                  </span>
+                                ) : (
+                                  <span className="text-neutral-600">—</span>
+                                )}
+                              </td>
+                              <td className="p-4">
+                                <span
+                                  className={`px-2.5 py-0.5 rounded text-[10px] font-exo2 font-black uppercase border ${
+                                    isApproved
+                                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                                      : isRejected
+                                      ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                                      : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                                  }`}
+                                >
+                                  {r.status}
+                                </span>
+                              </td>
+                              <td className="p-4 text-right">
+                                {(isPending || isManualPending) ? (
+                                  <div className="flex gap-2 justify-end">
+                                    <button
+                                      onClick={() => setApprovingRequestId(r.id)}
+                                      className="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/40 rounded font-exo2 font-black text-[9px] uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/20"
+                                    >
+                                      Approve
+                                    </button>
+                                    <button
+                                      onClick={() => setRejectingRequestId(r.id)}
+                                      className="px-2.5 py-1 bg-red-600/10 border border-red-500/40 rounded font-exo2 font-black text-[9px] uppercase tracking-wider text-red-400 hover:bg-red-600/20"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <span className="text-xs text-neutral-500 italic block pr-2">
+                                    Audited {r.admin_note ? `(${r.admin_note.slice(0, 20)}...)` : ''}
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          )
+                        })}
+                      {paymentRequests.length === 0 && (
+                        <tr>
+                          <td colSpan={10} className="text-center text-muted-foreground py-8">
+                            No requests found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </main>
@@ -798,6 +1163,167 @@ export default function AdminClient({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Screenshot Lightbox Modal */}
+      <AnimatePresence>
+        {selectedScreenshot && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedScreenshot(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="relative max-w-4xl max-h-[85vh] overflow-hidden rounded-lg border border-purple-500/30 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={selectedScreenshot} alt="Proof zoom" className="max-w-full max-h-[80vh] object-contain rounded" />
+              <button 
+                onClick={() => setSelectedScreenshot(null)} 
+                className="absolute top-3 right-3 text-neutral-400 hover:text-white p-1 rounded-full bg-black/60 border border-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Manual Approve Note Modal */}
+      <AnimatePresence>
+        {approvingRequestId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="w-full max-w-md p-6 bg-neutral-950 border border-purple-500/40 rounded-xl text-white space-y-4 shadow-xl"
+            >
+              <h3 className="text-base font-exo2 font-black uppercase text-white">Approve Payment</h3>
+              <p className="text-xs text-neutral-400 font-rajdhani">Add a review note to log with this transaction (optional):</p>
+              <input
+                type="text"
+                value={adminNoteInput}
+                onChange={(e) => setAdminNoteInput(e.target.value)}
+                placeholder="e.g. Verified on banking panel"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded font-rajdhani text-sm focus:outline-none focus:border-purple-500"
+              />
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  disabled={isActionLoading}
+                  onClick={() => {
+                    setApprovingRequestId(null)
+                    setAdminNoteInput('')
+                  }}
+                  className="flex-1 py-2 bg-neutral-900 border border-white/10 text-neutral-400 rounded font-exo2 font-black text-xs uppercase"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={isActionLoading}
+                  onClick={handleApprovePayment}
+                  className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-exo2 font-black text-xs uppercase flex items-center justify-center gap-1.5"
+                >
+                  {isActionLoading && <Loader2 className="w-3 h-3 animate-spin" />}
+                  Confirm
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Manual Reject Note Modal */}
+      <AnimatePresence>
+        {rejectingRequestId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="w-full max-w-md p-6 bg-neutral-950 border border-red-500/40 rounded-xl text-white space-y-4 shadow-xl"
+            >
+              <h3 className="text-base font-exo2 font-black uppercase text-red-400">Reject Payment</h3>
+              <p className="text-xs text-neutral-400 font-rajdhani">Please state the rejection reason (required):</p>
+              <input
+                type="text"
+                required
+                value={rejectReasonInput}
+                onChange={(e) => setRejectReasonInput(e.target.value)}
+                placeholder="e.g. UTR number incorrect or not found"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded font-rajdhani text-sm focus:outline-none focus:border-red-500"
+              />
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  disabled={isActionLoading}
+                  onClick={() => {
+                    setRejectingRequestId(null)
+                    setRejectReasonInput('')
+                  }}
+                  className="flex-1 py-2 bg-neutral-900 border border-white/10 text-neutral-400 rounded font-exo2 font-black text-xs uppercase"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={isActionLoading || !rejectReasonInput}
+                  onClick={handleRejectPayment}
+                  className="flex-1 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded font-exo2 font-black text-xs uppercase flex items-center justify-center gap-1.5"
+                >
+                  {isActionLoading && <Loader2 className="w-3 h-3 animate-spin" />}
+                  Confirm
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function ScreenshotThumbnail({ path, onClick }: { path: string; onClick: (url: string) => void }) {
+  const [url, setUrl] = useState<string | null>(null)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const getUrl = async () => {
+      const { data, error } = await supabase.storage
+        .from('payment-proofs')
+        .createSignedUrl(path, 300)
+      if (!error && data) {
+        setUrl(data.signedUrl)
+      }
+    }
+    getUrl()
+  }, [path, supabase])
+
+  if (!url) {
+    return <div className="w-12 h-12 bg-white/5 animate-pulse rounded border border-white/10" />
+  }
+
+  return (
+    <div className="relative w-12 h-12 rounded border border-white/10 overflow-hidden cursor-pointer hover:border-purple-500 transition-colors" onClick={() => onClick(url)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={url} alt="Proof thumbnail" className="w-full h-full object-cover" />
     </div>
   )
 }

@@ -1,9 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { User, Challenge, Rank, CommittedQuest, PenaltyQuest } from '@/lib/types'
-import type { Category } from '@/lib/types'
+import type { User, Challenge, Rank, CommittedQuest, PenaltyQuest, Category, PaymentRequest } from '@/lib/types'
 import { createClient } from '@/lib/supabase/client'
 import { RANK_COLORS } from '@/lib/constants'
 import Navbar from '@/components/Navbar'
@@ -14,6 +14,7 @@ import StatsCard from '@/components/StatsCard'
 import RankUpOverlay from '@/components/RankUpOverlay'
 import DemoOverlay from '@/components/demo/DemoOverlay'
 import PaywallModal from '@/components/paywall/PaywallModal'
+import BuyCoinsModal from '@/components/coins/BuyCoinsModal'
 
 type FilterTab = 'all' | Category | 'boss'
 
@@ -155,11 +156,76 @@ export default function DashboardClient({
   }, [challenges, activeCommitState])
   
   // Shadow Vault & Milestone states
-  const [activeDashboardTab, setActiveDashboardTab] = useState<'challenges' | 'vault'>('challenges')
+  const [activeDashboardTab, setActiveDashboardTab] = useState<'challenges' | 'vault' | 'payments'>('challenges')
   const [showCrowningCeremony, setShowCrowningCeremony] = useState(false)
   const [submittingVault, setSubmittingVault] = useState(false)
+  const [showBuyCoins, setShowBuyCoins] = useState(false)
+  const [userPayments, setUserPayments] = useState<PaymentRequest[]>([])
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
 
   const supabase = createClient()
+
+  const fetchUserPayments = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('payment_requests')
+      .select('*')
+      .order('submitted_at', { ascending: false })
+    if (!error && data) {
+      setUserPayments(data)
+    }
+  }, [supabase])
+
+  useEffect(() => {
+    if (user) {
+      fetchUserPayments()
+    }
+  }, [user, fetchUserPayments])
+
+  useEffect(() => {
+    const handleSwitchTab = (e: Event) => {
+      const tab = (e as CustomEvent).detail
+      if (tab === 'payments') {
+        setActiveDashboardTab('payments')
+        fetchUserPayments()
+      }
+    }
+    window.addEventListener('switch-dashboard-tab', handleSwitchTab)
+    return () => window.removeEventListener('switch-dashboard-tab', handleSwitchTab)
+  }, [fetchUserPayments])
+
+  useEffect(() => {
+    const checkApproved = async () => {
+      const { data: reqs } = await supabase
+        .from('payment_requests')
+        .select('id, plan, coins_amount')
+        .eq('status', 'approved')
+        .order('reviewed_at', { ascending: false })
+        .limit(1)
+
+      if (reqs && reqs[0]) {
+        const lastSeenApproved = localStorage.getItem('last_seen_approved_payment')
+        const latestReq = reqs[0]
+        if (lastSeenApproved !== latestReq.id) {
+          localStorage.setItem('last_seen_approved_payment', latestReq.id)
+          const isCoins = latestReq.plan === 'coins'
+          const label = isCoins ? `${latestReq.coins_amount} Coins` : `${latestReq.plan.toUpperCase()}-Rank Access`
+          setToastMessage(`⚔️ Your ${label} has been activated, Hunter!`)
+          
+          const { data: profile } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', user.id)
+            .single()
+          if (profile) {
+            setCurrentUser(profile as User)
+          }
+        }
+      }
+    }
+    if (user) {
+      checkApproved()
+    }
+  }, [user, supabase, setCurrentUser])
 
   const FILTERS: { key: FilterTab; label: string; icon: string }[] = [
     { key: 'all', label: 'All', icon: '⚡' },
@@ -373,6 +439,17 @@ export default function DashboardClient({
         user={user} 
         isOpen={showPaywall} 
         onClose={() => setShowPaywall(false)} 
+      />
+
+      {/* Buy Coins modal */}
+      <BuyCoinsModal
+        user={user}
+        isOpen={showBuyCoins}
+        onClose={() => setShowBuyCoins(false)}
+        onSuccess={(newCoins) => {
+          setCurrentUser((prev) => ({ ...prev, coins: newCoins }))
+          fetchUserPayments()
+        }}
       />
 
       <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -661,6 +738,23 @@ export default function DashboardClient({
             {/* ===================== MAIN FEED ===================== */}
             <main className="flex-1 min-w-0">
               
+              {/* Toast Notification Banner */}
+              {toastMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-4 p-4 rounded-lg border border-emerald-500 bg-emerald-950/20 text-emerald-400 font-rajdhani text-sm font-bold flex items-center justify-between shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                >
+                  <span>{toastMessage}</span>
+                  <button 
+                    onClick={() => setToastMessage(null)} 
+                    className="text-emerald-500 hover:text-white font-bold text-xs uppercase px-2 py-1 rounded bg-emerald-500/10 transition-colors"
+                  >
+                    Dismiss
+                  </button>
+                </motion.div>
+              )}
+
               {/* Tab Navigation */}
               <div className="flex gap-6 border-b border-white/10 pb-3 mb-6">
                 <button
@@ -682,6 +776,19 @@ export default function DashboardClient({
                   }`}
                 >
                   🪙 The Shadow Vault
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveDashboardTab('payments')
+                    fetchUserPayments()
+                  }}
+                  className={`font-exo2 font-black uppercase text-xs tracking-wider pb-1 border-b-2 transition-all duration-200 ${
+                    activeDashboardTab === 'payments'
+                      ? 'border-purple-500 text-purple-400'
+                      : 'border-transparent text-muted-foreground hover:text-white'
+                  }`}
+                >
+                  ⚔️ Payment Status
                 </button>
               </div>
 
@@ -847,11 +954,19 @@ export default function DashboardClient({
                       border: '1px solid rgba(124,58,237,0.15)',
                     }}
                   >
-                    <div>
-                      <span className="text-xs uppercase text-muted-foreground font-rajdhani">Your Balance</span>
-                      <div className="text-2xl font-exo2 font-black text-[#fbbf24]">
-                        {(user.coins || 0).toLocaleString()} 🪙
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <span className="text-xs uppercase text-muted-foreground font-rajdhani">Your Balance</span>
+                        <div className="text-2xl font-exo2 font-black text-[#fbbf24]">
+                          {(user.coins || 0).toLocaleString()} 🪙
+                        </div>
                       </div>
+                      <button
+                        onClick={() => setShowBuyCoins(true)}
+                        className="px-3 py-1.5 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black border border-yellow-400 rounded font-exo2 font-black text-[10px] uppercase tracking-wider transition-all duration-200 shadow-[0_0_10px_rgba(251,191,36,0.2)]"
+                      >
+                        ➕ Buy Coins
+                      </button>
                     </div>
                     <div className="text-right">
                       <span className="text-xs uppercase text-muted-foreground font-rajdhani">Items Unlocked</span>
@@ -1047,6 +1162,109 @@ export default function DashboardClient({
                       </div>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* Payment Status Tab content */}
+              {activeDashboardTab === 'payments' && (
+                <div className="space-y-6 text-left">
+                  <div>
+                    <h1
+                      className="text-3xl font-exo2 font-black uppercase"
+                      style={{
+                        background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}
+                    >
+                      ⚔️ Payment Status History
+                    </h1>
+                    <p className="text-sm text-muted-foreground font-rajdhani mt-1">
+                      Track your subscription upgrade requests and coin purchase verifications.
+                    </p>
+                  </div>
+
+                  {userPayments.length === 0 ? (
+                    <div className="text-center py-16 bg-white/[0.01] border border-white/5 rounded-xl">
+                      <p className="text-4xl mb-3">📜</p>
+                      <p className="font-exo2 font-bold uppercase text-muted-foreground">
+                        No payment requests submitted yet.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {userPayments.map((pay) => (
+                        <div
+                          key={pay.id}
+                          className="p-5 rounded-lg border flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                          style={{
+                            background: 'rgba(255,255,255,0.01)',
+                            borderColor: pay.status === 'pending' || pay.status === 'pending_manual'
+                              ? 'rgba(245,158,11,0.2)' 
+                              : pay.status === 'approved' 
+                              ? 'rgba(16,185,129,0.2)' 
+                              : 'rgba(239,68,68,0.2)',
+                          }}
+                        >
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-exo2 font-black text-sm uppercase text-white">
+                                {pay.plan === 'coins' ? `🪙 ${pay.coins_amount?.toLocaleString()} Coins` : `👑 ${pay.plan?.toUpperCase()}-Rank Plan`}
+                              </span>
+                              <span className="font-mono text-xs font-bold text-yellow-500 font-rajdhani">₹{pay.amount}</span>
+                            </div>
+                            <p className="text-xs font-rajdhani text-muted-foreground">
+                              Submitted: {new Date(pay.submitted_at).toLocaleString()}
+                            </p>
+                            {pay.upi_transaction_id && (
+                              <p className="text-xs font-mono text-neutral-400">
+                                UTR/Txn: {pay.upi_transaction_id}
+                              </p>
+                            )}
+                            {pay.status === 'rejected' && pay.admin_note && (
+                              <p className="text-xs font-rajdhani text-red-400 bg-red-950/20 border border-red-900/30 p-2.5 rounded mt-2">
+                                <strong>Reason:</strong> {pay.admin_note}
+                              </p>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`px-3 py-1 rounded text-xs font-exo2 font-black uppercase tracking-wider ${
+                                pay.status === 'approved'
+                                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                                  : pay.status === 'rejected'
+                                  ? 'bg-red-500/10 text-red-400 border border-red-500/30'
+                                  : 'bg-amber-500/10 text-amber-400 border border-amber-500/30 animate-pulse'
+                              }`}
+                            >
+                              {pay.status === 'approved'
+                                ? '✓ Approved'
+                                : pay.status === 'rejected'
+                                ? '✗ Rejected'
+                                : '⌛ Verification Pending'}
+                            </span>
+                            
+                            {pay.status === 'rejected' && (
+                              <button
+                                onClick={() => {
+                                  if (pay.plan === 'coins') {
+                                    setShowBuyCoins(true)
+                                  } else {
+                                    setShowPaywall(true)
+                                  }
+                                }}
+                                className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded font-exo2 font-black text-[10px] uppercase tracking-wider transition-colors"
+                              >
+                                Try Again
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </main>

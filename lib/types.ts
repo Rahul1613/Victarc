@@ -91,3 +91,27 @@ export interface PenaltyQuest {
   xp_loss: number
   status: 'active' | 'completed' | 'failed'
 }
+
+export interface PaymentRequest {
+  id: string
+  user_id: string
+  user_email: string
+  user_name: string
+  plan: 'basic' | 'premium' | 'coins'
+  amount: number
+  upi_transaction_id: string | null
+  screenshot_url: string
+  status: 'pending' | 'pending_manual' | 'approved' | 'rejected'
+  admin_note: string | null
+  submitted_at: string
+  reviewed_at: string | null
+  verified_by: 'pending' | 'ai' | 'ai_flagged' | 'manual'
+  ai_confidence: number | null
+  ai_reason: string | null
+  ai_extracted_txn_id: string | null
+  screenshot_hash: string | null
+  is_flagged_fraud: boolean
+  fraud_reason: string | null
+  coins_amount: number | null
+}
+

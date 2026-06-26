@@ -147,7 +147,7 @@ export default function SuccessScreen({ user, plan, paymentId, paidAt }: Success
     } finally {
       setDownloadingPng(false)
     }
-  }, [formattedDate, paymentIdShort, plan, user.username])
+  }, [])
 
   // Auto trigger downloads on mount
   useEffect(() => {
