@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'VICTARC — Arise. Complete. Dominate.',
     description: 'Daily fitness and self-growth challenges. Rank up. Become the Shadow Monarch.',
     type: 'website',
-    url: 'https://victarc.com',
+    url: 'https://www.victarc.in',
   },
   twitter: {
     card: 'summary_large_image',
