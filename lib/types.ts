@@ -115,3 +115,11 @@ export interface PaymentRequest {
   coins_amount: number | null
 }
 
+export interface AdminAction {
+  id: string
+  action: 'approve' | 'reject'
+  request_id: string | null
+  performed_via: 'email_link' | 'dashboard'
+  performed_at: string
+  details?: Record<string, unknown> | null
+}

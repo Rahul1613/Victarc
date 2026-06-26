@@ -4,12 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Check, ChevronDown, ChevronUp, Loader2, LogIn, Sparkles, X,
-  Copy, Upload, AlertTriangle
+  Copy, Upload, AlertTriangle, RefreshCw, HelpCircle
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@/lib/types'
 import SuccessScreen from './SuccessScreen'
-import { QRCodeCanvas } from 'qrcode.react'
+
 import { UPI_CONFIG } from '@/lib/upiConfig'
 
 interface PaywallModalProps {
@@ -745,6 +745,7 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
 
               {/* QR Code Container */}
               <div className="p-4 bg-white rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.3)] border border-purple-500/30 flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/qr.jpg" alt="GPay QR" className="w-48 h-48 object-contain" />
               </div>
 

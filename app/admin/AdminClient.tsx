@@ -830,11 +830,6 @@ export default function AdminClient({
 
             {/* Payment Requests Manager Tab */}
             {activeTab === 'payments' && (
-                // existing payment tab UI
-            )}
-            {activeTab === 'admin_actions' && (
-                <AdminActions />
-            )}
               <motion.div
                 key="payments-tab"
                 initial={{ opacity: 0, y: 15 }}
@@ -1032,6 +1027,10 @@ export default function AdminClient({
                   </table>
                 </div>
               </motion.div>
+            )}
+
+            {activeTab === 'admin_actions' && (
+              <AdminActions />
             )}
           </AnimatePresence>
         </div>
