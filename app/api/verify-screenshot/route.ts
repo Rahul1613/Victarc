@@ -126,6 +126,26 @@ export async function POST(req: Request) {
           status: 'manual_pending',
         })
         .eq('id', requestId)
+
+      // Fetch full request details to pass to email notifier
+      const { data: dbReq } = await supabaseAdmin
+        .from('payment_requests')
+        .select('*')
+        .eq('id', requestId)
+        .single()
+        
+      await triggerEmailNotification({
+        type: 'manual_flagged',
+        id: requestId,
+        userName,
+        userEmail: user.email || 'unknown',
+        plan: dbReq?.plan || '',
+        amount: expectedAmount,
+        upiTransactionId: dbReq?.upi_transaction_id || 'Not entered',
+        screenshotUrl: dbReq?.screenshot_url || '',
+        confidence: 0,
+        reason: 'AI verification disabled. Manual review required.',
+      })
         
       return NextResponse.json({ manualReview: true, reason: 'AI verification disabled. Queued for manual review.' })
     }
