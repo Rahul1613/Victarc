@@ -114,9 +114,20 @@ export async function POST(req: Request) {
     }
 
     // 5. Send screenshot to Claude vision API
+    // 5. Send screenshot to Claude vision API
     const anthropicKey = process.env.ANTHROPIC_API_KEY
     if (!anthropicKey) {
-      return NextResponse.json({ error: 'ANTHROPIC_API_KEY is not defined' }, { status: 500 })
+      console.warn('ANTHROPIC_API_KEY is not defined. Falling back to manual verification.')
+      
+      // Update status to manual_pending since we can't auto-verify
+      await supabaseAdmin
+        .from('payment_requests')
+        .update({
+          status: 'manual_pending',
+        })
+        .eq('id', requestId)
+        
+      return NextResponse.json({ manualReview: true, reason: 'AI verification disabled. Queued for manual review.' })
     }
 
     const anthropic = new Anthropic({ apiKey: anthropicKey })
