@@ -389,11 +389,7 @@ export default function AdminClient({
   }
 
 
-  // Filtered users roster
-  const filteredUsers = users.filter(u =>
-    u.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    u.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredUsers = users.filter(u => u.username.toLowerCase().includes(searchQuery.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="min-h-screen pb-12" style={{ background: 'var(--bg-primary)' }}>

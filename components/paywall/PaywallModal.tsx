@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Check, ChevronDown, ChevronUp, Loader2, LogIn, Sparkles, X, 
-  Copy, Upload, AlertTriangle, RefreshCw, HelpCircle 
+import {
+  Check, ChevronDown, ChevronUp, Loader2, LogIn, Sparkles, X,
+  Copy, Upload, AlertTriangle
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@/lib/types'
@@ -745,11 +745,7 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
 
               {/* QR Code Container */}
               <div className="p-4 bg-white rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.3)] border border-purple-500/30 flex items-center justify-center">
-                <QRCodeCanvas 
-                  value={UPI_CONFIG.plans[selectedPlan].upiDeeplink(UPI_CONFIG.upiId)} 
-                  size={200}
-                  level="M"
-                />
+                <img src="/qr.jpg" alt="GPay QR" className="w-48 h-48 object-contain" />
               </div>
 
               <div className="space-y-1">
