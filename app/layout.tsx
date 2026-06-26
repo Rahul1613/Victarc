@@ -20,6 +20,11 @@ export const metadata: Metadata = {
     title: 'VICTARC',
     description: 'Daily fitness challenges. Rank up. Become the Shadow Monarch.',
   },
+  icons: {
+    icon: '/favicon.jpg',
+    shortcut: '/favicon.jpg',
+    apple: '/favicon.jpg',
+  },
 }
 
 export default function RootLayout({
