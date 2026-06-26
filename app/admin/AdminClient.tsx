@@ -31,7 +31,7 @@ interface AdminClientProps {
   currentUser: User
 }
 
-type Tab = 'challenges' | 'users' | 'completions' | 'payments'
+type Tab = 'challenges' | 'users' | 'completions' | 'payments' | 'admin_actions'
 
 export default function AdminClient({
   initialUsers,
@@ -393,7 +393,7 @@ export default function AdminClient({
   const filteredUsers = users.filter(u =>
     u.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.email.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  );
 
   return (
     <div className="min-h-screen pb-12" style={{ background: 'var(--bg-primary)' }}>
