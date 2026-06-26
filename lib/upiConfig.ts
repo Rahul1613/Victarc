@@ -1,5 +1,5 @@
 export const UPI_CONFIG = {
-  upiId: 'YOUR_UPI_ID@upi',        // ← Rahul fills this
+  upiId: 'sisoderahul643-1@okaxis',
   name: 'Victarc',
   plans: {
     basic: {
