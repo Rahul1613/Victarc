@@ -202,7 +202,6 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
   const [lang, setLang] = useState<Language>('en')
   const [currentUser, setCurrentUser] = useState<User | null>(initialUser || null)
   const [tcExpanded, setTcExpanded] = useState(false)
-  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false)
   const [agreed, setAgreed] = useState(false)
   
   // Checkout flow step
@@ -226,9 +225,6 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
   const [isPolling, setIsPolling] = useState(false)
 
   const supabase = createClient()
-  const lastParaRef = useRef<HTMLParagraphElement | null>(null)
-  const tcContainerRef = useRef<HTMLDivElement | null>(null)
-  const observerRef = useRef<IntersectionObserver | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const text = TRANSLATIONS[lang]
@@ -250,32 +246,7 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
     getSessionUser()
   }, [supabase, currentUser])
 
-  // Setup IntersectionObserver for Terms & Conditions scroll requirement
-  useEffect(() => {
-    if (!tcExpanded) return
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries
-      if (entry.isIntersecting) {
-        setHasScrolledToBottom(true)
-      }
-    }
-
-    observerRef.current = new IntersectionObserver(handleIntersect, {
-      root: tcContainerRef.current,
-      threshold: 0.8,
-    })
-
-    if (lastParaRef.current) {
-      observerRef.current.observe(lastParaRef.current)
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect()
-      }
-    }
-  }, [tcExpanded])
 
   // Clean preview URLs to prevent leaks
   useEffect(() => {
@@ -673,18 +644,12 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
                           exit={{ height: 0 }}
                           className="overflow-hidden border-t border-white/5"
                         >
-                          <div 
-                            ref={tcContainerRef}
-                            className="p-4 max-h-60 sm:max-h-40 overflow-y-auto space-y-2 font-rajdhani text-xs text-neutral-400 leading-relaxed"
-                          >
-                            {text.tcText.map((p, i) => {
-                              const isLast = i === text.tcText.length - 1
-                              return (
-                                <p key={i} ref={isLast ? lastParaRef : null} className="pb-1">
-                                  {p}
-                                </p>
-                              )
-                            })}
+                          <div className="p-4 max-h-60 sm:max-h-40 overflow-y-auto space-y-2 font-rajdhani text-xs text-neutral-400 leading-relaxed">
+                            {text.tcText.map((p, i) => (
+                              <p key={i} className="pb-1">
+                                {p}
+                              </p>
+                            ))}
                           </div>
                         </motion.div>
                       )}
