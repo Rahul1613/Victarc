@@ -112,13 +112,7 @@ export default async function DashboardPage() {
     .select('challenge_id, completed_at, status')
     .eq('user_id', authUser.id)
 
-  const completedChallengeIds = (completions || [])
-    .filter((c: { status: string }) => c.status === 'approved')
-    .map((c: { challenge_id: string }) => c.challenge_id)
 
-  const pendingChallengeIds = (completions || [])
-    .filter((c: { status: string }) => c.status === 'pending')
-    .map((c: { challenge_id: string }) => c.challenge_id)
 
   // Fetch committed quest (ignore error if table does not exist yet)
   const { data: committed, error: committedErr } = await supabase
@@ -215,8 +209,7 @@ export default async function DashboardPage() {
     <DashboardClient
       user={finalUser as User}
       challenges={(challenges || []) as Challenge[]}
-      completedIds={completedChallengeIds}
-      pendingIds={pendingChallengeIds}
+      completions={(completions || []) as { challenge_id: string; completed_at: string; status: string }[]}
       activeCommit={activeCommit}
       activePenalty={activePenalty}
     />

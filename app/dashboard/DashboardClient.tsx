@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { User, Challenge, Rank, CommittedQuest, PenaltyQuest } from '@/lib/types'
 import type { Category } from '@/lib/types'
@@ -18,8 +18,7 @@ type FilterTab = 'all' | Category | 'boss'
 interface DashboardClientProps {
   user: User
   challenges: Challenge[]
-  completedIds: string[]
-  pendingIds: string[]
+  completions: { challenge_id: string; completed_at: string; status: string }[]
   activeCommit: CommittedQuest | null
   activePenalty: PenaltyQuest | null
 }
@@ -27,15 +26,42 @@ interface DashboardClientProps {
 export default function DashboardClient({
   user: initialUser,
   challenges,
-  completedIds: initialCompletedIds,
-  pendingIds: initialPendingIds,
+  completions = [],
   activeCommit: initialActiveCommit,
   activePenalty: initialActivePenalty,
 }: DashboardClientProps) {
   const [currentUser, setCurrentUser] = useState<User>(initialUser)
   const user = currentUser
-  const completedIds = new Set(initialCompletedIds)
-  const [pendingIds, setPendingIds] = useState<Set<string>>(new Set(initialPendingIds))
+
+  // Timezone-aware date checker
+  const isToday = (dateString: string) => {
+    const date = new Date(dateString)
+    const today = new Date()
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    )
+  }
+
+  // Filter completions to today's local day
+  const todayCompletions = useMemo(() => {
+    return completions.filter(c => isToday(c.completed_at))
+  }, [completions])
+
+  const completedIds = useMemo(() => {
+    const approved = todayCompletions
+      .filter(c => c.status === 'approved')
+      .map(c => c.challenge_id)
+    return new Set(approved)
+  }, [todayCompletions])
+
+  const [pendingIds, setPendingIds] = useState<Set<string>>(() => {
+    const pending = completions
+      .filter(c => c.status === 'pending' && isToday(c.completed_at))
+      .map(c => c.challenge_id)
+    return new Set(pending)
+  })
 
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null)
@@ -54,6 +80,75 @@ export default function DashboardClient({
   })
   const [activeCommitState, setActiveCommitState] = useState<CommittedQuest | null>(initialActiveCommit)
   const [activePenaltyState, setActivePenaltyState] = useState<PenaltyQuest | null>(initialActivePenalty)
+  const [timeLeft, setTimeLeft] = useState('')
+
+  // Live countdown timer until local midnight
+  useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date()
+      const midnight = new Date()
+      midnight.setHours(24, 0, 0, 0)
+      const diff = midnight.getTime() - now.getTime()
+      
+      const hours = Math.max(0, Math.floor(diff / (1000 * 60 * 60)))
+      const minutes = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)))
+      const seconds = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000))
+      
+      const pad = (num: number) => String(num).padStart(2, '0')
+      setTimeLeft(`${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`)
+    }
+    
+    updateTimer()
+    const interval = setInterval(updateTimer, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Select daily challenges deterministically based on date (rotates at midnight)
+  const dailyChallenges = useMemo(() => {
+    const today = new Date()
+    const dateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+    
+    let seed = 0
+    for (let i = 0; i < dateString.length; i++) {
+      seed += dateString.charCodeAt(i)
+    }
+    
+    const seededRandom = () => {
+      const x = Math.sin(seed++) * 10000
+      return x - Math.floor(x)
+    }
+    
+    const easy = challenges.filter(c => c.difficulty === 'E' && !c.is_boss_challenge)
+    const medium = challenges.filter(c => (c.difficulty === 'D' || c.difficulty === 'C') && !c.is_boss_challenge)
+    const hard = challenges.filter(c => (c.difficulty === 'B' || c.difficulty === 'A') && !c.is_boss_challenge)
+    const boss = challenges.filter(c => c.is_boss_challenge || c.difficulty === 'S')
+    
+    const selected: Challenge[] = []
+    
+    if (easy.length > 0) {
+      const idx = Math.floor(seededRandom() * easy.length)
+      selected.push(easy[idx])
+    }
+    if (medium.length > 0) {
+      const idx = Math.floor(seededRandom() * medium.length)
+      selected.push(medium[idx])
+    }
+    if (hard.length > 0) {
+      const idx = Math.floor(seededRandom() * hard.length)
+      selected.push(hard[idx])
+    }
+    
+    selected.push(...boss)
+    
+    if (activeCommitState) {
+      const committedChallenge = challenges.find(c => c.id === activeCommitState.challenge_id)
+      if (committedChallenge && !selected.some(c => c.id === activeCommitState.challenge_id)) {
+        selected.push(committedChallenge)
+      }
+    }
+    
+    return Array.from(new Set(selected))
+  }, [challenges, activeCommitState])
   
   // Shadow Vault & Milestone states
   const [activeDashboardTab, setActiveDashboardTab] = useState<'challenges' | 'vault'>('challenges')
@@ -71,7 +166,7 @@ export default function DashboardClient({
     { key: 'boss', label: 'Boss', icon: '⚔️' },
   ]
 
-  const filteredChallenges = challenges.filter((c) => {
+  const filteredChallenges = dailyChallenges.filter((c) => {
     if (activeFilter === 'all') return true
     if (activeFilter === 'boss') return c.is_boss_challenge
     return c.category === activeFilter
@@ -611,21 +706,36 @@ export default function DashboardClient({
               {activeDashboardTab === 'challenges' && (
                 <>
                   {/* Page title */}
-                  <div className="mb-6">
-                    <h1
-                      className="text-3xl font-exo2 font-black uppercase"
-                      style={{
-                        background: 'linear-gradient(135deg, #e2e8f0, #a78bfa)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                      }}
+                  <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <h1
+                        className="text-3xl font-exo2 font-black uppercase"
+                        style={{
+                          background: 'linear-gradient(135deg, #e2e8f0, #a78bfa)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text',
+                        }}
+                      >
+                        Daily Challenges
+                      </h1>
+                      <p className="text-sm text-muted-foreground font-rajdhani mt-1">
+                        {filteredChallenges.length} challenges available · {completedIds.size} completed
+                      </p>
+                    </div>
+
+                    {/* Countdown Timer */}
+                    <div
+                      className="px-4 py-2 rounded-lg border border-purple-500/30 bg-purple-950/20 shadow-[0_0_15px_rgba(167,139,250,0.1)] flex items-center gap-2 self-start sm:self-auto"
                     >
-                      Daily Challenges
-                    </h1>
-                    <p className="text-sm text-muted-foreground font-rajdhani mt-1">
-                      {filteredChallenges.length} challenges available · {completedIds.size} completed
-                    </p>
+                      <span className="text-base animate-pulse">⏰</span>
+                      <div className="font-rajdhani text-xs">
+                        <span className="text-muted-foreground block uppercase font-bold tracking-wider text-[10px]">Next Reset In</span>
+                        <span className="font-mono font-bold text-sm text-purple-400 tracking-wider">
+                          {timeLeft}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Filter tabs */}
