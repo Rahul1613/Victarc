@@ -2,23 +2,51 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.victarc.in'),
   title: {
-    default: 'VICTARC — Arise. Complete. Dominate.',
+    default: 'VICTARC — Solo Leveling Fitness & Gamified Daily Quests',
     template: '%s | VICTARC',
   },
   description:
-    'Daily fitness and self-growth challenges. Earn XP, rank up from E to SSS, and compete on the global leaderboard. Become the Shadow Monarch.',
-  keywords: ['fitness', 'challenges', 'self-improvement', 'XP', 'leaderboard', 'solo levelling'],
+    'Arise and become the Shadow Monarch. Victarc is a gamified Solo Leveling fitness platform featuring daily quests, penalty alerts, real-time leaderboard, and rank upgrades.',
+  keywords: [
+    'Victarc',
+    'Solo Leveling Fitness',
+    'Solo Leveling Workout',
+    'Arise Fitness',
+    'Shadow Monarch workout tracker',
+    'fitness gamification',
+    'daily challenges',
+    'RPG fitness app',
+    'gamified workout leaderboard',
+    'level up fitness',
+    'workout tracker',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'VICTARC — Arise. Complete. Dominate.',
-    description: 'Daily fitness and self-growth challenges. Rank up. Become the Shadow Monarch.',
+    title: 'VICTARC — Solo Leveling Fitness & Gamified Daily Quests',
+    description: 'Arise and become the Shadow Monarch. Daily fitness challenges. Rank up from E to SSS. Compete on the global leaderboard.',
     type: 'website',
     url: 'https://www.victarc.in',
+    siteName: 'VICTARC',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VICTARC',
-    description: 'Daily fitness challenges. Rank up. Become the Shadow Monarch.',
+    title: 'VICTARC — Solo Leveling Fitness',
+    description: 'Arise and become the Shadow Monarch. Daily fitness challenges and leaderboard.',
   },
   icons: {
     icon: '/favicon.jpg',

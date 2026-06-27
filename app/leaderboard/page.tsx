@@ -4,8 +4,11 @@ import type { LeaderboardEntry, User } from '@/lib/types'
 import LeaderboardClient from './LeaderboardClient'
 
 export const metadata: Metadata = {
-  title: 'Leaderboard',
-  description: 'Global VICTARC leaderboard. See who is leading the hunt.',
+  title: 'Global Hunter Leaderboard & Rank Rankings',
+  description: 'Track the top hunters on the global VICTARC leaderboard. See live levels, XP rewards, active streaks, and overall Solo Leveling rank progression.',
+  alternates: {
+    canonical: '/leaderboard',
+  },
 }
 
 // Always fetch fresh leaderboard data on every request
