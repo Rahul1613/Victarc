@@ -63,6 +63,17 @@ using (
   )
 );
 
+drop policy if exists "Admins can update payment requests" on public.payment_requests;
+create policy "Admins can update payment requests"
+on public.payment_requests for update
+to authenticated
+using (
+  exists (
+    select 1 from public.users
+    where id = auth.uid() and is_admin = true
+  )
+);
+
 -- 4. Create public.approve_payment SQL Function
 create or replace function public.approve_payment(p_request_id uuid, p_admin_note text)
 returns void
@@ -74,6 +85,14 @@ declare
   v_user_id uuid;
   v_coins_amount integer;
 begin
+  -- Secure check: only allow execution by admins or the service role
+  if auth.role() <> 'service_role' and not exists (
+    select 1 from public.users
+    where id = auth.uid() and is_admin = true
+  ) then
+    raise exception 'Unauthorized: Only administrators can approve payments';
+  end if;
+
   -- Get plan, user_id, and coins_amount from payment_requests
   select plan, user_id, coins_amount 
   into v_plan, v_user_id, v_coins_amount
@@ -117,6 +136,14 @@ language plpgsql
 security definer
 as $$
 begin
+  -- Secure check: only allow execution by admins or the service role
+  if auth.role() <> 'service_role' and not exists (
+    select 1 from public.users
+    where id = auth.uid() and is_admin = true
+  ) then
+    raise exception 'Unauthorized: Only administrators can reject payments';
+  end if;
+
   update public.payment_requests 
   set 
     status = 'rejected',
