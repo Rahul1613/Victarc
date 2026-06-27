@@ -6,8 +6,11 @@
 -- 1. Add instagram_handle column to public.users table
 alter table public.users add column if not exists instagram_handle text;
 
--- 2. Recreate the leaderboard view to include the instagram_handle column
-create or replace view public.leaderboard as
+-- 2. Drop the existing leaderboard view (so we can change column structure)
+drop view if exists public.leaderboard cascade;
+
+-- 3. Recreate the leaderboard view to include the instagram_handle column
+create view public.leaderboard as
   select
     u.id,
     u.username,
