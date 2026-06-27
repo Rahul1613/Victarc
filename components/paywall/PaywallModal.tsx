@@ -246,6 +246,35 @@ export default function PaywallModal({ user: initialUser, isOpen, onClose }: Pay
     getSessionUser()
   }, [supabase, currentUser])
 
+  // Check for existing pending requests when modal opens
+  useEffect(() => {
+    if (!isOpen || !currentUser) return
+
+    const checkPendingRequest = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('payment_requests')
+          .select('id, plan, upi_transaction_id, status')
+          .in('status', ['pending', 'pending_manual'])
+          .eq('user_id', currentUser.id)
+          .order('submitted_at', { ascending: false })
+          .limit(1)
+
+        if (!error && data && data[0]) {
+          const req = data[0]
+          setCreatedRequestId(req.id)
+          setSelectedPlan(req.plan as 'basic' | 'premium')
+          setUtrNumber(req.upi_transaction_id || '')
+          setFlowStep('manual_pending')
+        }
+      } catch (err) {
+        console.error('Error checking pending payment requests:', err)
+      }
+    }
+
+    checkPendingRequest()
+  }, [isOpen, currentUser, supabase])
+
 
 
   // Clean preview URLs to prevent leaks

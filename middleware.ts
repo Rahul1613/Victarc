@@ -59,26 +59,22 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   )
 
-  // If user has paid plan -> allow full access
-  if (userPlan === 'basic' || userPlan === 'premium') {
-    if (request.nextUrl.pathname === '/login') {
-      const url = request.nextUrl.clone()
-      url.pathname = '/dashboard'
-      return NextResponse.redirect(url)
-    }
-    return supabaseResponse
-  }
-
-  // Logged out or demo user redirects
-  if (isProtected && !user) {
+  // If user is logged in and visits landing page '/' or login page '/login' -> redirect to dashboard
+  if (user && (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/login')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 
-  if (request.nextUrl.pathname === '/login' && user) {
+  // If user has paid plan -> allow full access
+  if (userPlan === 'basic' || userPlan === 'premium') {
+    return supabaseResponse
+  }
+
+  // Logged out redirects for protected paths
+  if (isProtected && !user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
