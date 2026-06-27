@@ -483,46 +483,6 @@ export default function AdminClient({
         <div className="relative">
           <AnimatePresence mode="wait">
             {activeTab === 'challenges' && (
-            <motion.div
-              key="challenges-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-            >
-              {challenges.length === 0 ? (
-                <p className="col-span-full text-center text-muted-foreground py-12 font-rajdhani">
-                  No quests registered in the system database.
-                </p>
-              ) : (
-                challenges.map(c => {
-                  return (
-                    <div
-                      key={c.id}
-                      className={`p-6 rounded-lg border flex flex-col justify-between transition-all duration-300 relative ${
-                        c.is_active ? 'opacity-100' : 'opacity-50'
-                      }`}
-                      style={{
-                        background: 'rgba(255,255,255,0.02)',
-                        borderColor: c.is_active
-                          ? c.is_boss_challenge
-                            ? '#fbbf24'
-                            : 'rgba(255,255,255,0.06)'
-                          : 'rgba(255,255,255,0.02)',
-                        boxShadow: c.is_active && c.is_boss_challenge
-                          ? '0 0 20px rgba(251,191,36,0.1)'
-                          : 'none',
-                      }}
-                    >
-                      {/* ... existing challenge UI ... */}
-                    </div>
-                  )
-                })
-              )}
-            </motion.div>
-          )}
-          {activeTab === 'users' && (
               <motion.div
                 key="challenges-tab"
                 initial={{ opacity: 0, y: 15 }}
