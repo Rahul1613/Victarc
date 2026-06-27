@@ -13,8 +13,8 @@ interface DemoOverlayProps {
 export default function DemoOverlay({ user, onTriggerPaywall }: DemoOverlayProps) {
   const [timeLeft, setTimeLeft] = useState<number | null>(null)
 
-  // Only show for demo plan users or logged out visitors
-  const isDemo = !user || user.plan === 'demo'
+  // Only show for logged in demo plan users
+  const isDemo = !!(user && user.plan === 'demo')
 
   // Initialize trial expiration from localStorage
   useEffect(() => {
