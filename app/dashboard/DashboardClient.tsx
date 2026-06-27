@@ -24,6 +24,7 @@ interface DashboardClientProps {
   completions: { challenge_id: string; completed_at: string; status: string }[]
   activeCommit: CommittedQuest | null
   activePenalty: PenaltyQuest | null
+  isTopHunter?: boolean
 }
 
 export default function DashboardClient({
@@ -32,6 +33,7 @@ export default function DashboardClient({
   completions = [],
   activeCommit: initialActiveCommit,
   activePenalty: initialActivePenalty,
+  isTopHunter = false,
 }: DashboardClientProps) {
   const [currentUser, setCurrentUser] = useState<User>(initialUser)
   const user = currentUser
@@ -67,6 +69,11 @@ export default function DashboardClient({
   })
 
   const [showPaywall, setShowPaywall] = useState(false)
+
+  // Instagram Monarch integration
+  const [instagramInput, setInstagramInput] = useState(user.instagram_handle || '')
+  const [isUpdatingInstagram, setIsUpdatingInstagram] = useState(false)
+  const [instagramSuccessMsg, setInstagramSuccessMsg] = useState<string | null>(null)
 
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null)
@@ -359,6 +366,32 @@ export default function DashboardClient({
     } catch (err) {
       console.error('Error clearing penalty:', err)
       alert('Failed to log penalty completion. Please try again.')
+    }
+  }
+
+  async function handleSaveInstagram() {
+    setIsUpdatingInstagram(true)
+    setInstagramSuccessMsg(null)
+    try {
+      const sanitized = instagramInput.trim().replace(/^@/, '')
+      const { error } = await supabase
+        .from('users')
+        .update({ instagram_handle: sanitized || null })
+        .eq('id', user.id)
+
+      if (error) throw error
+
+      setCurrentUser((prev) => ({
+        ...prev,
+        instagram_handle: sanitized || null,
+      }))
+      setInstagramSuccessMsg('Instagram handle updated successfully!')
+      setTimeout(() => setInstagramSuccessMsg(null), 3000)
+    } catch (err) {
+      console.error('Failed to update Instagram handle:', err)
+      alert('Failed to update Instagram handle: ' + (err instanceof Error ? err.message : err))
+    } finally {
+      setIsUpdatingInstagram(false)
     }
   }
 
@@ -753,6 +786,58 @@ export default function DashboardClient({
                     Dismiss
                   </button>
                 </motion.div>
+              )}
+
+              {/* Reigning Monarch Instagram Editor Alert */}
+              {isTopHunter && (
+                <div
+                  className="mb-6 p-6 rounded-xl border border-amber-500/35 relative overflow-hidden backdrop-blur-md"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(124, 58, 237, 0.03) 100%)',
+                    boxShadow: '0 0 25px rgba(251, 191, 36, 0.08)',
+                  }}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="space-y-1 flex-1">
+                      <h3 className="font-exo2 font-black text-sm uppercase tracking-wider text-[#fbbf24] flex items-center gap-2">
+                        👑 Shadow Monarch Crown Access
+                      </h3>
+                      <p className="text-xs text-muted-foreground font-rajdhani leading-relaxed max-w-xl">
+                        Congratulations! You are currently the **#1 Hunter** on the global leaderboard. 
+                        Link your Instagram account below to show your profile link on the center crown throne banner for all players to see.
+                      </p>
+                    </div>
+
+                    <div className="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                      <div className="relative flex-1 sm:w-48">
+                        <span className="absolute left-3 top-2.5 text-xs text-muted-foreground font-rajdhani font-bold">@</span>
+                        <input
+                          type="text"
+                          value={instagramInput}
+                          onChange={(e) => setInstagramInput(e.target.value)}
+                          placeholder="instagram_username"
+                          className="w-full pl-7 pr-3 py-2 rounded bg-white/5 border border-white/10 text-xs font-rajdhani text-white focus:outline-none focus:border-purple-500 transition-colors"
+                        />
+                      </div>
+                      <button
+                        onClick={handleSaveInstagram}
+                        disabled={isUpdatingInstagram}
+                        className="px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 disabled:opacity-50 text-black font-exo2 font-black text-[10px] uppercase tracking-widest rounded transition-all shadow-md flex items-center justify-center gap-1.5"
+                      >
+                        {isUpdatingInstagram ? 'Saving...' : 'Link Handle'}
+                      </button>
+                    </div>
+                  </div>
+                  {instagramSuccessMsg && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-3 text-[11px] font-rajdhani text-emerald-400 font-bold"
+                    >
+                      ✓ {instagramSuccessMsg}
+                    </motion.p>
+                  )}
+                </div>
               )}
 
               {/* Tab Navigation */}

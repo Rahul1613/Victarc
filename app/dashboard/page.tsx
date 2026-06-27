@@ -205,6 +205,15 @@ export default async function DashboardPage() {
     }
   }
 
+  // Fetch top user from leaderboard to check if this user is the reigning Monarch
+  const { data: topHunter } = await supabase
+    .from('leaderboard')
+    .select('id')
+    .limit(1)
+    .maybeSingle()
+
+  const isTopHunter = topHunter && topHunter.id === authUser.id
+
   return (
     <DashboardClient
       user={finalUser as User}
@@ -212,6 +221,7 @@ export default async function DashboardPage() {
       completions={(completions || []) as { challenge_id: string; completed_at: string; status: string }[]}
       activeCommit={activeCommit}
       activePenalty={activePenalty}
+      isTopHunter={!!isTopHunter}
     />
   )
 }

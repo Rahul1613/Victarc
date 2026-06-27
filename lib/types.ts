@@ -16,6 +16,7 @@ export interface User {
   plan?: 'demo' | 'basic' | 'premium'
   payment_id?: string | null
   paid_at?: string | null
+  instagram_handle?: string | null
 }
 
 export interface Challenge {
@@ -51,6 +52,7 @@ export interface LeaderboardEntry {
   avatar_url: string | null
   total_completions: number
   position: number
+  instagram_handle?: string | null
 }
 
 export type Rank = 'E' | 'D' | 'C' | 'B' | 'A' | 'S' | 'SS' | 'SSS'
