@@ -28,6 +28,7 @@ export default function LandingClient() {
   const [mounted, setMounted] = useState(false)
   const [showPaywall, setShowPaywall] = useState(false)
   const [userProfile, setUserProfile] = useState<User | null>(null)
+  const [loadingSession, setLoadingSession] = useState(true)
 
   const supabase = createClient()
 
@@ -39,16 +40,26 @@ export default function LandingClient() {
     }
 
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (session?.user) {
-        const { data: profile } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', session.user.id)
-          .single()
-        if (profile) {
-          setUserProfile(profile as User)
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', session.user.id)
+            .single()
+          if (profile) {
+            setUserProfile(profile as User)
+            if (profile.plan !== 'demo') {
+              window.location.href = '/dashboard'
+              return
+            }
+          }
         }
+      } catch (err) {
+        console.error('Error fetching session:', err)
+      } finally {
+        setLoadingSession(false)
       }
     }
     checkSession()
@@ -71,7 +82,7 @@ export default function LandingClient() {
       )}
 
       {/* Demo Tour overlay */}
-      {(!userProfile || userProfile.plan === 'demo') && (
+      {!loadingSession && (!userProfile || userProfile.plan === 'demo') && (
         <DemoOverlay 
           user={userProfile} 
           onTriggerPaywall={() => setShowPaywall(true)} 
@@ -79,11 +90,13 @@ export default function LandingClient() {
       )}
 
       {/* Paywall modal */}
-      <PaywallModal 
-        user={userProfile} 
-        isOpen={showPaywall} 
-        onClose={() => setShowPaywall(false)} 
-      />
+      {!loadingSession && (
+        <PaywallModal 
+          user={userProfile} 
+          isOpen={showPaywall} 
+          onClose={() => setShowPaywall(false)} 
+        />
+      )}
 
       <main className="min-h-screen overflow-hidden">
         {/* ===================== HERO SECTION ===================== */}
