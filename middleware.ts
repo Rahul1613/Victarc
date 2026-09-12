@@ -2,9 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,9 +14,7 @@ export async function middleware(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
+          supabaseResponse = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -27,54 +23,26 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Refresh session — required to keep auth working
+  // Refresh session
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Query user plan from database if user is logged in
-  let userPlan = 'demo'
-  if (user) {
-    try {
-      const { data: profile } = await supabase
-        .from('users')
-        .select('plan')
-        .eq('id', user.id)
-        .single()
-      if (profile) {
-        userPlan = profile.plan || 'demo'
-      }
-    } catch (e) {
-      console.error('Error reading plan in middleware:', e)
-    }
-  }
+  const pathname = request.nextUrl.pathname
 
-  const publicPaths = ['/login', '/register', '/terms', '/privacy', '/refund', '/api']
-  const isPublic = publicPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path) || request.nextUrl.pathname === '/'
-  )
-
-  const protectedPaths = ['/dashboard', '/profile']
-  const isProtected = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  )
-
-  // If user is logged in and visits landing page '/' or login page '/login' -> redirect to dashboard
-  if (user && (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/login')) {
+  // If user is logged in and visits '/' → redirect to /journal
+  if (user && pathname === '/') {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = '/journal'
     return NextResponse.redirect(url)
   }
 
-  // If user has paid plan -> allow full access
-  if (userPlan === 'basic' || userPlan === 'premium') {
-    return supabaseResponse
-  }
-
-  // Logged out redirects for protected paths
+  // If user is NOT logged in and visits a protected path → redirect to /
+  const protectedPaths = ['/journal', '/home', '/profile', '/stats', '/calendar']
+  const isProtected = protectedPaths.some((p) => pathname.startsWith(p))
   if (isProtected && !user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/'
     return NextResponse.redirect(url)
   }
 

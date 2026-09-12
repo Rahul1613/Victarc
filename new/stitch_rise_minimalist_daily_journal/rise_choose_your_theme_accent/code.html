@@ -1,0 +1,617 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary-container": "#006a44",
+        "background": "#0f1512",
+        "on-surface": "#dee4e0",
+        "tertiary-fixed": "#5bfeb2",
+        "error": "#ffb4ab",
+        "surface-tint": "#15e292",
+        "on-tertiary-fixed": "#002112",
+        "primary": "#c7ffda",
+        "secondary": "#9bd2b6",
+        "surface-container-lowest": "#090f0d",
+        "on-surface-variant": "#bacbbd",
+        "surface": "#0f1512",
+        "surface-container-high": "#252b29",
+        "tertiary-fixed-dim": "#33e198",
+        "surface-container": "#1b211e",
+        "on-primary-fixed-variant": "#005231",
+        "tertiary-container": "#4bf1a6",
+        "on-secondary-fixed-variant": "#19503b",
+        "primary-fixed-dim": "#15e292",
+        "secondary-fixed": "#b7efd2",
+        "on-secondary": "#003826",
+        "primary-fixed": "#51ffad",
+        "secondary-container": "#19503b",
+        "outline-variant": "#3b4a40",
+        "inverse-surface": "#dee4e0",
+        "on-primary-container": "#006a42",
+        "surface-container-low": "#171d1a",
+        "on-primary": "#003921",
+        "primary-container": "#38f2a0",
+        "surface-dim": "#0f1512",
+        "on-tertiary": "#003822",
+        "inverse-primary": "#006d43",
+        "on-primary-fixed": "#002111",
+        "error-container": "#93000a",
+        "inverse-on-surface": "#2b322f",
+        "secondary-fixed-dim": "#9bd2b6",
+        "outline": "#859588",
+        "on-error": "#690005",
+        "on-background": "#dee4e0",
+        "surface-variant": "#303633",
+        "on-secondary-container": "#8ac1a6",
+        "on-error-container": "#ffdad6",
+        "tertiary": "#c8ffdc",
+        "on-tertiary-fixed-variant": "#005233",
+        "surface-bright": "#343b38",
+        "surface-container-highest": "#303633",
+        "on-secondary-fixed": "#002114"
+      },
+      "borderRadius": {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "margin": "2rem",
+        "gutter": "1.5rem",
+        "space-sm": "0.5rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "gutter-sm": "1rem",
+        "space-md": "1rem",
+        "space-lg": "1.5rem",
+        "margin-sm": "1rem"
+      },
+      "fontFamily": {
+        "label-md": [
+          "Inter"
+        ],
+        "label-lg": [
+          "Inter"
+        ],
+        "display-lg": [
+          "Inter"
+        ],
+        "body-lg": [
+          "Inter"
+        ],
+        "body-md": [
+          "Inter"
+        ],
+        "display-lg-mobile": [
+          "Inter"
+        ],
+        "headline-lg-mobile": [
+          "Inter"
+        ],
+        "body-sm": [
+          "Inter"
+        ],
+        "label-sm": [
+          "Inter"
+        ],
+        "headline-md": [
+          "Inter"
+        ],
+        "headline-sm": [
+          "Inter"
+        ],
+        "headline-lg": [
+          "Inter"
+        ]
+      },
+      "fontSize": {
+        "label-md": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "500"
+          }
+        ],
+        "label-lg": [
+          "14px",
+          {
+            "lineHeight": "20px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "600"
+          }
+        ],
+        "display-lg": [
+          "48px",
+          {
+            "lineHeight": "56px",
+            "letterSpacing": "-0.03em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-lg": [
+          "18px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.005em",
+            "fontWeight": "400"
+          }
+        ],
+        "body-md": [
+          "16px",
+          {
+            "lineHeight": "26px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "display-lg-mobile": [
+          "36px",
+          {
+            "lineHeight": "44px",
+            "letterSpacing": "-0.025em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-lg-mobile": [
+          "26px",
+          {
+            "lineHeight": "34px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-sm": [
+          "14px",
+          {
+            "lineHeight": "22px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "label-sm": [
+          "11px",
+          {
+            "lineHeight": "14px",
+            "letterSpacing": "0.04em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-md": [
+          "24px",
+          {
+            "lineHeight": "32px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-sm": [
+          "20px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-lg": [
+          "32px",
+          {
+            "lineHeight": "40px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+}</script></head><body class="bg-surface-container-lowest font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container"><div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-surface-tint/10 rounded-full blur-[140px]"></div><div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div></div><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl"><div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div><span class="font-headline-sm text-headline-sm text-primary tracking-tight">RISE JOURNAL</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Cloud: Synced</span></div></div><div class="hidden md:flex items-center gap-space-sm flex-1 max-w-md mx-gutter px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="material-symbols-outlined text-primary text-[18px]">format_quote</span><p class="font-body-sm text-body-sm text-on-surface-variant truncate">One step each day.</p></div><div class="flex items-center gap-space-md"><nav class="hidden sm:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs"><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stats" href="#">Stats</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav><a class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.25)]" data-path="new-entry" href="#"><span class="material-symbols-outlined text-[18px]">edit_note</span>New Entry</a><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="hidden lg:block font-label-md text-label-md text-on-surface">Rahul S.</span></div></div></div></header><main class="relative z-10 w-full pt-20 pb-space-xl bg-transparent"><div class="flex flex-col w-full">
+<div class="relative w-full max-w-7xl mx-auto px-margin-sm md:px-margin flex flex-col gap-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pt-space-md">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-high text-primary">
+<span class="material-symbols-outlined text-[22px]">palette</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Setup Phase</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 2 of 3</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Color &amp; Appearance</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<div class="hidden sm:flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-full">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-2/3 h-full bg-primary-container rounded-full shadow-[0_0_8px_#38f2a0]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant pl-space-xs">66% Completed</span>
+</div>
+<button class="font-label-lg text-label-lg text-outline hover:text-primary transition-colors flex items-center gap-space-xs" id="skip-default-btn">
+<span class="">Skip to default</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col max-w-3xl">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-low w-fit mb-space-sm"><span class="material-symbols-outlined text-primary text-[16px]">palette</span><span class="font-label-sm text-label-sm text-secondary">Personalize</span></div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Choose Your App Color</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-space-xs">Pick your favorite accent color for your buttons, streaks, and highlights. You can change this anytime in settings.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<div class="lg:col-span-7 flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-space-xs">
+<span class="">Curated Arc Accents</span>
+<span class="font-label-sm text-label-sm text-primary px-space-xs py-0.5 rounded bg-surface-container-high">Dark-Mode Balanced</span>
+</h2>
+<span class="font-label-sm text-label-sm text-outline">Click to preview</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md" id="palette-grid">
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container-high transition-all flex items-center justify-between group shadow-md" data-glow="rgba(56,242,160,0.3)" data-hex="#38F2A0" data-name="Winter Aurora" style="outline: 2px solid #38F2A0; outline-offset: -2px;" type="button">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_0_16px_rgba(56,242,160,0.4)]" style="background-color: #38F2A0;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Mint Green</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#38F2A0</span></div>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-surface-container-low px-space-xs py-0.5 rounded">Default</span>
+</button>
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container transition-all flex items-center justify-between group hover:bg-surface-container-high" data-glow="rgba(56,216,242,0.3)" data-hex="#38D8F2" data-name="Arctic Frost" type="button" style="outline: medium;">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #38D8F2;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Sky Blue</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#38D8F2</span></div>
+</div>
+</button>
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container transition-all flex items-center justify-between group hover:bg-surface-container-high" data-glow="rgba(242,184,56,0.3)" data-hex="#F2B838" data-name="Dawn Sunlight" type="button" style="outline: medium;">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #F2B838;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Warm Orange</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#F2B838</span></div>
+</div>
+</button>
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container transition-all flex items-center justify-between group hover:bg-surface-container-high" data-glow="rgba(242,78,56,0.3)" data-hex="#F24E38" data-name="Relentless Fire" type="button" style="outline: medium;">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #F24E38;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Red</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#F24E38</span></div>
+</div>
+</button>
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container transition-all flex items-center justify-between group hover:bg-surface-container-high" data-glow="rgba(168,85,247,0.3)" data-hex="#A855F7" data-name="Nocturnal Veil" type="button" style="outline: medium;">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #A855F7;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Purple</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#A855F7</span></div>
+</div>
+</button>
+<button class="palette-card text-left p-space-md rounded-lg bg-surface-container transition-all flex items-center justify-between group hover:bg-surface-container-high" data-glow="rgba(226,232,240,0.3)" data-hex="#E2E8F0" data-name="Pure Discipline" type="button" style="outline: medium;">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #E2E8F0;">
+<span class="material-symbols-outlined text-[20px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+<div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Clean White</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#E2E8F0</span></div>
+</div>
+</button>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md mt-space-xs">
+<div class="flex items-center gap-space-md">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">colorize</span>
+</div>
+<div class="flex flex-col"><span class="font-label-lg text-label-lg text-on-surface">Custom Color</span><span class="font-body-sm text-body-sm text-on-surface-variant">Enter any color code you like</span></div>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<div class="relative flex items-center">
+<input class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" id="native-color-picker" type="color" value="#38F2A0">
+<div class="w-8 h-8 rounded-full shadow-sm cursor-pointer" id="custom-color-bubble" style="background-color: #38F2A0;"></div>
+</div>
+<div class="relative flex items-center bg-surface-container px-space-md py-space-xs rounded-full">
+<span class="text-outline font-mono text-body-sm mr-1">#</span>
+<input class="w-20 bg-transparent text-on-surface font-mono text-body-sm uppercase focus:outline-none" id="custom-hex-input" maxlength="6" type="text" value="38F2A0">
+<button class="ml-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors" id="apply-custom-btn" type="button">
+                  Set
+                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Canvas Dark Depth</h2>
+<span class="font-label-sm text-label-sm text-outline">OLED optimized</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md" id="depth-selector">
+<label class="depth-card relative flex items-start gap-space-md p-space-md rounded-lg bg-surface-container cursor-pointer transition-all hover:bg-surface-container-high" style="outline: 2px solid #38F2A0; outline-offset: -2px;">
+<input checked="" class="hidden depth-radio" name="depth-theme" type="radio" value="void">
+<div class="w-5 h-5 rounded-full flex items-center justify-center mt-0.5" style="background-color: #38F2A0;">
+<span class="w-2 h-2 rounded-full bg-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-label-lg text-label-lg text-on-surface">Pitch Black</span><span class="font-label-sm text-label-sm text-primary font-mono">#020805</span></div><p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">OLED - Saves battery</p></div>
+</label>
+<label class="depth-card relative flex items-start gap-space-md p-space-md rounded-lg bg-surface-container cursor-pointer transition-all hover:bg-surface-container-high" style="outline: medium;">
+<input class="hidden depth-radio" name="depth-theme" type="radio" value="charcoal">
+<div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center mt-0.5">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</div>
+<div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-label-lg text-label-lg text-on-surface">Dark Gray</span><span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#0B120F</span></div><p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Soft dark mode</p></div>
+</label>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-md pt-space-sm">
+<button class="w-full sm:w-auto px-space-xl py-space-md rounded-full font-label-lg text-label-lg font-semibold transition-all flex items-center justify-center gap-space-xs shadow-lg" id="apply-continue-btn" style="background-color: rgb(56, 242, 160); color: rgb(2, 8, 5); box-shadow: rgba(56, 242, 160, 0.3) 0px 0px 24px -4px;" type="button"><span class="">Save &amp; Continue</span><span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+<button class="w-full sm:w-auto px-space-lg py-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-lg text-label-lg transition-colors flex items-center justify-center gap-space-xs" id="reset-default-btn" type="button"><span class="material-symbols-outlined text-[18px]">restart_alt</span><span class="">Reset to Default</span></button>
+</div>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-space-md sticky top-24">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full animate-pulse" id="preview-status-dot" style="background-color: #38F2A0;"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Live Atmosphere Mockup</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-mono" id="preview-active-name" style="color: rgb(56, 242, 160);">Mint Green</span>
+</div>
+<div class="relative rounded-xl p-space-lg overflow-hidden transition-colors duration-500 shadow-2xl" id="mockup-container" style="background-color: #020805;">
+<div class="absolute -right-20 -top-20 w-56 h-56 rounded-full blur-[90px] opacity-30 pointer-events-none transition-all duration-700" id="ambient-glow-orb" style="background-color: #38F2A0;"></div>
+<div class="relative flex flex-col gap-space-lg z-10">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full" id="mockup-indicator-dot" style="background-color: #38F2A0;"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide">RISE // SANCTUARY</span>
+</div>
+<div class="px-space-sm py-0.5 rounded-full bg-surface-container-high font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="">Encrypted</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">05:42 AM • Dawn Horizon</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Good Morning, Rahul.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Keep your daily habit going.</p>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Current Momentum</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold" id="mockup-streak-val" style="color: #38F2A0;">7</span>
+<span class="font-label-md text-label-md text-on-surface">Days Active</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full mt-space-xs overflow-hidden">
+<div class="w-4/5 h-full rounded-full transition-all duration-500" id="mockup-progress-bar" style="background-color: #38F2A0;"></div>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ritual Status</span>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px]" id="mockup-status-icon" style="color: #38F2A0;">wb_twilight</span>
+<span class="font-label-md text-label-md text-on-surface">Ready to write</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Write about your day</span>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low relative overflow-hidden pl-space-lg" id="mockup-quote-card">
+<div class="absolute left-0 top-0 bottom-0 w-1 transition-colors duration-500" id="mockup-quote-accent" style="background-color: #38F2A0;"></div>
+<p class="font-body-sm text-body-sm text-on-surface italic">"Silence is not the absence of sound, but the presence of undisturbed intention."</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant block mt-1">— Daily Contemplation</span>
+</div>
+<button class="w-full py-space-md px-space-md rounded-full font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-xs transition-all duration-300 transform active:scale-95 shadow-md" id="mockup-primary-cta" style="background-color: rgb(56, 242, 160); color: rgb(2, 8, 5); box-shadow: rgba(56, 242, 160, 0.3) 0px 0px 20px;" type="button">
+<span class="">Write Today's Entry</span>
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<div class="flex items-center justify-between pt-space-xs text-outline font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+<span class="">Auto-synced</span>
+</span>
+<span class="font-mono">ChronoID: #89F-AURORA</span>
+</div>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+<div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface">Universal App Application</span><span class="font-body-sm text-body-sm text-on-surface-variant">Your selected color will apply across all your buttons, streaks, and calendar.</span></div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      let currentAccent = '#38F2A0';
+      let currentGlow = 'rgba(56,242,160,0.3)';
+      let currentName = 'Winter Aurora';
+      let currentDepth = '#020805';
+
+      const paletteButtons = document.querySelectorAll('.palette-card');
+      const nativeColorPicker = document.getElementById('native-color-picker');
+      const customHexInput = document.getElementById('custom-hex-input');
+      const customColorBubble = document.getElementById('custom-color-bubble');
+      const applyCustomBtn = document.getElementById('apply-custom-btn');
+      
+      const depthCards = document.querySelectorAll('.depth-card');
+      const depthRadios = document.querySelectorAll('.depth-radio');
+
+      const mockupContainer = document.getElementById('mockup-container');
+      const ambientGlowOrb = document.getElementById('ambient-glow-orb');
+      const previewStatusDot = document.getElementById('preview-status-dot');
+      const previewActiveName = document.getElementById('preview-active-name');
+      const mockupIndicatorDot = document.getElementById('mockup-indicator-dot');
+      const mockupStreakVal = document.getElementById('mockup-streak-val');
+      const mockupProgressBar = document.getElementById('mockup-progress-bar');
+      const mockupStatusIcon = document.getElementById('mockup-status-icon');
+      const mockupQuoteAccent = document.getElementById('mockup-quote-accent');
+      const mockupPrimaryCta = document.getElementById('mockup-primary-cta');
+      const applyContinueBtn = document.getElementById('apply-continue-btn');
+      const resetDefaultBtn = document.getElementById('reset-default-btn');
+      const skipDefaultBtn = document.getElementById('skip-default-btn');
+
+      function getContrastTextColor(hexColor) {
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16) || 0;
+        const g = parseInt(hex.substring(2, 4), 16) || 0;
+        const b = parseInt(hex.substring(4, 6), 16) || 0;
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return (yiq >= 150) ? '#020805' : '#dee4e0';
+      }
+
+      function updateTheme(hex, name, glowRgba) {
+        currentAccent = hex;
+        currentName = name;
+        currentGlow = glowRgba || `rgba(${parseInt(hex.slice(1,3),16)}, ${parseInt(hex.slice(3,5),16)}, ${parseInt(hex.slice(5,7),16)}, 0.35)`;
+
+        const contrastText = getContrastTextColor(hex);
+
+        previewStatusDot.style.backgroundColor = hex;
+        previewActiveName.innerText = `${name} (${hex.toUpperCase()})`;
+        previewActiveName.style.color = hex;
+        ambientGlowOrb.style.backgroundColor = hex;
+        mockupIndicatorDot.style.backgroundColor = hex;
+        mockupStreakVal.style.color = hex;
+        mockupProgressBar.style.backgroundColor = hex;
+        mockupStatusIcon.style.color = hex;
+        mockupQuoteAccent.style.backgroundColor = hex;
+        
+        mockupPrimaryCta.style.backgroundColor = hex;
+        mockupPrimaryCta.style.color = contrastText;
+        mockupPrimaryCta.style.boxShadow = `0 0 20px ${currentGlow}`;
+
+        applyContinueBtn.style.backgroundColor = hex;
+        applyContinueBtn.style.color = contrastText;
+        applyContinueBtn.style.boxShadow = `0 0 24px -4px ${currentGlow}`;
+
+        customColorBubble.style.backgroundColor = hex;
+        customHexInput.value = hex.replace('#', '').toUpperCase();
+        nativeColorPicker.value = hex;
+
+        paletteButtons.forEach(btn => {
+          const btnHex = btn.getAttribute('data-hex');
+          const checkIcon = btn.querySelector('.check-icon');
+          if (btnHex.toLowerCase() === hex.toLowerCase()) {
+            btn.style.outline = `2px solid ${hex}`;
+            btn.style.outlineOffset = '-2px';
+            btn.classList.add('bg-surface-container-high');
+            btn.classList.remove('bg-surface-container');
+            if (checkIcon) checkIcon.classList.remove('hidden');
+          } else {
+            btn.style.outline = 'none';
+            btn.classList.remove('bg-surface-container-high');
+            btn.classList.add('bg-surface-container');
+            if (checkIcon) checkIcon.classList.add('hidden');
+          }
+        });
+
+        depthCards.forEach(dc => {
+          const radio = dc.querySelector('input');
+          if (radio.checked) {
+            dc.style.outline = `2px solid ${hex}`;
+            dc.style.outlineOffset = '-2px';
+            const bullet = dc.querySelector('div > span');
+            bullet.parentElement.style.backgroundColor = hex;
+          } else {
+            dc.style.outline = 'none';
+            const bullet = dc.querySelector('div > span');
+            bullet.parentElement.style.backgroundColor = '';
+          }
+        });
+      }
+
+      function updateDepth(depthType) {
+        if (depthType === 'void') {
+          currentDepth = '#020805';
+        } else {
+          currentDepth = '#0B120F';
+        }
+        mockupContainer.style.backgroundColor = currentDepth;
+      }
+
+      paletteButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const hex = btn.getAttribute('data-hex');
+          const name = btn.getAttribute('data-name');
+          const glow = btn.getAttribute('data-glow');
+          updateTheme(hex, name, glow);
+        });
+      });
+
+      nativeColorPicker.addEventListener('input', (e) => {
+        const val = e.target.value;
+        updateTheme(val, 'Custom Hue');
+      });
+
+      applyCustomBtn.addEventListener('click', () => {
+        let val = customHexInput.value.trim();
+        if (!val.startsWith('#')) val = '#' + val;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          updateTheme(val, 'Custom Hue');
+        }
+      });
+
+      customHexInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          applyCustomBtn.click();
+        }
+      });
+
+      depthRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          depthCards.forEach(dc => {
+            dc.style.outline = 'none';
+            const dotContainer = dc.querySelector('div');
+            dotContainer.classList.remove('bg-primary-container');
+            dotContainer.classList.add('bg-surface-container-high');
+            dotContainer.style.backgroundColor = '';
+          });
+
+          const parentCard = e.target.closest('.depth-card');
+          parentCard.style.outline = `2px solid ${currentAccent}`;
+          parentCard.style.outlineOffset = '-2px';
+          const activeDotContainer = parentCard.querySelector('div');
+          activeDotContainer.style.backgroundColor = currentAccent;
+
+          updateDepth(e.target.value);
+        });
+      });
+
+      function resetToDefault() {
+        updateTheme('#38F2A0', 'Winter Aurora', 'rgba(56,242,160,0.3)');
+        const voidRadio = document.querySelector('input[value="void"]');
+        if (voidRadio) {
+          voidRadio.checked = true;
+          voidRadio.dispatchEvent(new Event('change'));
+        }
+      }
+
+      resetDefaultBtn.addEventListener('click', resetToDefault);
+      skipDefaultBtn.addEventListener('click', resetToDefault);
+
+      applyContinueBtn.addEventListener('click', () => {
+        applyContinueBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+          <span>Configuring Sanctuary...</span>
+        `;
+        setTimeout(() => {
+          applyContinueBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px]">done</span>
+            <span>Atmosphere Locked</span>
+          `;
+          setTimeout(() => {
+            window.location.hash = '#journal';
+          }, 600);
+        }, 800);
+      });
+
+      updateTheme('#38F2A0', 'Winter Aurora', 'rgba(56,242,160,0.3)');
+    })();
+  </script>
+</div></main><footer class="relative z-10 w-full bg-surface-container-lowest py-space-xl"><div class="max-w-7xl mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-md text-label-md text-on-surface-variant">RISE JOURNAL — A Journal For A Better You</span></div><div class="font-label-sm text-label-sm text-outline">Encrypted end-to-end with nocturnal calm • Synced in Realtime</div></div></footer>
+
+</body></html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary-container": "#006a44",
+        "background": "#0f1512",
+        "on-surface": "#dee4e0",
+        "tertiary-fixed": "#5bfeb2",
+        "error": "#ffb4ab",
+        "surface-tint": "#15e292",
+        "on-tertiary-fixed": "#002112",
+        "primary": "#c7ffda",
+        "secondary": "#9bd2b6",
+        "surface-container-lowest": "#090f0d",
+        "on-surface-variant": "#bacbbd",
+        "surface": "#0f1512",
+        "surface-container-high": "#252b29",
+        "tertiary-fixed-dim": "#33e198",
+        "surface-container": "#1b211e",
+        "on-primary-fixed-variant": "#005231",
+        "tertiary-container": "#4bf1a6",
+        "on-secondary-fixed-variant": "#19503b",
+        "primary-fixed-dim": "#15e292",
+        "secondary-fixed": "#b7efd2",
+        "on-secondary": "#003826",
+        "primary-fixed": "#51ffad",
+        "secondary-container": "#19503b",
+        "outline-variant": "#3b4a40",
+        "inverse-surface": "#dee4e0",
+        "on-primary-container": "#006a42",
+        "surface-container-low": "#171d1a",
+        "on-primary": "#003921",
+        "primary-container": "#38f2a0",
+        "surface-dim": "#0f1512",
+        "on-tertiary": "#003822",
+        "inverse-primary": "#006d43",
+        "on-primary-fixed": "#002111",
+        "error-container": "#93000a",
+        "inverse-on-surface": "#2b322f",
+        "secondary-fixed-dim": "#9bd2b6",
+        "outline": "#859588",
+        "on-error": "#690005",
+        "on-background": "#dee4e0",
+        "surface-variant": "#303633",
+        "on-secondary-container": "#8ac1a6",
+        "on-error-container": "#ffdad6",
+        "tertiary": "#c8ffdc",
+        "on-tertiary-fixed-variant": "#005233",
+        "surface-bright": "#343b38",
+        "surface-container-highest": "#303633",
+        "on-secondary-fixed": "#002114"
+      },
+      "borderRadius": {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "margin": "2rem",
+        "gutter": "1.5rem",
+        "space-sm": "0.5rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "gutter-sm": "1rem",
+        "space-md": "1rem",
+        "space-lg": "1.5rem",
+        "margin-sm": "1rem"
+      },
+      "fontFamily": {
+        "label-md": [
+          "Inter"
+        ],
+        "label-lg": [
+          "Inter"
+        ],
+        "display-lg": [
+          "Inter"
+        ],
+        "body-lg": [
+          "Inter"
+        ],
+        "body-md": [
+          "Inter"
+        ],
+        "display-lg-mobile": [
+          "Inter"
+        ],
+        "headline-lg-mobile": [
+          "Inter"
+        ],
+        "body-sm": [
+          "Inter"
+        ],
+        "label-sm": [
+          "Inter"
+        ],
+        "headline-md": [
+          "Inter"
+        ],
+        "headline-sm": [
+          "Inter"
+        ],
+        "headline-lg": [
+          "Inter"
+        ]
+      },
+      "fontSize": {
+        "label-md": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "500"
+          }
+        ],
+        "label-lg": [
+          "14px",
+          {
+            "lineHeight": "20px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "600"
+          }
+        ],
+        "display-lg": [
+          "48px",
+          {
+            "lineHeight": "56px",
+            "letterSpacing": "-0.03em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-lg": [
+          "18px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.005em",
+            "fontWeight": "400"
+          }
+        ],
+        "body-md": [
+          "16px",
+          {
+            "lineHeight": "26px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "display-lg-mobile": [
+          "36px",
+          {
+            "lineHeight": "44px",
+            "letterSpacing": "-0.025em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-lg-mobile": [
+          "26px",
+          {
+            "lineHeight": "34px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-sm": [
+          "14px",
+          {
+            "lineHeight": "22px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "label-sm": [
+          "11px",
+          {
+            "lineHeight": "14px",
+            "letterSpacing": "0.04em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-md": [
+          "24px",
+          {
+            "lineHeight": "32px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-sm": [
+          "20px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-lg": [
+          "32px",
+          {
+            "lineHeight": "40px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+}</script></head><body class="bg-surface-container-lowest font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container"><div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-surface-tint/10 rounded-full blur-[140px]"></div><div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div></div><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/20"><div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div><span class="font-headline-sm text-headline-sm text-primary tracking-tight">RISE JOURNAL</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Cloud: Synced</span></div></div><div class="hidden md:flex items-center gap-space-sm flex-1 max-w-md mx-gutter px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="material-symbols-outlined text-primary text-[18px]">format_quote</span><p class="font-body-sm text-body-sm text-on-surface-variant truncate">Small steps every day lead to big progress.</p></div><div class="flex items-center gap-space-md"><nav class="hidden sm:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs"><a aria-current="page" class="transition-colors bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stats" href="#">Stats</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav><button class="challenge-modal-trigger inline-flex items-center gap-1.5 px-space-md py-space-xs rounded-full bg-surface-container-high text-primary font-label-lg text-label-lg border border-primary-container/40 hover:border-primary-container hover:bg-surface-bright transition-all shadow-[0_0_15px_rgba(56,242,160,0.18)] cursor-pointer active:scale-95" title="Start a Winter Arc Duel"><span class="text-[16px]">⚔️</span><span class="hidden sm:inline font-semibold">Challenge a Friend</span><span class="sm:hidden font-semibold">Duel</span><span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span></button><a class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.25)]" data-path="new-entry" href="#"><span class="material-symbols-outlined text-[18px]">edit_note</span>New Entry</a><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="hidden lg:block font-label-md text-label-md text-on-surface">Rahul S.</span></div></div></div></header><main class="relative z-10 w-full pt-20 pb-space-xl bg-transparent"><div class="flex flex-col w-full max-w-5xl mx-auto px-margin-sm sm:px-margin space-y-space-xl pb-16">
+<!-- Immersive Hero Greeting & Atmosphere -->
+<section class="relative rounded-lg overflow-hidden bg-surface-container-low p-space-lg sm:p-space-xl"><div class="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none" data-alt="Nocturnal alpine mountain silhouette under misty emerald green moonlight, dark forest pine trees, atmospheric glowing neon mint fog, cinematic deep blacks and serene ambient lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxwvKanUUiiGFa8UIpQc2X7fiSCrVQjm2uGgfgIInGtFrNKva1hy4waueN_9e0Gzt0P1v610k18smJLbCS5V2JQowAblh1pSel1M7y6Px54L9aKX-EKRWetz5XoRSWBlGl_0xoqoJCKC6JoH1lCT4OMqRIs8buzAljG0BDKQu9hkyzj0w_sOmtiZHnseCH_yq2dK3FKHIufeOKqkA3fkZOiKEX-jmx_OxfYXRTFUsqAFf70ZDyGZsWXA')"></div><div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-surface-container-low/80 to-transparent z-0"></div><div class="absolute top-0 right-1/4 w-80 h-80 bg-primary-container/10 rounded-full blur-[100px] pointer-events-none"></div><div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-space-lg"><div class="space-y-space-xs"><div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm tracking-wider uppercase border border-outline-variant/40"><span class="w-1.5 h-1.5 rounded-full bg-primary-container shadow-[0_0_8px_#38f2a0]"></span><span class="">❄️ Winter Arc • Day 42 of 90</span></div><div class="pt-space-xs"><p class="font-label-lg text-label-lg text-on-surface-variant">Good Morning,</p><h1 class="font-display-lg text-display-lg text-on-surface tracking-tight flex items-center gap-space-sm">Rahul <span class="text-primary-container animate-pulse text-headline-lg font-headline-lg">❄️</span></h1></div><p class="font-body-md text-body-md text-on-surface-variant">Stay consistent. Build daily habits that last.</p></div><div class="flex flex-col sm:items-end gap-space-xs bg-surface-container-lowest/60 backdrop-blur-md p-space-md rounded"><div class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Thursday, 11 Sep 2026</div><p class="font-label-sm text-label-sm text-secondary">Day 42 of 90 Days</p><div class="flex items-center gap-space-sm mt-1"><button class="challenge-modal-trigger inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:text-primary transition-colors cursor-pointer group"><span class="">⚔️ Challenge a Friend</span><span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span></button></div></div></div></section>
+<!-- Week Ribbon Strip -->
+<section class="flex flex-col space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">September 2026 • Week 37</span>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-primary-container">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="">Daily Target Met</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-space-xs sm:gap-space-sm" id="week-strip">
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">MON</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">7</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/40 mt-space-xs"></span>
+</button>
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">TUE</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">8</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/50 mt-space-xs"></span>
+</button>
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">WED</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">9</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/70 mt-space-xs"></span>
+</button>
+<!-- Active Day: THU 11 -->
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-primary-container text-on-primary-container shadow-[0_0_24px_rgba(56,242,160,0.35)] transform scale-[1.03] transition-all">
+<span class="font-label-sm text-label-sm font-semibold tracking-wider">THU</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">11</span>
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container mt-space-xs"></span>
+</button>
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">FRI</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">12</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-space-xs"></span>
+</button>
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">SAT</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">13</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-space-xs"></span>
+</button>
+<button class="flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface">SUN</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">14</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-space-xs"></span>
+</button>
+</div>
+</section>
+<!-- High-Impact Hero Call to Action -->
+<section class="flex flex-col items-stretch"><div class="relative rounded-lg overflow-hidden bg-gradient-to-r from-primary-container/20 via-surface-container-low to-surface-container-high border border-primary-container/30 p-space-lg sm:p-space-xl shadow-[0_0_30px_rgba(56,242,160,0.1)]"><div class="absolute -right-8 -bottom-8 w-40 h-40 bg-primary-container/20 rounded-full blur-2xl pointer-events-none"></div><div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg"><div class="space-y-space-xs max-w-2xl"><div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-primary-container/20 text-primary-container font-label-sm text-label-sm uppercase tracking-wider font-semibold"><span class="material-symbols-outlined text-[14px]">edit_note</span><span class="">DAILY JOURNAL</span></div><h2 class="font-headline-md text-headline-md sm:font-headline-lg sm:text-headline-lg text-on-surface font-bold tracking-tight">Write Today's Journal Entry</h2><p class="font-body-md text-body-md text-on-surface-variant">Write about your day, your thoughts, or what you worked on. Completely free form.</p></div><a class="flex-shrink-0 inline-flex items-center gap-space-sm px-space-lg py-space-md rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-[0_0_24px_rgba(56,242,160,0.4)] hover:bg-primary-fixed hover:shadow-[0_0_36px_rgba(56,242,160,0.6)] active:scale-95 transition-all group" href="#" id="open-journal-cta"><span class="">Open Today's Journal ✏️</span></a></div></div></section>
+<!-- Winter Arc Active Peer Duels Widget -->
+<section class="rounded-lg bg-surface-container-low p-space-lg sm:p-space-xl border border-primary-container/30 space-y-space-md relative overflow-hidden shadow-[0_0_25px_rgba(56,242,160,0.08)]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm border-b border-outline-variant/20"><div><div class="flex items-center gap-space-xs"><span class="text-[22px]">⚔️</span><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">FRIEND CHALLENGES</h2><span class="px-2 py-0.5 rounded-full bg-primary-container/20 text-primary-container text-[11px] font-semibold uppercase tracking-wider">Active Challenge</span></div><p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Compete head-to-head with friends to stay on track</p></div><div class="flex items-center gap-space-sm"><button class="challenge-modal-trigger inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md font-bold hover:bg-primary-fixed transition-all shadow-[0_0_15px_rgba(56,242,160,0.3)] active:scale-95 cursor-pointer"><span class="">⚔️ Challenge a Friend</span><span class="material-symbols-outlined text-[16px]">person_add</span></button></div></div>
+<!-- Active Duel Match Card -->
+<div class="bg-surface-container rounded p-space-md sm:p-space-lg border border-outline-variant/30 space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-[18px]">⚔️</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold" id="duel-card-title">100 Daily Push-ups</h3>
+<span class="font-label-sm text-label-sm px-space-sm py-0.5 rounded-full bg-primary-container/20 text-primary-container font-semibold">Day 12 of 30</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Opponent: <span class="text-primary font-semibold">@alex90</span> (Active 15m ago)</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-surface-container-high text-tertiary-fixed font-label-sm text-label-sm border border-tertiary-fixed/30 flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-primary-container">local_fire_department</span><span class="">You are leading by 15 push-ups</span></span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-xs">
+<!-- Rahul (User) Side -->
+<div class="p-space-md rounded bg-surface-container-lowest/80 border border-primary-container/30 space-y-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-[12px] font-bold">R</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Rahul (You)</span>
+<span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-1.5 py-0.2 rounded">Leader</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary-container font-bold" id="user-duel-score">75 / 100</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-300 shadow-[0_0_10px_#38f2a0]" id="user-duel-bar" style="width: 75%"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quick Log:</span>
+<div class="flex items-center gap-1.5">
+<button class="px-2 py-0.5 rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-label-sm text-primary transition-colors cursor-pointer duel-log-btn" data-inc="25">+25</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-label-sm text-primary transition-colors cursor-pointer duel-log-btn" data-inc="50">+50</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-label-sm text-primary transition-colors cursor-pointer duel-log-btn" data-inc="100">+100</button>
+</div>
+</div>
+</div>
+<!-- Opponent Side -->
+<div class="p-space-md rounded bg-surface-container-lowest/60 border border-outline-variant/30 space-y-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center text-[12px] font-bold">A</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Alex M. (@alex90)</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-secondary font-bold" id="opp-duel-score">60 completed today</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full transition-all duration-300" id="opp-duel-bar" style="width: 60%"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline">Streak: 12 Days</span>
+<span class="font-label-sm text-label-sm text-secondary">60 completed today</span>
+</div>
+</div>
+</div>
+<!-- Duel Invite Link Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low p-space-sm rounded border border-outline-variant/20">
+<div class="flex items-center gap-space-xs text-body-sm text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary-container flex-shrink-0">link</span>
+<span class="truncate font-mono text-[12px] text-on-surface-variant">risejournal.com/arc/challenge/rahul-pushups-90d</span>
+</div>
+<button class="copy-invite-link-btn flex-shrink-0 inline-flex items-center gap-1.5 px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-all border border-outline-variant/40 cursor-pointer active:scale-95" data-link="https://risejournal.com/arc/challenge/rahul-pushups-90d"><span class="material-symbols-outlined text-[14px]">content_copy</span><span class="">Copy Link</span></button>
+</div>
+</div>
+</section>
+<section class="rounded-lg bg-surface-container-low p-space-lg sm:p-space-xl border border-outline-variant/30 space-y-space-md relative overflow-hidden" id="winter-arc-section"><div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm border-b border-outline-variant/20"><div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary-container text-[22px]">task_alt</span><h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">DAILY HABITS</h2></div><p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Your 10 daily goals for consistency</p></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm bg-surface-container px-space-md py-space-xs rounded-full border border-outline-variant/30"><div class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></div><span class="font-label-md text-label-md font-semibold text-primary" id="compliance-counter">7 / 10 Completed</span></div><button class="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:text-primary bg-surface-container-high hover:bg-surface-bright px-space-md py-space-xs rounded-full transition-all cursor-pointer" id="toggle-add-task"><span class="material-symbols-outlined text-[16px]">add</span><span class="">Add New Task</span></button></div></div><div class="space-y-1.5"><div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant"><span class="font-semibold text-primary-container">Today's Progress</span><span class="font-semibold text-primary" id="compliance-pct">7 of 10 done (70%)</span></div><div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden"><div class="bg-primary-container h-full rounded-full transition-all duration-500 shadow-[0_0_12px_#38f2a0]" id="compliance-bar" style="width: 70%"></div></div></div><div class="hidden p-space-md bg-surface-container rounded border border-primary-container/30 transition-all" id="add-task-container"><form class="flex flex-col sm:flex-row items-stretch gap-space-sm" id="add-task-form"><input class="flex-1 bg-surface-container-lowest border border-outline-variant/50 rounded-full px-space-md py-space-xs text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-primary-container" id="new-task-input" placeholder="e.g., Cold plunge 3 min or Practice Spanish 20 min..." required="" type="text"><select class="bg-surface-container-lowest border border-outline-variant/50 rounded-full px-space-md py-space-xs text-label-sm font-label-sm text-on-surface focus:outline-none focus:border-primary-container" id="new-task-category"><option value="Discipline">Discipline</option><option value="Fitness">Fitness</option><option value="Mental Focus">Mental Focus</option><option value="Recovery">Recovery</option><option value="Knowledge">Knowledge</option></select><button class="px-space-lg py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md font-bold hover:bg-primary-fixed transition-colors flex items-center justify-center gap-1" type="submit"><span class="material-symbols-outlined text-[16px]">check</span><span class="">Save Protocol</span></button></form></div><div class="grid grid-cols-1 md:grid-cols-2 gap-space-xs sm:gap-space-sm pt-space-xs" id="protocol-tasks-list"><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Daily exercise (45–60 mins)</span></div><span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Fitness</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Eat clean healthy food (no junk)</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Food</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">No alcohol or sugary drinks</span></div><span class="font-label-sm text-label-sm text-tertiary bg-tertiary/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Health</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Drink 3.5 to 4 liters of water</span></div><span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Water</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Wake up early (5:00 AM – 6:00 AM)</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Sleep</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Sleep 7 to 8 hours</span></div><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-space-sm py-0.5 rounded-full flex-shrink-0">Rest</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="true"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Limit social media and phone screen time</span></div><span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Focus</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="false"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline bg-transparent flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold hidden">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">Read 10 to 15 pages of a book</span></div><span class="font-label-sm text-label-sm text-secondary bg-secondary/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Reading</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="false"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline bg-transparent flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold hidden">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">2 to 4 hours of focused deep work</span></div><span class="font-label-sm text-label-sm text-tertiary bg-tertiary/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Work</span></div><div class="task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20" data-completed="false"><div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline bg-transparent flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold hidden">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">Write in journal</span></div><span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-space-sm py-0.5 rounded-full flex-shrink-0">Journal</span></div></div></section>
+<!-- Interactive Quote Card with Midnight Mountain Background -->
+<section class="relative rounded-lg overflow-hidden bg-surface-container p-space-lg sm:p-space-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg shadow-md">
+<div class="absolute inset-0 opacity-25 pointer-events-none mix-blend-luminosity" data-alt="Moody dark green mountain ridges silhouette against distant night stars, deep emerald shadows and soft pine gradients, peaceful Zen contemplative setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAO-UavzKf0yxkrKtfA93tq_xmE670S5L6jdfr9q_a8sd6IIQqle296yQAn51uLuTRPHTRa4id74H9_6ByJDj8uEyv2ExynHjikQroxVMKOZeGHB4ZFco6qd-5JogEGIpMSVKdabMTFAKRcZLTALMCSpGqCUf4A33I3m8Y3U41zmry7jQWxxjHWKVscfR_eLx4vkKsnX5auKPtV-sDtbBIDf8MT_WLM2DRVInGWc_u4h6SVzEjnq2eB8Q')"></div>
+<div class="absolute -left-10 -bottom-10 w-48 h-48 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl space-y-space-xs">
+<div class="flex items-center gap-space-xs text-primary-container">
+<span class="material-symbols-outlined text-[28px]">format_quote</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">Morning Contemplation</span>
+</div>
+<blockquote class="font-headline-sm text-headline-sm sm:font-headline-md sm:text-headline-md text-on-surface italic font-light tracking-tight transition-opacity duration-300" id="quote-text">
+        “A small step today, leads to big results tomorrow.”
+      </blockquote>
+<p class="font-label-md text-label-md text-secondary tracking-wide" id="quote-author">
+        — Unknown
+      </p>
+</div>
+<div class="relative z-10 flex-shrink-0 self-end md:self-center">
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-all active:scale-95 group cursor-pointer" id="refresh-quote-btn">
+<span class="material-symbols-outlined text-[18px] text-primary-container group-hover:rotate-180 transition-transform duration-500">autorenew</span>
+<span class="">New Quote</span>
+</button>
+</div>
+</section>
+<!-- Minimalist Stats Grid (4 Cards) -->
+<section class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<h2 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider font-semibold">Your Consistency</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Updated real-time</span>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-space-sm sm:gap-space-md"><div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors relative overflow-hidden group"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">Current Streak</span><span class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary-container"><span class="material-symbols-outlined text-[18px]">local_fire_department</span></span></div><div class="mt-space-md"><div class="flex items-baseline gap-1"><span class="font-display-lg text-display-lg text-primary-container font-semibold tracking-tight">7</span><span class="font-headline-sm text-headline-sm text-on-surface">Days</span></div><p class="font-label-sm text-label-sm text-secondary mt-2">Active today</p></div></div><div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors relative overflow-hidden group"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">Total Entries</span><span class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-secondary"><span class="material-symbols-outlined text-[18px]">bar_chart</span></span></div><div class="mt-space-md"><div class="flex items-baseline gap-1"><span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">28</span><span class="font-label-md text-label-md text-on-surface-variant">entries</span></div><p class="font-label-sm text-label-sm text-secondary mt-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">trending_up</span> +4 this week</p></div></div><div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors relative overflow-hidden group"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">This Month</span><span class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[18px]">menu_book</span></span></div><div class="mt-space-md"><div class="flex items-baseline gap-1"><span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">15</span><span class="font-label-md text-label-md text-on-surface-variant">/ 30 Days</span></div><p class="font-label-sm text-label-sm text-outline mt-2">September progress</p></div></div><div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors relative overflow-hidden group"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">Best Streak</span><span class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-tertiary-fixed"><span class="material-symbols-outlined text-[18px]">star</span></span></div><div class="mt-space-md"><div class="flex items-baseline gap-1"><span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">21</span><span class="font-headline-sm text-headline-sm text-on-surface">Days</span></div><p class="font-label-sm text-label-sm text-outline mt-2">Personal best</p></div></div></div>
+</section>
+<!-- Recent Entries Section -->
+<section class="space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Recent Journal Entries</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Your latest notes and morning reflections</p>
+</div>
+<a class="inline-flex items-center gap-1 font-label-lg text-label-lg text-primary-container hover:text-primary transition-colors group" href="#">
+<span class="">View All</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="flex flex-col space-y-space-sm">
+<!-- Row 1: Thursday 11 -->
+<div class="rounded-lg bg-surface-container-low hover:bg-surface-container transition-all duration-200 p-space-md sm:p-space-lg flex items-center justify-between gap-space-md group cursor-pointer">
+<div class="flex items-center gap-space-md min-w-0">
+<!-- Date capsule -->
+<div class="flex flex-col items-center justify-center w-14 h-16 rounded bg-surface-container-high flex-shrink-0 text-center">
+<span class="font-label-sm text-label-sm text-primary-container font-semibold uppercase">THU</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">11</span>
+<span class="font-label-sm text-label-sm text-outline">Sep</span>
+</div>
+<!-- Text preview -->
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary-container transition-colors">A Fresh Start</h3>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-secondary">06:24 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+              Today I felt more focused and motivated. I got some work done and learned something new about mindful breathing during morning dawn walks.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-md flex-shrink-0">
+<div class="hidden sm:block w-24 h-16 rounded overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Cinematic dawn sunrise over jagged pine tree mountain ridges with misty teal atmosphere, peaceful solitude" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADej28y03Aga8GOAEwhXDkIGH_oK3CgAQDwQzPSCmgWtydv2B-oEc6F391p8L9XRn768z-yF1FoHLiyz9uKbyqJayT-nBN6ycxJ55Tvlp8C-cC5azVECrQ6kVP_PYrS8jGjLFD_0f9xRE-4hZHOnVUYg4HDiKTNqBgPEs5RQZApKOJ_4w0TThjtA25eZLLYG3oUMndnDHkDfQECITp1eTo7ehWb1zIws5qtkYClo87EudNTezZBHRQPQ">
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Row 2: Wednesday 10 -->
+<div class="rounded-lg bg-surface-container-low hover:bg-surface-container transition-all duration-200 p-space-md sm:p-space-lg flex items-center justify-between gap-space-md group cursor-pointer">
+<div class="flex items-center gap-space-md min-w-0">
+<!-- Date capsule -->
+<div class="flex flex-col items-center justify-center w-14 h-16 rounded bg-surface-container-high flex-shrink-0 text-center">
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase">WED</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">10</span>
+<span class="font-label-sm text-label-sm text-outline">Sep</span>
+</div>
+<!-- Text preview -->
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary-container transition-colors">Productive Day</h3>
+<span class="font-label-sm text-label-sm text-outline">07:15 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+              Completed my tasks early, went for a long quiet walk and felt deep gratitude for the people around me and the peaceful solitude of home.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-md flex-shrink-0">
+<div class="hidden sm:block w-24 h-16 rounded overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Dense evergreen pine trees silhouette during deep emerald twilight dusk with warm low horizon light, tranquil forest vista" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqLHtnVB8TcQMe4B0KjN51aVLhNX-838yQROh3gnYErzGq8SNpFtCmL4OwGt-LM6b9kkGsl1c4inBPeLHqQKg4FoTgmEfl-pisbblMB1sH8_r1-xv-9XYWb5ajT8IW7qsf4t56b-rnaXQeFcsAMLBJYSROC_eX8CSG1dtDyHO1XXbnXLwgx8i1zvCqzuB-lK3ih2Fhfk9wuB2ZXxspqDtwOFHjrw-k6iIm5WhdnuVFSpn01ps9y8_SaQ">
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Row 3: Tuesday 09 -->
+<div class="rounded-lg bg-surface-container-low hover:bg-surface-container transition-all duration-200 p-space-md sm:p-space-lg flex items-center justify-between gap-space-md group cursor-pointer">
+<div class="flex items-center gap-space-md min-w-0">
+<!-- Date capsule -->
+<div class="flex flex-col items-center justify-center w-14 h-16 rounded bg-surface-container-high flex-shrink-0 text-center">
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase">TUE</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">09</span>
+<span class="font-label-sm text-label-sm text-outline">Sep</span>
+</div>
+<!-- Text preview -->
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary-container transition-colors">Self Improvement</h3>
+<span class="font-label-sm text-label-sm text-outline">08:00 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+              Read Marcus Aurelius Meditations over black coffee. Feeling grounded and clear about my long-term quarterly goals.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-md flex-shrink-0">
+<div class="hidden sm:block w-24 h-16 rounded overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Top-down warm aesthetic of open book and steaming coffee ceramic cup on dark wood table with gentle directional lamp lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATuwZ0N27CdypYlUsHb93dS3PUL_1OLej4KWteHIWhfJNaFYhWJpMBlsl5kEGB_XKzn1oVHo8g3H39AskDb9YxV1BWt-AX9EdVHWpf6gqgk1ec_t0tgqGHYGTGlevHJO0jUSRHmNlFEX08kGOirzLWpEW7SbFC1CkAbcj8P3lghkE02lQIsdfknndtVujIuObrDrKcV_IFYY1CbVG5ES_r7dViaaBd9QOaSCvgimxhTosSBa1Kv0lWig">
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Supabase Cloud Sync & Mental Health Anchor Pill -->
+<section class="flex flex-col sm:flex-row items-center justify-between p-space-md rounded bg-surface-container-lowest text-on-surface-variant gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#38f2a0]"></div>
+<span class="font-label-md text-label-md text-on-surface">Supabase: Connected • Realtime Sync Active</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock</span>
+<span class="">Zero-Knowledge AES-256 Journal Encryption</span>
+</div>
+</section>
+</div>
+<!-- Winter Arc Duel & Challenge Modal -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-surface-container-lowest/80 backdrop-blur-md transition-opacity duration-300" id="challenge-modal">
+<div class="relative w-full max-w-2xl bg-surface-container-low rounded-lg border border-primary-container/40 p-space-lg sm:p-space-xl shadow-[0_0_50px_rgba(56,242,160,0.18)] max-h-[90vh] overflow-y-auto space-y-space-lg transform scale-95 transition-transform duration-300" id="challenge-modal-box">
+<!-- Modal Header -->
+<div class="flex items-start justify-between border-b border-outline-variant/30 pb-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="text-headline-md">⚔️</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">WINTER ARC PEER DUEL</h2>
+<span class="font-label-sm text-label-sm bg-primary-container/20 text-primary-container px-2 py-0.5 rounded-full font-semibold">Live Mode</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Lock in with brothers and sisters in discipline. Mutual accountability for 14, 30, or 90 days.</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface flex items-center justify-center transition-colors cursor-pointer" id="close-modal-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Quick Challenge Selection -->
+<div class="space-y-space-xs">
+<label class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">1. Select Arc Gauntlet</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="challenge-type-pills">
+<button class="challenge-type-btn p-2.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold text-center border border-primary-container transition-all" data-goal="100 Pushups" data-title="100 Daily Pushup Gauntlet">
+💪 100 Pushups
+</button>
+<button class="challenge-type-btn p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center border border-outline-variant/30 transition-all" data-goal="5:00 AM Wake" data-title="5:00 AM Dawn Wakeup Duel">
+⏰ 5:00 AM Wake
+</button>
+<button class="challenge-type-btn p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center border border-outline-variant/30 transition-all" data-goal="5 KM Run" data-title="5KM Daily Winter Arc Run">
+🏃‍♂️ 5KM Run
+</button>
+<button class="challenge-type-btn p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center border border-outline-variant/30 transition-all" data-goal="Zero Sugar" data-title="Zero Sugar 14-Day Lock-in">
+🥗 Zero Sugar
+</button>
+</div>
+</div>
+<!-- Search Cadet / Friend -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">2. Search Cadet or Friend</label>
+<span class="font-label-sm text-label-sm text-outline" id="cadet-count-badge">4 friends ready</span>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-full pl-10 pr-4 py-2 text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-primary-container" id="friend-search-input" placeholder="Search by name or handle (e.g. @marcus_nordic, @elena_zen)..." type="text">
+</div>
+<!-- Cadets List -->
+<div class="space-y-1.5 max-h-48 overflow-y-auto pr-1 pt-1" id="friends-list-container">
+<!-- Friend 1 -->
+<div class="friend-item flex items-center justify-between p-space-xs sm:p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors border border-outline-variant/20" data-name="Marcus Vance" data-username="@marcus_nordic">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-primary-container flex items-center justify-center font-semibold text-sm">MV</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Marcus Vance</p>
+<span class="font-label-sm text-label-sm text-outline">@marcus_nordic</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">🔥 41-day streak</span>
+</div>
+</div>
+<button class="send-challenge-btn px-space-md py-1 rounded-full bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-primary-container font-label-sm text-label-sm font-semibold transition-all border border-primary-container/30 cursor-pointer">
+Challenge ⚔️
+</button>
+</div>
+<!-- Friend 2 -->
+<div class="friend-item flex items-center justify-between p-space-xs sm:p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors border border-outline-variant/20" data-name="Alex Mercer" data-username="@alex90">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-semibold text-sm">AM</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Alex Mercer</p>
+<span class="font-label-sm text-label-sm text-outline">@alex90</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container flex items-center gap-1">⚡ In Duel Now</span>
+</div>
+</div>
+<button class="send-challenge-btn px-space-md py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold transition-all cursor-pointer">
+Active Duel ⚔️
+</button>
+</div>
+<!-- Friend 3 -->
+<div class="friend-item flex items-center justify-between p-space-xs sm:p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors border border-outline-variant/20" data-name="Elena Rostova" data-username="@elena_zen">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-tertiary-fixed flex items-center justify-center font-semibold text-sm">ER</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Elena Rostova</p>
+<span class="font-label-sm text-label-sm text-outline">@elena_zen</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Active today • 5:15 AM Wake</span>
+</div>
+</div>
+<button class="send-challenge-btn px-space-md py-1 rounded-full bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-primary-container font-label-sm text-label-sm font-semibold transition-all border border-primary-container/30 cursor-pointer">
+Challenge ⚔️
+</button>
+</div>
+<!-- Friend 4 -->
+<div class="friend-item flex items-center justify-between p-space-xs sm:p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors border border-outline-variant/20" data-name="David Chen" data-username="@david_runs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-semibold text-sm">DC</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">David Chen</p>
+<span class="font-label-sm text-label-sm text-outline">@david_runs</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">❄️ Day 38 Arc Cadet</span>
+</div>
+</div>
+<button class="send-challenge-btn px-space-md py-1 rounded-full bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-primary-container font-label-sm text-label-sm font-semibold transition-all border border-primary-container/30 cursor-pointer">
+Challenge ⚔️
+</button>
+</div>
+</div>
+</div>
+<!-- Shareable Challenge Link Box -->
+<div class="space-y-space-xs pt-1">
+<label class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">3. Or Share Direct Challenge URL</label>
+<div class="flex flex-col sm:flex-row items-center gap-2">
+<div class="w-full bg-surface-container-lowest border border-outline-variant/40 rounded px-3 py-2 text-mono font-mono text-xs text-on-surface truncate" id="modal-link-box">
+https://risejournal.com/arc/challenge/rahul-pushups-90d
+</div>
+<button class="w-full sm:w-auto flex-shrink-0 copy-invite-link-btn inline-flex items-center justify-center gap-1.5 px-space-lg py-2 rounded bg-primary-container hover:bg-primary-fixed text-on-primary-container font-label-md text-label-md font-bold transition-all shadow-[0_0_15px_rgba(56,242,160,0.3)] cursor-pointer" data-link="https://risejournal.com/arc/challenge/rahul-pushups-90d">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span class="">Copy Invite Link</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-2 px-space-md py-space-sm rounded-full bg-surface-container-high text-primary-container border border-primary-container/50 shadow-[0_0_20px_rgba(56,242,160,0.35)]" id="challenge-toast">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-md text-label-md font-bold" id="challenge-toast-text">Invite Link Copied to Clipboard!</span>
+</div>
+<script>
+  // Interactive Daily Quotes cycler
+  const quotes = [
+    { text: "A small step today, leads to big results tomorrow.", author: "Unknown" },
+    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+    { text: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+    { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Ryan Holiday" },
+    { text: "We do not rise to the level of our expectations, we fall to the level of our training.", author: "Archilochus" }
+  ];
+
+  let currentQuoteIndex = 0;
+  const quoteText = document.getElementById('quote-text');
+  const quoteAuthor = document.getElementById('quote-author');
+  const refreshBtn = document.getElementById('refresh-quote-btn');
+
+  if (refreshBtn && quoteText && quoteAuthor) {
+    refreshBtn.addEventListener('click', () => {
+      quoteText.style.opacity = '0';
+      quoteAuthor.style.opacity = '0';
+      
+      setTimeout(() => {
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+        quoteText.innerHTML = '&ldquo;' + quotes[currentQuoteIndex].text + '&rdquo;';
+        quoteAuthor.innerHTML = '&mdash; ' + quotes[currentQuoteIndex].author;
+        quoteText.style.opacity = '1';
+        quoteAuthor.style.opacity = '1';
+      }, 200);
+    });
+  }
+
+  // Interactive day selection in Week Ribbon
+  const weekStrip = document.getElementById('week-strip');
+  if (weekStrip) {
+    const dayButtons = weekStrip.querySelectorAll('button');
+    dayButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dayButtons.forEach(b => {
+          b.className = "flex flex-col items-center py-space-md px-space-xs rounded bg-surface-container-low hover:bg-surface-container-high transition-colors group";
+          const label = b.querySelector('span:first-child');
+          if (label) label.className = "font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface";
+          const num = b.querySelector('span:nth-child(2)');
+          if (num) num.className = "font-headline-sm text-headline-sm text-on-surface mt-1";
+          const dot = b.querySelector('span:last-child');
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-outline-variant mt-space-xs";
+        });
+
+        btn.className = "flex flex-col items-center py-space-md px-space-xs rounded bg-primary-container text-on-primary-container shadow-[0_0_24px_rgba(56,242,160,0.35)] transform scale-[1.03] transition-all";
+        const activeLabel = btn.querySelector('span:first-child');
+        if (activeLabel) activeLabel.className = "font-label-sm text-label-sm font-semibold tracking-wider";
+        const activeNum = btn.querySelector('span:nth-child(2)');
+        if (activeNum) activeNum.className = "font-headline-md text-headline-md font-bold mt-0.5";
+        const activeDot = btn.querySelector('span:last-child');
+        if (activeDot) activeDot.className = "w-1.5 h-1.5 rounded-full bg-on-primary-container mt-space-xs";
+      });
+    });
+  }
+</script><script id="winter-arc-interactive-script">
+(function(){
+  function updateCompliance() {
+    const tasks = document.querySelectorAll('#protocol-tasks-list .task-card');
+    const completed = document.querySelectorAll('#protocol-tasks-list .task-card[data-completed="true"]');
+    const total = tasks.length;
+    const count = completed.length;
+    const counter = document.getElementById('compliance-counter');
+    const pct = document.getElementById('compliance-pct');
+    const bar = document.getElementById('compliance-bar');
+    
+    if (counter) counter.textContent = count + ' / ' + total + ' Completed';
+    const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+    if (pct) pct.textContent = percentage + '%';
+    if (bar) bar.style.width = percentage + '%';
+  }
+
+  function attachTaskListeners(card) {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('form')) return;
+      const isDone = card.getAttribute('data-completed') === 'true';
+      const nextState = !isDone;
+      card.setAttribute('data-completed', nextState ? 'true' : 'false');
+      
+      const btn = card.querySelector('.task-checkbox');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const title = card.querySelector('.task-title');
+      
+      if (nextState) {
+        btn.className = 'task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90';
+        icon.classList.remove('hidden');
+        title.classList.add('line-through', 'opacity-70');
+      } else {
+        btn.className = 'task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline bg-transparent flex-shrink-0 transition-transform active:scale-90';
+        icon.classList.add('hidden');
+        title.classList.remove('line-through', 'opacity-70');
+      }
+      updateCompliance();
+    });
+  }
+
+  document.querySelectorAll('#protocol-tasks-list .task-card').forEach(attachTaskListeners);
+
+  const toggleBtn = document.getElementById('toggle-add-task');
+  const addFormContainer = document.getElementById('add-task-container');
+  if (toggleBtn && addFormContainer) {
+    toggleBtn.addEventListener('click', function() {
+      addFormContainer.classList.toggle('hidden');
+      const input = document.getElementById('new-task-input');
+      if (!addFormContainer.classList.contains('hidden') && input) {
+        input.focus();
+      }
+    });
+  }
+
+  const addForm = document.getElementById('add-task-form');
+  if (addForm) {
+    addForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-task-input');
+      const category = document.getElementById('new-task-category');
+      if (!input || !input.value.trim()) return;
+      
+      const titleText = input.value.trim();
+      const catText = category ? category.value : 'Custom';
+      
+      const newCard = document.createElement('div');
+      newCard.className = 'task-card flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group border border-outline-variant/20';
+      newCard.setAttribute('data-completed', 'false');
+      newCard.innerHTML = '<div class="flex items-center gap-space-sm min-w-0"><button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline bg-transparent flex-shrink-0 transition-transform active:scale-90"><span class="material-symbols-outlined text-[14px] font-bold hidden">check</span></button><span class="task-title font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">' + titleText + '</span></div><span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-space-sm py-0.5 rounded-full flex-shrink-0">' + catText + '</span>';
+      
+      attachTaskListeners(newCard);
+      document.getElementById('protocol-tasks-list').appendChild(newCard);
+      input.value = '';
+      addFormContainer.classList.add('hidden');
+      updateCompliance();
+    });
+  }
+
+  // --- WINTER ARC DUELS & CHALLENGE MODAL LOGIC ---
+  const modal = document.getElementById('challenge-modal');
+  const modalBox = document.getElementById('challenge-modal-box');
+  const openTriggers = document.querySelectorAll('.challenge-modal-trigger');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const toast = document.getElementById('challenge-toast');
+  const toastText = document.getElementById('challenge-toast-text');
+
+  function showToast(msg) {
+    if (!toast) return;
+    if (toastText) toastText.textContent = msg;
+    toast.classList.remove('translate-y-24', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-24', 'opacity-0');
+    }, 2800);
+  }
+
+  function openModal() {
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+      modalBox.classList.remove('scale-95');
+      modalBox.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modalBox.classList.remove('scale-100');
+    modalBox.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }, 150);
+  }
+
+  openTriggers.forEach(btn => btn.addEventListener('click', openModal));
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Friend search filter
+  const searchInput = document.getElementById('friend-search-input');
+  const friendsContainer = document.getElementById('friends-list-container');
+  const countBadge = document.getElementById('cadet-count-badge');
+
+  if (searchInput && friendsContainer) {
+    searchInput.addEventListener('input', function(e) {
+      const q = e.target.value.toLowerCase().trim();
+      const items = friendsContainer.querySelectorAll('.friend-item');
+      let visibleCount = 0;
+      items.forEach(item => {
+        const name = item.getAttribute('data-name').toLowerCase();
+        const username = item.getAttribute('data-username').toLowerCase();
+        if (name.includes(q) || username.includes(q)) {
+          item.style.display = 'flex';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      if (countBadge) countBadge.textContent = visibleCount + ' friends ready';
+    });
+  }
+
+  // Quick challenge type selector
+  const typeBtns = document.querySelectorAll('.challenge-type-btn');
+  const duelCardTitle = document.getElementById('duel-card-title');
+  const modalLinkBox = document.getElementById('modal-link-box');
+
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      typeBtns.forEach(b => {
+        b.className = 'challenge-type-btn p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm text-center border border-outline-variant/30 transition-all';
+      });
+      btn.className = 'challenge-type-btn p-2.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold text-center border border-primary-container transition-all';
+      
+      const title = btn.getAttribute('data-title');
+      if (duelCardTitle && title) duelCardTitle.textContent = title;
+      const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').substring(0, 20);
+      const newUrl = 'https://risejournal.com/arc/challenge/rahul-' + slug;
+      if (modalLinkBox) modalLinkBox.textContent = newUrl;
+      
+      document.querySelectorAll('.copy-invite-link-btn').forEach(cb => {
+        cb.setAttribute('data-link', newUrl);
+      });
+    });
+  });
+
+  // Copy link buttons
+  const copyBtns = document.querySelectorAll('.copy-invite-link-btn');
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const link = btn.getAttribute('data-link') || 'https://risejournal.com/arc/challenge/rahul-pushups-90d';
+      navigator.clipboard.writeText(link).catch(() => {});
+      
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[15px]">done</span><span>Copied! ✓</span>';
+      showToast('Invite link copied: ' + link);
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+      }, 2200);
+    });
+  });
+
+  // Send challenge action inside friend list
+  const challengeCadetBtns = document.querySelectorAll('.send-challenge-btn');
+  challengeCadetBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const parent = btn.closest('.friend-item');
+      const handle = parent ? parent.getAttribute('data-username') : 'friend';
+      btn.textContent = 'Challenged! ⚔️';
+      btn.className = 'send-challenge-btn px-space-md py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold transition-all';
+      showToast('⚔️ Challenge invitation dispatched to ' + handle);
+    });
+  });
+
+  // Duel progress quick logging buttons
+  let userScore = 75;
+  const userScoreEl = document.getElementById('user-duel-score');
+  const userBarEl = document.getElementById('user-duel-bar');
+  const duelLogBtns = document.querySelectorAll('.duel-log-btn');
+
+  duelLogBtns.forEach(b => {
+    b.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const inc = parseInt(b.getAttribute('data-inc') || '25', 10);
+      userScore = Math.min(100, userScore + inc);
+      if (userScoreEl) userScoreEl.textContent = userScore + ' / 100';
+      if (userBarEl) userBarEl.style.width = userScore + '%';
+      showToast('Logged +' + inc + ' reps! You lead with ' + userScore + ' pushups.');
+    });
+  });
+})();
+</script></main><footer class="relative z-10 w-full bg-surface-container-lowest py-space-xl"><div class="max-w-7xl mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-md text-label-md text-on-surface-variant">RISE JOURNAL — A Journal For A Better You</span></div><div class="font-label-sm text-label-sm text-outline">Encrypted end-to-end with nocturnal calm • Synced in Realtime</div></div></footer>
+
+</body></html>

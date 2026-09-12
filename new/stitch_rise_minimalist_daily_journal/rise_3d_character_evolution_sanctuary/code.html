@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary-container": "#006a44",
+        "background": "#0f1512",
+        "on-surface": "#dee4e0",
+        "tertiary-fixed": "#5bfeb2",
+        "error": "#ffb4ab",
+        "surface-tint": "#15e292",
+        "on-tertiary-fixed": "#002112",
+        "primary": "#c7ffda",
+        "secondary": "#9bd2b6",
+        "surface-container-lowest": "#090f0d",
+        "on-surface-variant": "#bacbbd",
+        "surface": "#0f1512",
+        "surface-container-high": "#252b29",
+        "tertiary-fixed-dim": "#33e198",
+        "surface-container": "#1b211e",
+        "on-primary-fixed-variant": "#005231",
+        "tertiary-container": "#4bf1a6",
+        "on-secondary-fixed-variant": "#19503b",
+        "primary-fixed-dim": "#15e292",
+        "secondary-fixed": "#b7efd2",
+        "on-secondary": "#003826",
+        "primary-fixed": "#51ffad",
+        "secondary-container": "#19503b",
+        "outline-variant": "#3b4a40",
+        "inverse-surface": "#dee4e0",
+        "on-primary-container": "#006a42",
+        "surface-container-low": "#171d1a",
+        "on-primary": "#003921",
+        "primary-container": "#38f2a0",
+        "surface-dim": "#0f1512",
+        "on-tertiary": "#003822",
+        "inverse-primary": "#006d43",
+        "on-primary-fixed": "#002111",
+        "error-container": "#93000a",
+        "inverse-on-surface": "#2b322f",
+        "secondary-fixed-dim": "#9bd2b6",
+        "outline": "#859588",
+        "on-error": "#690005",
+        "on-background": "#dee4e0",
+        "surface-variant": "#303633",
+        "on-secondary-container": "#8ac1a6",
+        "on-error-container": "#ffdad6",
+        "tertiary": "#c8ffdc",
+        "on-tertiary-fixed-variant": "#005233",
+        "surface-bright": "#343b38",
+        "surface-container-highest": "#303633",
+        "on-secondary-fixed": "#002114"
+      },
+      "borderRadius": {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "margin": "2rem",
+        "gutter": "1.5rem",
+        "space-sm": "0.5rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "gutter-sm": "1rem",
+        "space-md": "1rem",
+        "space-lg": "1.5rem",
+        "margin-sm": "1rem"
+      },
+      "fontFamily": {
+        "label-md": [
+          "Inter"
+        ],
+        "label-lg": [
+          "Inter"
+        ],
+        "display-lg": [
+          "Inter"
+        ],
+        "body-lg": [
+          "Inter"
+        ],
+        "body-md": [
+          "Inter"
+        ],
+        "display-lg-mobile": [
+          "Inter"
+        ],
+        "headline-lg-mobile": [
+          "Inter"
+        ],
+        "body-sm": [
+          "Inter"
+        ],
+        "label-sm": [
+          "Inter"
+        ],
+        "headline-md": [
+          "Inter"
+        ],
+        "headline-sm": [
+          "Inter"
+        ],
+        "headline-lg": [
+          "Inter"
+        ]
+      },
+      "fontSize": {
+        "label-md": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "500"
+          }
+        ],
+        "label-lg": [
+          "14px",
+          {
+            "lineHeight": "20px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "600"
+          }
+        ],
+        "display-lg": [
+          "48px",
+          {
+            "lineHeight": "56px",
+            "letterSpacing": "-0.03em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-lg": [
+          "18px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.005em",
+            "fontWeight": "400"
+          }
+        ],
+        "body-md": [
+          "16px",
+          {
+            "lineHeight": "26px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "display-lg-mobile": [
+          "36px",
+          {
+            "lineHeight": "44px",
+            "letterSpacing": "-0.025em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-lg-mobile": [
+          "26px",
+          {
+            "lineHeight": "34px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-sm": [
+          "14px",
+          {
+            "lineHeight": "22px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "label-sm": [
+          "11px",
+          {
+            "lineHeight": "14px",
+            "letterSpacing": "0.04em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-md": [
+          "24px",
+          {
+            "lineHeight": "32px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-sm": [
+          "20px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-lg": [
+          "32px",
+          {
+            "lineHeight": "40px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+}</script></head><body class="bg-surface-container-lowest font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container"><div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-surface-tint/10 rounded-full blur-[140px]"></div><div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div></div><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl"><div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div><span class="font-headline-sm text-headline-sm text-primary tracking-tight">RISE JOURNAL</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Cloud: Synced</span></div></div><div class="hidden md:flex items-center gap-space-sm flex-1 max-w-md mx-gutter px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="material-symbols-outlined text-primary text-[18px]">format_quote</span><p class="font-body-sm text-body-sm text-on-surface-variant truncate">Dawn brings clarity to what was quiet chaos.</p></div><div class="flex items-center gap-space-md"><nav class="hidden sm:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs"><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stats" href="#">Stats</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav><a class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.25)]" data-path="new-entry" href="#"><span class="material-symbols-outlined text-[18px]">edit_note</span>New Entry</a><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="hidden lg:block font-label-md text-label-md text-on-surface">Rahul S.</span></div></div></div></header><main class="relative z-10 w-full pt-20 pb-space-xl bg-transparent"><div class="flex flex-col w-full">
+<div class="max-w-7xl mx-auto w-full px-margin space-y-space-xl">
+<!-- Top Introduction & Arc Stage Context -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_10px_#38f2a0]"></span>
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-wider">Character Evolution • Your Winter Arc Avatar</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Watch Yourself Transform</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your 3D character evolves physically as you log daily journals, maintain habits, and win challenges. Every day of discipline sculpts your avatar.</p>
+</div>
+<!-- Day Counter & Streak Card -->
+<div class="flex items-center gap-space-md px-space-lg py-space-sm rounded-full bg-surface-container-low shadow-sm">
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Active Arc</span>
+<span class="font-headline-sm text-headline-sm text-primary">Day 42 of 90</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_0_14px_rgba(56,242,160,0.3)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+</div>
+<!-- Main Dual Column Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left / Center Feature: 3D Interactive Avatar Stage Showcase (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Showcase Stage Container -->
+<div class="relative w-full rounded-2xl bg-surface-container-low p-space-lg overflow-hidden flex flex-col shadow-xl">
+<!-- Atmospheric neon glow disc behind 3D model -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-surface-tint/10 blur-[100px] pointer-events-none"></div>
+<!-- Top Stage Badges -->
+<div class="relative z-10 flex items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary-container">3d_rotation</span>
+<span class="font-label-md text-label-md">360° Interactive Avatar</span>
+<span class="text-outline">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Drag to Rotate</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary">Synced to Day 42 / 90</span>
+</div>
+</div>
+<!-- 3D Scene Viewport -->
+<div class="relative w-full min-h-[420px] rounded-xl overflow-hidden flex items-center justify-center bg-surface-container-lowest/60">
+<!-- STITCH_THREEJS_START:ANIMATION_24 class="w-full h-[420px] rounded-2xl bg-transparent block relative" -->
+<div class="w-full h-[420px] rounded-2xl bg-transparent block relative" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_24" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_24');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Interactive 3D Low-Poly Character Avatar with Body Morphing (Fat to Fit/Athletic) & Arc Glow
+const containerEl = typeof container !== 'undefined' ? container : document.body;
+const width = containerEl.clientWidth || 400;
+const height = containerEl.clientHeight || 450;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+camera.position.set(0, 1.4, 3.8);
+camera.lookAt(0, 1.1, 0);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.shadowMap.enabled = true;
+containerEl.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+scene.add(ambientLight);
+
+const dirLight = new THREE.DirectionalLight(0x38f2a0, 1.8);
+dirLight.position.set(3, 4, 3);
+scene.add(dirLight);
+
+const rimLight = new THREE.DirectionalLight(0x38d8f2, 1.2);
+rimLight.position.set(-3, 2, -2);
+scene.add(rimLight);
+
+const groundGlowLight = new THREE.PointLight(0x38f2a0, 1.5, 5);
+groundGlowLight.position.set(0, 0.1, 0);
+scene.add(groundGlowLight);
+
+// Pedestal / Circular platform
+const platformGeo = new THREE.CylinderGeometry(1.2, 1.3, 0.12, 32);
+const platformMat = new THREE.MeshStandardMaterial({ 
+    color: 0x141f1a, 
+    roughness: 0.3, 
+    metalness: 0.6 
+});
+const platform = new THREE.Mesh(platformGeo, platformMat);
+platform.position.y = 0.06;
+scene.add(platform);
+
+// Neon ring on platform
+const ringGeo = new THREE.TorusGeometry(1.22, 0.025, 16, 64);
+ringGeo.rotateX(Math.PI / 2);
+const ringMat = new THREE.MeshBasicMaterial({ color: 0x38f2a0 });
+const ring = new THREE.Mesh(ringGeo, ringMat);
+ring.position.y = 0.12;
+scene.add(ring);
+
+// Character Root Group
+const charGroup = new THREE.Group();
+scene.add(charGroup);
+
+// Materials
+const skinMat = new THREE.MeshPhongMaterial({ color: 0xdb9b7b, flatShading: true });
+const suitMat = new THREE.MeshStandardMaterial({ color: 0x18241e, roughness: 0.4, metalness: 0.3, flatShading: true });
+const accentMat = new THREE.MeshBasicMaterial({ color: 0x38f2a0 });
+const hairMat = new THREE.MeshLambertMaterial({ color: 0x1a1a1a, flatShading: true });
+const shoeMat = new THREE.MeshLambertMaterial({ color: 0x090f0d, flatShading: true });
+
+// HEAD & FACE
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 1.85, 0);
+
+const headGeo = new THREE.BoxGeometry(0.38, 0.42, 0.38);
+const headMesh = new THREE.Mesh(headGeo, skinMat);
+headGroup.add(headMesh);
+
+const hairGeo = new THREE.BoxGeometry(0.42, 0.18, 0.42);
+const hairMesh = new THREE.Mesh(hairGeo, hairMat);
+hairMesh.position.set(0, 0.18, -0.02);
+headGroup.add(hairMesh);
+
+// Glowing visor / arc headband
+const bandGeo = new THREE.BoxGeometry(0.41, 0.06, 0.4);
+const bandMesh = new THREE.Mesh(bandGeo, accentMat);
+bandMesh.position.set(0, 0.08, 0.01);
+headGroup.add(bandMesh);
+
+charGroup.add(headGroup);
+
+// TORSO (with scalable morph targets for Fat -> Athletic -> Shredded)
+const torsoGeo = new THREE.CylinderGeometry(0.28, 0.24, 0.7, 8);
+const torsoMesh = new THREE.Mesh(torsoGeo, suitMat);
+torsoMesh.position.set(0, 1.25, 0);
+charGroup.add(torsoMesh);
+
+// Chest / Arc Core Light
+const chestCoreGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.04, 16);
+chestCoreGeo.rotateX(Math.PI / 2);
+const chestCoreMesh = new THREE.Mesh(chestCoreGeo, accentMat);
+chestCoreMesh.position.set(0, 1.35, 0.22);
+charGroup.add(chestCoreMesh);
+
+// BELLY (morphable sphere/cylinder that represents fat/heavy vs lean/six-pack)
+const bellyGeo = new THREE.SphereGeometry(0.32, 12, 10);
+const bellyMesh = new THREE.Mesh(bellyGeo, suitMat);
+bellyMesh.position.set(0, 1.15, 0.08);
+charGroup.add(bellyMesh);
+
+// LEGS
+const legGeo = new THREE.CylinderGeometry(0.12, 0.1, 0.65, 8);
+
+const leftLeg = new THREE.Mesh(legGeo, suitMat);
+leftLeg.position.set(-0.2, 0.58, 0);
+charGroup.add(leftLeg);
+
+const rightLeg = new THREE.Mesh(legGeo, suitMat);
+rightLeg.position.set(0.2, 0.58, 0);
+charGroup.add(rightLeg);
+
+// FEET / SHOES
+const shoeGeo = new THREE.BoxGeometry(0.16, 0.14, 0.28);
+
+const leftShoe = new THREE.Mesh(shoeGeo, shoeMat);
+leftShoe.position.set(-0.2, 0.14, 0.06);
+charGroup.add(leftShoe);
+
+const rightShoe = new THREE.Mesh(shoeGeo, shoeMat);
+rightShoe.position.set(0.2, 0.14, 0.06);
+charGroup.add(rightShoe);
+
+// ARMS
+const armGeo = new THREE.CylinderGeometry(0.1, 0.08, 0.6, 8);
+
+const leftArm = new THREE.Mesh(armGeo, suitMat);
+leftArm.position.set(-0.42, 1.25, 0);
+leftArm.rotation.z = 0.15;
+charGroup.add(leftArm);
+
+const rightArm = new THREE.Mesh(armGeo, suitMat);
+rightArm.position.set(0.42, 1.25, 0);
+rightArm.rotation.z = -0.15;
+charGroup.add(rightArm);
+
+// Evolution Stage Morph Parameters
+// stage 1: Fat/Soft (belly big, arms/legs thick, posture slouched)
+// stage 2: Steady/Slimming (belly reduced, posture upright)
+// stage 3: Athletic/Fit (wide shoulders, trim waist, defined chest)
+// stage 4: Winter Arc Peak / Titanium Beast (broad, neon cyber lines, aura)
+let currentEvolutionStage = 1; // Default starting character
+
+window.setAvatarStage = function(stage) {
+    currentEvolutionStage = stage;
+};
+
+// Evolution transition smoothing state
+let targetBellyScaleX = 1.45;
+let targetBellyScaleZ = 1.4;
+let targetTorsoScaleX = 1.25;
+let targetTorsoScaleY = 0.95;
+let targetShoulderWidth = 1.0;
+let targetCoreGlow = 0x38f2a0;
+
+function updateMorphTargets() {
+    if (currentEvolutionStage === 1) {
+        // Stage 1: Fat / Starting Point
+        targetBellyScaleX = 1.55;
+        targetBellyScaleZ = 1.5;
+        targetTorsoScaleX = 1.35;
+        targetTorsoScaleY = 0.92;
+        targetShoulderWidth = 0.9;
+        headGroup.position.y = 1.78;
+        chestCoreMesh.position.z = 0.28;
+    } else if (currentEvolutionStage === 2) {
+        // Stage 2: 15-30 Days Consistent (Leaner)
+        targetBellyScaleX = 1.15;
+        targetBellyScaleZ = 1.1;
+        targetTorsoScaleX = 1.1;
+        targetTorsoScaleY = 1.0;
+        targetShoulderWidth = 1.05;
+        headGroup.position.y = 1.84;
+        chestCoreMesh.position.z = 0.23;
+    } else if (currentEvolutionStage === 3) {
+        // Stage 3: 45-60 Days (Athletic & Strong)
+        targetBellyScaleX = 0.85;
+        targetBellyScaleZ = 0.85;
+        targetTorsoScaleX = 1.2;
+        targetTorsoScaleY = 1.08;
+        targetShoulderWidth = 1.22;
+        headGroup.position.y = 1.88;
+        chestCoreMesh.position.z = 0.21;
+    } else {
+        // Stage 4: Day 90 Winter Arc Master (Peak Muscular / Cyber Arc)
+        targetBellyScaleX = 0.72;
+        targetBellyScaleZ = 0.75;
+        targetTorsoScaleX = 1.4;
+        targetTorsoScaleY = 1.12;
+        targetShoulderWidth = 1.35;
+        headGroup.position.y = 1.9;
+        chestCoreMesh.position.z = 0.22;
+    }
+}
+
+// Interactive Rotation Dragging
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+
+containerEl.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener('mouseup', () => { isDragging = false; });
+
+window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - previousMousePosition.x;
+    charGroup.rotation.y += deltaX * 0.015;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+// Touch controls for mobile
+containerEl.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+});
+window.addEventListener('touchend', () => { isDragging = false; });
+window.addEventListener('touchmove', (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const deltaX = e.touches[0].clientX - previousMousePosition.x;
+    charGroup.rotation.y += deltaX * 0.015;
+    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+});
+
+// Animation Loop
+let clock = new THREE.Clock();
+function animate() {
+    requestAnimationFrame(animate);
+    const time = clock.getElapsedTime();
+
+    updateMorphTargets();
+
+    // Smooth Lerp of body shapes
+    bellyMesh.scale.x += (targetBellyScaleX - bellyMesh.scale.x) * 0.08;
+    bellyMesh.scale.z += (targetBellyScaleZ - bellyMesh.scale.z) * 0.08;
+    torsoMesh.scale.x += (targetTorsoScaleX - torsoMesh.scale.x) * 0.08;
+    torsoMesh.scale.y += (targetTorsoScaleY - torsoMesh.scale.y) * 0.08;
+
+    leftArm.position.x = -0.32 - (targetShoulderWidth * 0.12);
+    rightArm.position.x = 0.32 + (targetShoulderWidth * 0.12);
+
+    // Idle breathing & gentle floating/rotation
+    if (!isDragging) {
+        charGroup.rotation.y += 0.006;
+    }
+    charGroup.position.y = Math.sin(time * 2) * 0.03;
+    ring.rotation.z = time * 0.5;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    const w = containerEl.clientWidth || 400;
+    const h = containerEl.clientHeight || 450;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_24 -->
+<!-- Floating Stage Pill over Canvas -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 px-space-lg py-space-xs rounded-full bg-surface-container-high/90 backdrop-blur-md shadow-md text-center pointer-events-none">
+<p class="font-label-lg text-label-lg text-primary tracking-wide" id="current-physique-label">
+                Current Physique: Level 2 — Lean &amp; Building (Day 42)
+              </p>
+</div>
+</div>
+<!-- Interactive Morph Controls / Time Horizon Timeline -->
+<div class="relative z-10 mt-space-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Preview Physical Morph Journey</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Click stage to simulate avatar transformation</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs pt-space-xs">
+<!-- Stage 1 Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all text-center group" id="btn-stage-1" onclick="window.setAvatarStage(1)">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Phase 01</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5">🌱 Day 1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Starting Soft</span>
+</button>
+<!-- Stage 2 Button (Active default) -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-primary-container text-on-primary-container shadow-[0_0_18px_rgba(56,242,160,0.3)] transition-all text-center" id="btn-stage-2" onclick="window.setAvatarStage(2)">
+<span class="font-label-sm text-label-sm text-on-primary-container/80 font-medium">Phase 02 (Current)</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5">⚡ Day 30</span>
+<span class="font-label-sm text-label-sm text-on-primary-container/90">Getting Lean</span>
+</button>
+<!-- Stage 3 Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all text-center group" id="btn-stage-3" onclick="window.setAvatarStage(3)">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Phase 03</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5">🔥 Day 60</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Athletic &amp; Fit</span>
+</button>
+<!-- Stage 4 Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all text-center group" id="btn-stage-4" onclick="window.setAvatarStage(4)">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Final Goal</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5">👑 Day 90</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Peak Winter Arc</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Lore & Transformation Philosophy -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Auto-Sync Dynamic Body Physics</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every completed workout and meal log recalculates fat mesh parameters and muscle volume.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[22px]">verified</span>
+</div>
+</div>
+<!-- Right Column: Stats, Archetype, & Unlocks (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Card 1: Evolution Progress Tracker -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Evolution Progress</h2>
+</div>
+<span class="font-label-md text-label-md text-primary font-semibold">Stage 2 → Stage 3</span>
+</div>
+<!-- Circular Metric & Bar Breakdown -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Overall Progress</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">68%</span>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary-container rounded-full shadow-[0_0_12px_#38f2a0]" style="width: 68%;"></div>
+</div>
+<p class="font-label-sm text-label-sm text-outline">18 days of consistency remaining until Athletic &amp; Fit morph</p>
+</div>
+<!-- Clear Requirements List -->
+<div class="space-y-space-sm pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">What Evolves Your Character?</span>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">10 Daily Habits Completed</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tones muscle tissue &amp; trims midsection fat</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">Daily Dawn Journal Log</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Unlocks glowing aura, sharp eye focus &amp; posture</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">Push-up Duels Won</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expands chest breadth &amp; shoulder width</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Starting Character Archetype -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">person_outline</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Base Archetype</h2>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container-high hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors" onclick="window.cycleArchetype()">
+              Change Base
+            </button>
+</div>
+<div class="flex items-center gap-space-md p-space-md rounded-xl bg-surface-container">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
+<span class="material-symbols-outlined text-[24px]" id="archetype-icon">hiking</span>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold truncate" id="archetype-title">The Comeback</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="archetype-desc">Starting soft &amp; rebuilds into an elite, disciplined athlete over 90 days.</p>
+</div>
+</div>
+</div>
+<!-- Card 3: Recent & Upcoming Body Unlocks -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low flex flex-col gap-space-md shadow-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">stars</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Physical Morph Milestones</h2>
+</div>
+<div class="space-y-space-xs">
+<!-- Unlocked 1 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 40: Waistline Morph</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">-15% body fat avatar compression</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">Active</span>
+</div>
+<!-- Unlocked 2 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 35: Arc Core Halo</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Luminescent green chest aura enabled</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">Active</span>
+</div>
+<!-- Locked Next -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container opacity-60">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 60: Broad V-Taper Frame</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Wider shoulders, pronounced lats</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">18d left</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Quick Action Bar -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low flex flex-col md:flex-row items-center justify-between gap-space-md shadow-md">
+<div class="flex items-center gap-space-md text-left w-full md:w-auto">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Keep Sculpting Today</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3 habits remaining before tonight's 11:59 PM avatar sync.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm w-full md:w-auto justify-end">
+<a class="px-space-lg py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-space-xs" href="#">
+<span class="material-symbols-outlined text-[18px]">sports_kabaddi</span>
+          Duel a Friend
+        </a>
+<a class="px-space-lg py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-space-xs" href="#">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+          Open Journal
+        </a>
+<a class="px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.3)] flex items-center gap-space-xs" href="#">
+<span>Go to Today's Habits (7/10 done)</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Archetypes rotation
+  const archetypes = [
+    { title: "The Comeback", desc: "Starting soft & rebuilds into an elite, disciplined athlete over 90 days.", icon: "hiking" },
+    { title: "The Dawn Runner", desc: "Agile, endurance-focused frame with speed-glow boots and lightweight build.", icon: "directions_run" },
+    { title: "The Iron Monk", desc: "Heavy strength-focused physique built for push-ups, calisthenics & cold discipline.", icon: "self_improvement" }
+  ];
+  let currentArchetypeIndex = 0;
+
+  window.cycleArchetype = function() {
+    currentArchetypeIndex = (currentArchetypeIndex + 1) % archetypes.length;
+    const arch = archetypes[currentArchetypeIndex];
+    document.getElementById('archetype-title').innerText = arch.title;
+    document.getElementById('archetype-desc').innerText = arch.desc;
+    document.getElementById('archetype-icon').innerText = arch.icon;
+  };
+
+  // Avatar Stage Morph Switcher
+  const stages = [
+    { num: 1, label: "Current Physique: Level 1 — Starting Heavy & Soft (Day 1)", desc: "Starting Soft" },
+    { num: 2, label: "Current Physique: Level 2 — Lean & Building (Day 42)", desc: "Getting Lean" },
+    { num: 3, label: "Current Physique: Level 3 — Athletic & Fit (Day 60)", desc: "Athletic & Fit" },
+    { num: 4, label: "Current Physique: Level 4 — Peak Winter Arc (Day 90)", desc: "Peak Winter Arc" }
+  ];
+
+  window.setAvatarStage = function(stageNum) {
+    const stageInfo = stages.find(s => s.num === stageNum);
+    if (!stageInfo) return;
+
+    // Update banner label
+    const labelEl = document.getElementById('current-physique-label');
+    if (labelEl) {
+      labelEl.innerText = stageInfo.label;
+    }
+
+    // Update button states
+    for (let i = 1; i <= 4; i++) {
+      const btn = document.getElementById('btn-stage-' + i);
+      if (!btn) continue;
+      
+      if (i === stageNum) {
+        btn.className = "stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-primary-container text-on-primary-container shadow-[0_0_18px_rgba(56,242,160,0.3)] transition-all text-center";
+        const sub = btn.querySelector('span:first-child');
+        if (sub) {
+          sub.className = "font-label-sm text-label-sm text-on-primary-container/80 font-medium";
+          sub.innerText = "Active Preview";
+        }
+      } else {
+        btn.className = "stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all text-center group";
+        const sub = btn.querySelector('span:first-child');
+        if (sub) {
+          sub.className = "font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors";
+          sub.innerText = "Phase 0" + i;
+        }
+      }
+    }
+
+    // Inform 3D scene if window listener is attached
+    if (window.dispatchEvent) {
+      window.dispatchEvent(new CustomEvent('avatar:morph', { detail: { stage: stageNum } }));
+    }
+  };
+</script></main><footer class="relative z-10 w-full bg-surface-container-lowest py-space-xl"><div class="max-w-7xl mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-md text-label-md text-on-surface-variant">RISE JOURNAL — A Journal For A Better You</span></div><div class="font-label-sm text-label-sm text-outline">Encrypted end-to-end with nocturnal calm • Synced in Realtime</div></div></footer></body></html>

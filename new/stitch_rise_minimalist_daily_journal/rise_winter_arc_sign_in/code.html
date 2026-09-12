@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary-container": "#006a44",
+        "background": "#0f1512",
+        "on-surface": "#dee4e0",
+        "tertiary-fixed": "#5bfeb2",
+        "error": "#ffb4ab",
+        "surface-tint": "#15e292",
+        "on-tertiary-fixed": "#002112",
+        "primary": "#c7ffda",
+        "secondary": "#9bd2b6",
+        "surface-container-lowest": "#090f0d",
+        "on-surface-variant": "#bacbbd",
+        "surface": "#0f1512",
+        "surface-container-high": "#252b29",
+        "tertiary-fixed-dim": "#33e198",
+        "surface-container": "#1b211e",
+        "on-primary-fixed-variant": "#005231",
+        "tertiary-container": "#4bf1a6",
+        "on-secondary-fixed-variant": "#19503b",
+        "primary-fixed-dim": "#15e292",
+        "secondary-fixed": "#b7efd2",
+        "on-secondary": "#003826",
+        "primary-fixed": "#51ffad",
+        "secondary-container": "#19503b",
+        "outline-variant": "#3b4a40",
+        "inverse-surface": "#dee4e0",
+        "on-primary-container": "#006a42",
+        "surface-container-low": "#171d1a",
+        "on-primary": "#003921",
+        "primary-container": "#38f2a0",
+        "surface-dim": "#0f1512",
+        "on-tertiary": "#003822",
+        "inverse-primary": "#006d43",
+        "on-primary-fixed": "#002111",
+        "error-container": "#93000a",
+        "inverse-on-surface": "#2b322f",
+        "secondary-fixed-dim": "#9bd2b6",
+        "outline": "#859588",
+        "on-error": "#690005",
+        "on-background": "#dee4e0",
+        "surface-variant": "#303633",
+        "on-secondary-container": "#8ac1a6",
+        "on-error-container": "#ffdad6",
+        "tertiary": "#c8ffdc",
+        "on-tertiary-fixed-variant": "#005233",
+        "surface-bright": "#343b38",
+        "surface-container-highest": "#303633",
+        "on-secondary-fixed": "#002114"
+      },
+      "borderRadius": {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "margin": "2rem",
+        "gutter": "1.5rem",
+        "space-sm": "0.5rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "gutter-sm": "1rem",
+        "space-md": "1rem",
+        "space-lg": "1.5rem",
+        "margin-sm": "1rem"
+      },
+      "fontFamily": {
+        "label-md": [
+          "Inter"
+        ],
+        "label-lg": [
+          "Inter"
+        ],
+        "display-lg": [
+          "Inter"
+        ],
+        "body-lg": [
+          "Inter"
+        ],
+        "body-md": [
+          "Inter"
+        ],
+        "display-lg-mobile": [
+          "Inter"
+        ],
+        "headline-lg-mobile": [
+          "Inter"
+        ],
+        "body-sm": [
+          "Inter"
+        ],
+        "label-sm": [
+          "Inter"
+        ],
+        "headline-md": [
+          "Inter"
+        ],
+        "headline-sm": [
+          "Inter"
+        ],
+        "headline-lg": [
+          "Inter"
+        ]
+      },
+      "fontSize": {
+        "label-md": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "500"
+          }
+        ],
+        "label-lg": [
+          "14px",
+          {
+            "lineHeight": "20px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "600"
+          }
+        ],
+        "display-lg": [
+          "48px",
+          {
+            "lineHeight": "56px",
+            "letterSpacing": "-0.03em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-lg": [
+          "18px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.005em",
+            "fontWeight": "400"
+          }
+        ],
+        "body-md": [
+          "16px",
+          {
+            "lineHeight": "26px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "display-lg-mobile": [
+          "36px",
+          {
+            "lineHeight": "44px",
+            "letterSpacing": "-0.025em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-lg-mobile": [
+          "26px",
+          {
+            "lineHeight": "34px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-sm": [
+          "14px",
+          {
+            "lineHeight": "22px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "label-sm": [
+          "11px",
+          {
+            "lineHeight": "14px",
+            "letterSpacing": "0.04em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-md": [
+          "24px",
+          {
+            "lineHeight": "32px",
+            "letterSpacing": "-0.015em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-sm": [
+          "20px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-lg": [
+          "32px",
+          {
+            "lineHeight": "40px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+}</script></head><body class="bg-surface-container-lowest font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container"><div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-surface-tint/10 rounded-full blur-[140px]"></div><div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div></div><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl"><div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div><span class="font-headline-sm text-headline-sm text-primary tracking-tight">RISE JOURNAL</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Cloud: Synced</span></div></div><div class="hidden md:flex items-center gap-space-sm flex-1 max-w-md mx-gutter px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="material-symbols-outlined text-primary text-[18px]">format_quote</span><p class="font-body-sm text-body-sm text-on-surface-variant truncate">Dawn brings clarity to what was quiet chaos.</p></div><div class="flex items-center gap-space-md"><nav class="hidden sm:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs"><a aria-current="page" class="transition-colors bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-full px-space-md py-space-xs" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stats" href="#">Stats</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav><a class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.25)]" data-path="new-entry" href="#"><span class="material-symbols-outlined text-[18px]">edit_note</span>New Entry</a><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="hidden lg:block font-label-md text-label-md text-on-surface">Rahul S.</span></div></div></div></header><main class="relative z-10 w-full pt-20 pb-space-xl bg-transparent"><div class="flex flex-col w-full">
+<div class="relative w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]">
+<!-- Ambient Frost & Alpine Glow Backdrops -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden select-none">
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[360px] bg-primary-container/10 rounded-full blur-[160px]"></div>
+<div class="absolute bottom-10 left-10 w-72 h-72 bg-secondary-container/20 rounded-full blur-[130px]"></div>
+<div class="absolute top-12 right-12 w-80 h-80 bg-surface-tint/5 rounded-full blur-[140px]"></div>
+<!-- Subtle Geometric Frost Lattice (Inline SVG) -->
+<svg class="absolute inset-0 w-full h-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="48" id="frost-grid" patternunits="userSpaceOnUse" width="48">
+<path class="text-primary-container" d="M 48 0 L 0 48 M 0 0 L 48 48" fill="none" stroke="currentColor" stroke-width="0.75"></path>
+<circle class="text-primary-container" cx="24" cy="24" fill="currentColor" r="1.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#frost-grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Main Container Layout: Asymmetric Dual Column on Desktop -->
+<div class="relative z-10 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
+<!-- Left Editorial Storytelling & Protocol Tracker Pane (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between p-space-lg lg:p-space-xl rounded-lg bg-surface-container-low shadow-xl relative overflow-hidden">
+<!-- Atmospheric Mountain Aurora Backdrop in Card -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+<div class="absolute -bottom-10 -left-10 right-0 h-64 bg-gradient-to-t from-secondary-container via-surface-container to-transparent"></div>
+<svg class="absolute bottom-0 w-full h-40 text-surface-container-high" fill="currentColor" preserveaspectratio="none" viewbox="0 0 400 160">
+<polygon points="0,160 70,80 140,120 220,40 310,110 400,30 400,160"></polygon>
+</svg>
+</div>
+<div class="relative z-10 flex flex-col gap-space-md">
+<!-- Overline Badge -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high w-fit shadow-sm">
+<span class="text-[14px]">❄️</span>
+<span class="font-label-sm text-label-sm text-primary-container uppercase tracking-wider">Winter Arc Protocol</span>
+<span class="w-1 h-1 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 42 / 90</span>
+</div>
+<!-- Editorial Manifesto -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-widest">Discipline Over Comfort</span>
+<h2 class="font-display-lg text-headline-lg lg:text-display-lg text-on-surface leading-tight">
+              Embrace the <span class="text-primary-container">stillness</span>.
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+              When the temperature drops, true clarity ascends. 90 days of dawn reflections, uncompromised honesty, and mental sovereignty.
+            </p>
+</div>
+<!-- Micro Visual Element: Winter Arc Velocity Ring & Stats -->
+<div class="p-space-md rounded bg-surface-container mt-space-sm flex items-center justify-between gap-space-md shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 48 48">
+<circle class="text-surface-variant" cx="24" cy="24" fill="none" r="20" stroke="currentColor" stroke-width="3"></circle>
+<circle class="text-primary-container" cx="24" cy="24" fill="none" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="41.8" stroke-linecap="round" stroke-width="3.5"></circle>
+</svg>
+<span class="absolute font-label-md text-label-md text-primary font-bold">67%</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Collective Elevation</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">1,482 Cadets</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim">Zero zero-days allowed</span>
+</div>
+</div>
+<div class="hidden sm:flex flex-col items-end text-right">
+<span class="font-label-sm text-label-sm text-outline">Sunrise Target</span>
+<span class="font-label-lg text-label-lg text-primary">05:45 AM</span>
+</div>
+</div>
+</div>
+<!-- Ambient Winter Arc Daily Affirmation -->
+<div class="relative z-10 pt-space-lg mt-space-md">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0 mt-0.5">ac_unit</span>
+<div class="flex flex-col gap-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface italic">
+                “Discipline creates freedom. Every sunrise journal entry is a victory against nocturnal quiet chaos.”
+              </p>
+<div class="flex items-center gap-space-xs mt-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Winter Arc Field Rule #04</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Authentication Card Pane (7 cols) -->
+<div class="lg:col-span-7 flex flex-col justify-center p-space-lg lg:p-space-xl rounded-lg bg-surface-container shadow-2xl relative">
+<!-- Subtle Frosted Corner Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-bl-full pointer-events-none blur-xl"></div>
+<!-- Header Section -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">lock</span>
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider">Encrypted Portal</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-high">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Auth v2</span>
+</div>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs" id="auth-title">
+            Welcome Back
+          </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="auth-subtitle">
+            Step into the cold. Master your mind. 90 days of relentless focus.
+          </p>
+</div>
+<!-- Segmented Tab Toggle -->
+<div class="mt-space-md p-1 rounded-full bg-surface-container-lowest flex items-center relative">
+<button class="flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 bg-surface-container-high text-primary shadow-sm flex items-center justify-center gap-space-xs" id="tab-signin" type="button">
+<span class="material-symbols-outlined text-[16px]">login</span>
+<span>Sign In</span>
+</button>
+<button class="flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-space-xs" id="tab-signup" type="button">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+<span>Commit to Arc</span>
+</button>
+</div>
+<!-- Feedback / Toast Alert Banner (Hidden by default) -->
+<div class="hidden mt-space-md p-space-md rounded bg-surface-container-high flex items-center gap-space-sm transition-all duration-300 shadow-md" id="auth-feedback">
+<span class="material-symbols-outlined text-primary-container text-[20px]" id="auth-feedback-icon">hourglass_top</span>
+<span class="font-body-sm text-body-sm text-on-surface" id="auth-feedback-text">Validating encrypted telemetry...</span>
+</div>
+<!-- Main Form -->
+<form class="mt-space-lg flex flex-col gap-space-md" id="auth-form" onsubmit="return false;">
+<!-- Name Input (For registration only - animated toggle) -->
+<div class="hidden flex-col gap-space-xs" id="field-name-group">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between" for="input-name">
+<span>Cadet Codename / Name</span>
+<span class="font-label-sm text-label-sm text-outline">Public in Arc leaderboard</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">badge</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md pl-12 pr-space-md py-3 rounded outline-none placeholder:text-outline focus:bg-surface-container-low transition-all shadow-inner" id="input-name" placeholder="e.g., Marcus V." type="text"/>
+</div>
+</div>
+<!-- Email Input -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between" for="input-email">
+<span>Cadet Email Address</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim">Supabase Verified</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">alternate_email</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md pl-12 pr-space-md py-3 rounded outline-none placeholder:text-outline focus:bg-surface-container-low transition-all shadow-inner" id="input-email" placeholder="discipline@winterarc.io" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="input-password">Master Key Passcode</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline transition-colors" href="#" id="link-forgot">Forgot Key?</a>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">key</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md pl-12 pr-12 py-3 rounded outline-none placeholder:text-outline focus:bg-surface-container-low transition-all shadow-inner" id="input-password" placeholder="••••••••••••" required="" type="password"/>
+<button class="absolute right-space-md text-outline hover:text-on-surface transition-colors flex items-center justify-center p-1" id="btn-toggle-password" title="Toggle password visibility" type="button">
+<span class="material-symbols-outlined text-[20px]" id="icon-eye">visibility</span>
+</button>
+</div>
+</div>
+<!-- Checkbox: Session Persistence -->
+<div class="flex items-center justify-between pt-space-xs">
+<label class="flex items-center gap-space-sm cursor-pointer select-none group">
+<input checked="" class="hidden peer" id="check-remember" type="checkbox"/>
+<div class="w-5 h-5 rounded bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary-container peer-checked:text-on-primary-container text-transparent transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
+                Retain Winter Arc active session
+              </span>
+</label>
+</div>
+<!-- Primary Submit Button -->
+<button class="mt-space-sm w-full h-12 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg tracking-wide flex items-center justify-center gap-space-xs shadow-[0_0_24px_-2px_rgba(56,242,160,0.35)] hover:bg-primary-fixed hover:shadow-[0_0_32px_rgba(56,242,160,0.5)] active:scale-[0.99] transition-all duration-200" id="btn-submit" type="submit">
+<span id="btn-submit-text">ENTER THE WINTER ARC</span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1">arrow_forward</span>
+</button>
+</form>
+<!-- Or Divider -->
+<div class="my-space-lg flex items-center gap-space-md">
+<div class="h-px bg-surface-variant flex-1"></div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Fast Protocol Auth</span>
+<div class="h-px bg-surface-variant flex-1"></div>
+</div>
+<!-- Social Auth Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<!-- Google Auth -->
+<button class="oauth-trigger flex items-center justify-center gap-space-xs py-2.5 px-space-md rounded-full bg-surface-container-lowest hover:bg-surface-container-high transition-colors shadow-sm" data-provider="Google" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z" fill="#EA4335"></path>
+<path d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z" fill="#4285F4"></path>
+<path d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z" fill="#FBBC05"></path>
+<path d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.4 7.5 23 12 23z" fill="#34A853"></path>
+</svg>
+<span class="font-label-md text-label-md text-on-surface">Google</span>
+</button>
+<!-- Apple Auth -->
+<button class="oauth-trigger flex items-center justify-center gap-space-xs py-2.5 px-space-md rounded-full bg-surface-container-lowest hover:bg-surface-container-high transition-colors shadow-sm" data-provider="Apple ID" type="button">
+<svg class="w-4 h-4 fill-on-surface" viewbox="0 0 24 24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.38c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.64 1.35-.58.66-1.08 1.73-.95 2.76 1 .08 2.03-.51 2.66-1.26z"></path>
+</svg>
+<span class="font-label-md text-label-md text-on-surface">Apple</span>
+</button>
+<!-- Supabase Instant Magic Link -->
+<button class="oauth-trigger flex items-center justify-center gap-space-xs py-2.5 px-space-md rounded-full bg-surface-container-lowest hover:bg-surface-container-high transition-colors shadow-sm" data-provider="Magic Link" type="button">
+<span class="material-symbols-outlined text-primary-container text-[18px]">bolt</span>
+<span class="font-label-md text-label-md text-on-surface">Magic Link</span>
+</button>
+</div>
+<!-- Privacy & Protocol Guarantee -->
+<div class="mt-space-lg text-center">
+<p class="font-label-sm text-label-sm text-outline">
+            Protected by Supabase Zero-Knowledge Vault. <br class="hidden sm:inline"/>
+            By engaging, you accept the <a class="text-on-surface hover:text-primary transition-colors underline" href="#">Winter Arc Manifesto</a> and <a class="text-on-surface hover:text-primary transition-colors underline" href="#">Terms</a>.
+          </p>
+</div>
+</div>
+</div>
+<!-- Sub-dashboard Quick Protocol Anchor Cards -->
+<div class="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-space-md mt-space-lg">
+<div class="p-space-md rounded bg-surface-container-low flex items-center gap-space-md shadow-sm hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[20px]">wb_twilight</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate font-medium">Daily Dawn Ledger</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Strict 15-minute uncensored brain dump</span>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex items-center gap-space-md shadow-sm hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[20px]">offline_bolt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate font-medium">Zero Distraction Mode</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Ambient rain &amp; alpine wind audio engine</span>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex items-center gap-space-md shadow-sm hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[20px]">shield_with_heart</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate font-medium">90-Day Accountability</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Immutable streak logged on Supabase</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const tabSignIn = document.getElementById('tab-signin');
+      const tabSignUp = document.getElementById('tab-signup');
+      const fieldNameGroup = document.getElementById('field-name-group');
+      const authTitle = document.getElementById('auth-title');
+      const authSubtitle = document.getElementById('auth-subtitle');
+      const btnSubmit = document.getElementById('btn-submit');
+      const btnSubmitText = document.getElementById('btn-submit-text');
+      const feedbackBanner = document.getElementById('auth-feedback');
+      const feedbackText = document.getElementById('auth-feedback-text');
+      const feedbackIcon = document.getElementById('auth-feedback-icon');
+      const passwordInput = document.getElementById('input-password');
+      const btnTogglePassword = document.getElementById('btn-toggle-password');
+      const iconEye = document.getElementById('icon-eye');
+      const authForm = document.getElementById('auth-form');
+
+      let currentMode = 'signin';
+
+      function setMode(mode) {
+        currentMode = mode;
+        if (mode === 'signin') {
+          tabSignIn.className = "flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 bg-surface-container-high text-primary shadow-sm flex items-center justify-center gap-space-xs";
+          tabSignUp.className = "flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-space-xs";
+          fieldNameGroup.classList.add('hidden');
+          fieldNameGroup.classList.remove('flex');
+          authTitle.textContent = "Welcome Back";
+          authSubtitle.textContent = "Step into the cold. Master your mind. 90 days of relentless focus.";
+          btnSubmitText.textContent = "ENTER THE WINTER ARC";
+        } else {
+          tabSignUp.className = "flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 bg-surface-container-high text-primary shadow-sm flex items-center justify-center gap-space-xs";
+          tabSignIn.className = "flex-1 py-space-xs px-space-md rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-space-xs";
+          fieldNameGroup.classList.remove('hidden');
+          fieldNameGroup.classList.add('flex');
+          authTitle.textContent = "Join Winter Arc";
+          authSubtitle.textContent = "Pledge your winter. No excuses. Daily journal entries begin now.";
+          btnSubmitText.textContent = "INITIATE PROTOCOL & COMMIT";
+        }
+      }
+
+      tabSignIn.addEventListener('click', () => setMode('signin'));
+      tabSignUp.addEventListener('click', () => setMode('signup'));
+
+      // Password toggle
+      btnTogglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        iconEye.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+
+      // Interactive Auth submission mock
+      authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        feedbackBanner.classList.remove('hidden');
+        feedbackBanner.classList.add('flex');
+        feedbackIcon.textContent = 'sync';
+        feedbackIcon.classList.add('animate-spin');
+        feedbackText.textContent = 'Syncing cryptographic credentials with Supabase Node...';
+
+        btnSubmit.disabled = true;
+        btnSubmit.classList.add('opacity-75');
+
+        setTimeout(() => {
+          feedbackIcon.classList.remove('animate-spin');
+          feedbackIcon.textContent = 'verified';
+          feedbackText.textContent = currentMode === 'signin' 
+            ? 'Access Granted. Welcome back Cadet Rahul. Entering Vault...' 
+            : 'Protocol Activated. Winter Arc Ledger initialized.';
+          
+          setTimeout(() => {
+            feedbackBanner.classList.add('hidden');
+            feedbackBanner.classList.remove('flex');
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('opacity-75');
+          }, 3500);
+        }, 1200);
+      });
+
+      // Quick OAuth triggers
+      document.querySelectorAll('.oauth-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const provider = btn.getAttribute('data-provider');
+          feedbackBanner.classList.remove('hidden');
+          feedbackBanner.classList.add('flex');
+          feedbackIcon.textContent = 'sync';
+          feedbackIcon.classList.add('animate-spin');
+          feedbackText.textContent = 'Redirecting to ' + provider + ' Secure Handshake...';
+
+          setTimeout(() => {
+            feedbackIcon.classList.remove('animate-spin');
+            feedbackIcon.textContent = 'check_circle';
+            feedbackText.textContent = 'Connected via ' + provider + '. Syncing Winter Arc profile...';
+          }, 1000);
+        });
+      });
+    })();
+  </script>
+</div></main><footer class="relative z-10 w-full bg-surface-container-lowest py-space-xl"><div class="max-w-7xl mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-md text-label-md text-on-surface-variant">RISE JOURNAL — A Journal For A Better You</span></div><div class="font-label-sm text-label-sm text-outline">Encrypted end-to-end with nocturnal calm • Synced in Realtime</div></div></footer></body></html>

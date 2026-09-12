@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rise Journal — Daily Discipline &amp; Reflection</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary": "#003826",
+            "tertiary-fixed": "#5bfeb2",
+            "surface-container-highest": "#303633",
+            "on-surface": "#dee4e0",
+            "on-tertiary": "#003822",
+            "surface-dim": "#0f1512",
+            "surface-container": "#1b211e",
+            "error-container": "#93000a",
+            "outline": "#859588",
+            "outline-variant": "#3b4a40",
+            "primary-fixed": "#51ffad",
+            "on-error": "#690005",
+            "on-primary-fixed-variant": "#005231",
+            "background": "#0f1512",
+            "on-secondary-fixed-variant": "#19503b",
+            "surface-container-lowest": "#090f0d",
+            "surface-container-low": "#171d1a",
+            "on-secondary-container": "#8ac1a6",
+            "on-primary-fixed": "#002111",
+            "on-error-container": "#ffdad6",
+            "primary": "#c7ffda",
+            "surface-tint": "#15e292",
+            "tertiary-fixed-dim": "#33e198",
+            "surface-container-high": "#252b29",
+            "on-secondary-fixed": "#002114",
+            "on-tertiary-fixed-variant": "#005233",
+            "tertiary-container": "#4bf1a6",
+            "secondary-container": "#19503b",
+            "secondary-fixed": "#b7efd2",
+            "on-tertiary-fixed": "#002112",
+            "secondary": "#9bd2b6",
+            "inverse-surface": "#dee4e0",
+            "inverse-on-surface": "#2b322f",
+            "surface-variant": "#303633",
+            "secondary-fixed-dim": "#9bd2b6",
+            "on-primary": "#003921",
+            "primary-container": "#38f2a0",
+            "on-primary-container": "#006a42",
+            "on-surface-variant": "#bacbbd",
+            "surface": "#0f1512",
+            "inverse-primary": "#006d43",
+            "on-background": "#dee4e0",
+            "on-tertiary-container": "#006a44",
+            "tertiary": "#c8ffdc",
+            "surface-bright": "#343b38",
+            "primary-fixed-dim": "#15e292",
+            "error": "#ffb4ab"
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background font-sans text-on-surface min-h-screen relative antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Subtle ambient background glow -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[680px] sm:w-[850px] h-[360px] bg-primary-container/10 rounded-full blur-[140px]"></div>
+<div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div>
+</div>
+<!-- Responsive Navigation Header -->
+<header class="sticky top-0 w-full z-50 bg-surface-container-lowest/85 backdrop-blur-xl border-b border-white/[0.05]">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between gap-4">
+<!-- Brand & Cloud Status -->
+<div class="flex items-center gap-3 sm:gap-4">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0] group-hover:scale-125 transition-transform"></div>
+<span class="text-base sm:text-lg font-bold tracking-tight text-primary">RISE JOURNAL</span>
+</a>
+<div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high/80 border border-white/[0.05] text-xs text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span>Cloud Synced</span>
+</div>
+</div>
+<!-- Desktop Nav Links -->
+<nav class="hidden md:flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-full border border-white/[0.04]">
+<a class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium bg-primary-container text-on-primary-container transition-colors shadow-[0_0_16px_rgba(56,242,160,0.25)]" href="#">Home</a>
+<a class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">Journal</a>
+<a class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">Habits</a>
+<a class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" href="#">Stats</a>
+</nav>
+<!-- Right Actions: Mobile Toggle, New Entry, Avatar -->
+<div class="flex items-center gap-2.5 sm:gap-3">
+<a class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-container text-xs sm:text-sm font-semibold hover:bg-primary-fixed hover:shadow-[0_0_20px_rgba(56,242,160,0.35)] transition-all" href="#today-journal">
+<span class="material-symbols-outlined text-[17px]">edit_note</span>
+<span>New Entry</span>
+</a>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2 pl-1">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-semibold text-xs shadow-inner">
+            RS
+          </div>
+<span class="hidden lg:block text-xs sm:text-sm font-medium text-on-surface">Rahul S.</span>
+</div>
+<!-- Mobile Hamburger Toggle Button -->
+<button aria-label="Open Menu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface border border-white/[0.06] transition-colors" id="mobile-menu-toggle">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Dropdown Navigation -->
+<div class="hidden md:hidden border-t border-white/[0.06] bg-surface-container-lowest/95 backdrop-blur-xl px-4 py-3 space-y-1" id="mobile-menu">
+<a class="block px-3 py-2 rounded-lg text-sm font-medium bg-primary-container text-on-primary-container" href="#">Home</a>
+<a class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" href="#">Journal</a>
+<a class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" href="#">Daily Habits</a>
+<a class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" href="#">Stats</a>
+<a class="flex items-center gap-2 mt-2 px-3 py-2 rounded-lg text-sm font-semibold bg-primary-container/20 text-primary-container border border-primary-container/30" href="#today-journal">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Open Today's Journal</span>
+</a>
+</div>
+</header>
+<!-- Main Content Container with Spacious Layout -->
+<main class="relative z-10 w-full">
+<div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 sm:space-y-12">
+<!-- 1. Spacious Hero / Welcome Card -->
+<section class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-surface-container-low border border-white/[0.06] p-6 sm:p-8 md:p-10 shadow-lg">
+<div class="absolute inset-0 z-0 opacity-25 mix-blend-screen pointer-events-none bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxwvKanUUiiGFa8UIpQc2X7fiSCrVQjm2uGgfgIInGtFrNKva1hy4waueN_9e0Gzt0P1v610k18smJLbCS5V2JQowAblh1pSel1M7y6Px54L9aKX-EKRWetz5XoRSWBlGl_0xoqoJCKC6JoH1lCT4OMqRIs8buzAljG0BDKQu9hkyzj0w_sOmtiZHnseCH_yq2dK3FKHIufeOKqkA3fkZOiKEX-jmx_OxfYXRTFUsqAFf70ZDyGZsWXA')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-surface-container-low/90 to-surface-container-low/60 z-0"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2.5 max-w-xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/80 text-primary text-xs font-semibold tracking-wide uppercase border border-white/[0.06]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container shadow-[0_0_8px_#38f2a0]"></span>
+<span>❄️ Winter Arc Protocol • Day 42 of 90</span>
+</div>
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-on-surface tracking-tight flex items-center gap-2">
+              Good Morning, Rahul <span class="text-primary-container text-xl sm:text-2xl">❄️</span>
+</h1>
+<p class="text-sm sm:text-base text-on-surface-variant font-normal leading-relaxed">
+              Discipline over comfort. 90 days of relentless focus, calm execution, and mental clarity.
+            </p>
+</div>
+<div class="flex flex-col sm:items-end gap-1.5 bg-surface-container-lowest/70 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/[0.05] self-start md:self-auto w-full sm:w-auto">
+<div class="flex items-center gap-1.5 text-secondary text-xs font-medium">
+<span class="material-symbols-outlined text-[15px] text-primary-container">calendar_today</span>
+<span>Day 42 Milestone Phase</span>
+</div>
+<div class="text-lg sm:text-xl font-semibold text-on-surface tracking-tight">Thursday, 11 Sep 2026</div>
+<div class="text-xs text-primary-container font-medium flex items-center gap-1">
+<span>Next review in 8 days</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Responsive 7-Day Date Strip -->
+<section class="space-y-3">
+<div class="flex items-center justify-between text-xs text-outline">
+<span class="uppercase font-semibold tracking-wider text-on-surface-variant">September 2026 • Week 37</span>
+<div class="flex items-center gap-1.5 text-primary-container font-medium">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span>Today Active</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1.5 sm:gap-3" id="week-strip">
+<!-- Mon -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">MON</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">7</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/40 mt-1.5"></span>
+</button>
+<!-- Tue -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">TUE</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">8</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/50 mt-1.5"></span>
+</button>
+<!-- Wed -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">WED</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">9</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container/70 mt-1.5"></span>
+</button>
+<!-- Thu (Active Day) -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-primary-container text-on-primary-container font-semibold shadow-[0_0_20px_rgba(56,242,160,0.3)] ring-1 ring-primary-container transition-all">
+<span class="text-[11px] sm:text-xs tracking-wide">THU</span>
+<span class="text-sm sm:text-base font-bold mt-0.5">11</span>
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container mt-1.5"></span>
+</button>
+<!-- Fri -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">FRI</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">12</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-1.5"></span>
+</button>
+<!-- Sat -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">SAT</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">13</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-1.5"></span>
+</button>
+<!-- Sun -->
+<button class="flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group">
+<span class="text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface">SUN</span>
+<span class="text-sm sm:text-base font-semibold text-on-surface mt-0.5">14</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant mt-1.5"></span>
+</button>
+</div>
+</section>
+<!-- 3. Today's Free-Writing Journal Card (Prominent Callout) -->
+<section class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-primary-container/15 via-surface-container-low to-surface-container border border-primary-container/30 p-6 sm:p-8 md:p-9 shadow-[0_0_35px_rgba(56,242,160,0.08)]" id="today-journal">
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary-container/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="space-y-2.5 max-w-2xl">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container/20 text-primary-container text-xs font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span>Daily Journal</span>
+<span class="text-on-surface-variant font-normal">• Auto-saved (Thu, 11 Sep)</span>
+</div>
+<h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-on-surface tracking-tight">
+              Write Today's Dawn Journal Entry
+            </h2>
+<p class="text-sm sm:text-base text-on-surface-variant font-normal leading-relaxed">
+              Free-write your thoughts, log your daily actions, triumphs &amp; raw reflections with zero constraints. Completely open canvas for mental clarity.
+            </p>
+</div>
+<a class="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary-container text-on-primary-container font-semibold text-sm sm:text-base shadow-[0_0_24px_rgba(56,242,160,0.4)] hover:bg-primary-fixed hover:shadow-[0_0_32px_rgba(56,242,160,0.6)] active:scale-98 transition-all group" href="#">
+<span>Open Today's Journal ✍️</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- 4. Winter Arc Daily Habits (10 Non-Negotiables) -->
+<section class="rounded-2xl sm:rounded-3xl bg-surface-container-low p-5 sm:p-8 border border-white/[0.06] space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[22px]">military_tech</span>
+<h2 class="text-lg sm:text-xl font-bold text-on-surface tracking-tight">Daily Habits (10 Non-Negotiables)</h2>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant mt-1">10 Core disciplines for unstoppable physical &amp; psychological momentum</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container px-3.5 py-1.5 rounded-full border border-white/[0.06]">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></div>
+<span class="text-xs sm:text-sm font-semibold text-primary" id="compliance-counter">7 / 10 Completed</span>
+</div>
+<button class="inline-flex items-center gap-1 text-xs sm:text-sm text-primary-container hover:text-primary bg-surface-container-high hover:bg-surface-bright px-3.5 py-1.5 rounded-full border border-white/[0.06] transition-colors cursor-pointer" id="toggle-add-task">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Custom Habit</span>
+</button>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs text-on-surface-variant">
+<span class="uppercase tracking-wider font-semibold text-primary-container">Daily Habit Completion Rate</span>
+<span class="font-semibold text-primary" id="compliance-pct">70%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500 shadow-[0_0_12px_#38f2a0]" id="compliance-bar" style="width: 70%"></div>
+</div>
+</div>
+<!-- Add Habit Inline Form -->
+<div class="hidden p-4 bg-surface-container rounded-xl border border-primary-container/30 transition-all" id="add-task-container">
+<form class="flex flex-col sm:flex-row items-stretch gap-3" id="add-task-form">
+<input class="flex-1 bg-surface-container-lowest border border-white/[0.1] rounded-xl px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:border-primary-container" id="new-task-input" placeholder="e.g., Cold plunge 3 min or Practice Spanish 20 min..." required="" type="text"/>
+<select class="bg-surface-container-lowest border border-white/[0.1] rounded-xl px-4 py-2.5 text-xs font-medium text-on-surface focus:outline-none focus:border-primary-container" id="new-task-category">
+<option value="Discipline">Discipline</option>
+<option value="Fitness">Fitness</option>
+<option value="Mental Focus">Mental Focus</option>
+<option value="Recovery">Recovery</option>
+<option value="Knowledge">Knowledge</option>
+</select>
+<button class="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs sm:text-sm hover:bg-primary-fixed transition-colors flex items-center justify-center gap-1" type="submit">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Save Habit</span>
+</button>
+</form>
+</div>
+<!-- 10 Habits Grid (Spacious & Clean) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4" id="protocol-tasks-list">
+<!-- Habit 1 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Daily exercise for 45–60 minutes</span>
+</div>
+<span class="text-[11px] sm:text-xs text-primary-container bg-primary-container/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Fitness</span>
+</div>
+<!-- Habit 2 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Strict clean diet with zero cheat meals</span>
+</div>
+<span class="text-[11px] sm:text-xs text-secondary bg-secondary/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Nutrition</span>
+</div>
+<!-- Habit 3 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">No alcohol, sugary drinks, or junk food</span>
+</div>
+<span class="text-[11px] sm:text-xs text-tertiary bg-tertiary/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Purity</span>
+</div>
+<!-- Habit 4 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Drink 3.5 to 4 litres of water daily</span>
+</div>
+<span class="text-[11px] sm:text-xs text-primary-container bg-primary-container/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Hydration</span>
+</div>
+<!-- Habit 5 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Wake up between 5:00 AM and 6:00 AM</span>
+</div>
+<span class="text-[11px] sm:text-xs text-secondary bg-secondary/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Dawn Discipline</span>
+</div>
+<!-- Habit 6 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Get 7 to 8 hours of sleep on fixed schedule</span>
+</div>
+<span class="text-[11px] sm:text-xs text-on-surface-variant bg-white/[0.05] px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Recovery</span>
+</div>
+<!-- Habit 7 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="true">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface line-through opacity-70 group-hover:opacity-100 transition-opacity truncate">Strict social media &amp; screen time limits</span>
+</div>
+<span class="text-[11px] sm:text-xs text-primary-container bg-primary-container/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Mental Focus</span>
+</div>
+<!-- Habit 8 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="false">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline/50 bg-transparent flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold hidden">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface group-hover:text-primary transition-colors truncate">Read 10 to 15 pages of non-fiction daily</span>
+</div>
+<span class="text-[11px] sm:text-xs text-secondary bg-secondary/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Knowledge</span>
+</div>
+<!-- Habit 9 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="false">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline/50 bg-transparent flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold hidden">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface group-hover:text-primary transition-colors truncate">2 to 4 hours of uninterrupted deep work</span>
+</div>
+<span class="text-[11px] sm:text-xs text-tertiary bg-tertiary/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Execution</span>
+</div>
+<!-- Habit 10 -->
+<div class="task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group" data-completed="false">
+<div class="flex items-center gap-3 min-w-0">
+<button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline/50 bg-transparent flex-shrink-0 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-[14px] font-bold hidden">check</span>
+</button>
+<span class="task-title text-xs sm:text-sm text-on-surface group-hover:text-primary transition-colors truncate">Track progress daily in a journal</span>
+</div>
+<span class="text-[11px] sm:text-xs text-primary-container bg-primary-container/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">Reflection</span>
+</div>
+</div>
+</section>
+<!-- 5. Inspiring Contemplation Quote Card -->
+<section class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-surface-container p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-md border border-white/[0.04]">
+<div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-luminosity bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAO-UavzKf0yxkrKtfA93tq_xmE670S5L6jdfr9q_a8sd6IIQqle296yQAn51uLuTRPHTRa4id74H9_6ByJDj8uEyv2ExynHjikQroxVMKOZeGHB4ZFco6qd-5JogEGIpMSVKdabMTFAKRcZLTALMCSpGqCUf4A33I3m8Y3U41zmry7jQWxxjHWKVscfR_eLx4vkKsnX5auKPtV-sDtbBIDf8MT_WLM2DRVInGWc_u4h6SVzEjnq2eB8Q')"></div>
+<div class="absolute -left-10 -bottom-10 w-44 h-44 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl space-y-2">
+<div class="flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined text-[24px]">format_quote</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">Morning Contemplation</span>
+</div>
+<blockquote class="text-lg sm:text-xl md:text-2xl text-on-surface italic font-light tracking-tight transition-opacity duration-300 leading-snug" id="quote-text">
+            “A small step today, leads to big results tomorrow.”
+          </blockquote>
+<p class="text-xs sm:text-sm text-secondary tracking-wide" id="quote-author">
+            — Unknown
+          </p>
+</div>
+<div class="relative z-10 flex-shrink-0 self-end md:self-center">
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface text-xs sm:text-sm font-medium transition-all active:scale-95 group border border-white/[0.05]" id="refresh-quote-btn">
+<span class="material-symbols-outlined text-[16px] text-primary-container group-hover:rotate-180 transition-transform duration-500">autorenew</span>
+<span>New Quote</span>
+</button>
+</div>
+</section>
+<!-- 6. Your Consistency (Responsive 4-Card Stats Grid) -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-sm sm:text-base font-semibold text-on-surface uppercase tracking-wider">Your Consistency</h2>
+<span class="text-xs text-on-surface-variant">Updated in real-time</span>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+<!-- Card 1: Streak -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low p-4 sm:p-5 flex flex-col justify-between hover:bg-surface-container transition-colors border border-white/[0.04] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Current Streak</span>
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[16px]">local_fire_department</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-container tracking-tight">7</span>
+<span class="text-xs sm:text-sm text-on-surface font-medium">Days</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2.5 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 70%"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: Total Entries -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low p-4 sm:p-5 flex flex-col justify-between hover:bg-surface-container transition-colors border border-white/[0.04] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Total Entries</span>
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[16px]">bar_chart</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">28</span>
+<span class="text-xs sm:text-sm text-on-surface-variant font-medium">notes</span>
+</div>
+<p class="text-xs text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +4 this week
+              </p>
+</div>
+</div>
+<!-- Card 3: This Month -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low p-4 sm:p-5 flex flex-col justify-between hover:bg-surface-container transition-colors border border-white/[0.04] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">This Month</span>
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">15</span>
+<span class="text-xs sm:text-sm text-on-surface-variant font-medium">/ 30</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+<!-- Card 4: Longest Streak -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low p-4 sm:p-5 flex flex-col justify-between hover:bg-surface-container transition-colors border border-white/[0.04] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Longest Streak</span>
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-tertiary-fixed">
+<span class="material-symbols-outlined text-[16px]">star</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">21</span>
+<span class="text-xs sm:text-sm text-on-surface font-medium">Days</span>
+</div>
+<p class="text-xs text-outline mt-2">All-time record</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Recent Entries -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-base sm:text-lg font-bold text-on-surface tracking-tight">Recent Entries</h2>
+<p class="text-xs sm:text-sm text-on-surface-variant">Reflections from your recent dawn sessions</p>
+</div>
+<a class="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary-container hover:text-primary transition-colors group" href="#">
+<span>View All</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="flex flex-col space-y-3">
+<!-- Entry 1 -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low hover:bg-surface-container border border-white/[0.04] transition-all p-3.5 sm:p-5 flex items-center justify-between gap-4 group cursor-pointer">
+<div class="flex items-center gap-3 sm:gap-4 min-w-0">
+<div class="flex flex-col items-center justify-center w-12 sm:w-14 h-14 sm:h-16 rounded-xl bg-surface-container-high flex-shrink-0 text-center border border-white/[0.03]">
+<span class="text-[10px] sm:text-xs text-primary-container font-bold uppercase">THU</span>
+<span class="text-sm sm:text-lg font-bold text-on-surface leading-tight">11</span>
+<span class="text-[10px] sm:text-xs text-outline">Sep</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-2">
+<h3 class="text-sm sm:text-base font-semibold text-on-surface truncate group-hover:text-primary-container transition-colors">A Fresh Start</h3>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="text-xs text-secondary hidden sm:inline">06:24 AM</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+                  Today I felt more focused and motivated. I got some work done and learned something new about mindful breathing during morning dawn walks.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+<div class="hidden sm:block w-20 sm:w-24 h-14 sm:h-16 rounded-lg overflow-hidden relative">
+<img alt="Dawn sunrise mountain view" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADej28y03Aga8GOAEwhXDkIGH_oK3CgAQDwQzPSCmgWtydv2B-oEc6F391p8L9XRn768z-yF1FoHLiyz9uKbyqJayT-nBN6ycxJ55Tvlp8C-cC5azVECrQ6kVP_PYrS8jGjLFD_0f9xRE-4hZHOnVUYg4HDiKTNqBgPEs5RQZApKOJ_4w0TThjtA25eZLLYG3oUMndnDHkDfQECITp1eTo7ehWb1zIws5qtkYClo87EudNTezZBHRQPQ"/>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low hover:bg-surface-container border border-white/[0.04] transition-all p-3.5 sm:p-5 flex items-center justify-between gap-4 group cursor-pointer">
+<div class="flex items-center gap-3 sm:gap-4 min-w-0">
+<div class="flex flex-col items-center justify-center w-12 sm:w-14 h-14 sm:h-16 rounded-xl bg-surface-container-high flex-shrink-0 text-center border border-white/[0.03]">
+<span class="text-[10px] sm:text-xs text-secondary font-bold uppercase">WED</span>
+<span class="text-sm sm:text-lg font-bold text-on-surface leading-tight">10</span>
+<span class="text-[10px] sm:text-xs text-outline">Sep</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-2">
+<h3 class="text-sm sm:text-base font-semibold text-on-surface truncate group-hover:text-primary-container transition-colors">Productive Day</h3>
+<span class="text-xs text-outline hidden sm:inline">07:15 AM</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+                  Completed my tasks early, went for a long quiet walk and felt deep gratitude for the people around me and the peaceful solitude of home.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+<div class="hidden sm:block w-20 sm:w-24 h-14 sm:h-16 rounded-lg overflow-hidden relative">
+<img alt="Evergreen pine trees silhouette at dusk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqLHtnVB8TcQMe4B0KjN51aVLhNX-838yQROh3gnYErzGq8SNpFtCmL4OwGt-LM6b9kkGsl1c4inBPeLHqQKg4FoTgmEfl-pisbblMB1sH8_r1-xv-9XYWb5ajT8IW7qsf4t56b-rnaXQeFcsAMLBJYSROC_eX8CSG1dtDyHO1XXbnXLwgx8i1zvCqzuB-lK3ih2Fhfk9wuB2ZXxspqDtwOFHjrw-k6iIm5WhdnuVFSpn01ps9y8_SaQ"/>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="rounded-xl sm:rounded-2xl bg-surface-container-low hover:bg-surface-container border border-white/[0.04] transition-all p-3.5 sm:p-5 flex items-center justify-between gap-4 group cursor-pointer">
+<div class="flex items-center gap-3 sm:gap-4 min-w-0">
+<div class="flex flex-col items-center justify-center w-12 sm:w-14 h-14 sm:h-16 rounded-xl bg-surface-container-high flex-shrink-0 text-center border border-white/[0.03]">
+<span class="text-[10px] sm:text-xs text-secondary font-bold uppercase">TUE</span>
+<span class="text-sm sm:text-lg font-bold text-on-surface leading-tight">09</span>
+<span class="text-[10px] sm:text-xs text-outline">Sep</span>
+</div>
+<div class="min-w-0 space-y-1">
+<div class="flex items-center gap-2">
+<h3 class="text-sm sm:text-base font-semibold text-on-surface truncate group-hover:text-primary-container transition-colors">Self Improvement</h3>
+<span class="text-xs text-outline hidden sm:inline">08:00 AM</span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant line-clamp-1 sm:line-clamp-2">
+                  Read Marcus Aurelius Meditations over black coffee. Feeling grounded and clear about my long-term quarterly goals.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+<div class="hidden sm:block w-20 sm:w-24 h-14 sm:h-16 rounded-lg overflow-hidden relative">
+<img alt="Book and coffee mug on wooden desk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATuwZ0N27CdypYlUsHb93dS3PUL_1OLej4KWteHIWhfJNaFYhWJpMBlsl5kEGB_XKzn1oVHo8g3H39AskDb9YxV1BWt-AX9EdVHWpf6gqgk1ec_t0tgqGHYGTGlevHJO0jUSRHmNlFEX08kGOirzLWpEW7SbFC1CkAbcj8P3lghkE02lQIsdfknndtVujIuObrDrKcV_IFYY1CbVG5ES_r7dViaaBd9QOaSCvgimxhTosSBa1Kv0lWig"/>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container group-hover:translate-x-1 transition-all">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Status Pill & Zero-Knowledge Encryption -->
+<section class="flex flex-col sm:flex-row items-center justify-between p-4 rounded-xl bg-surface-container-lowest text-on-surface-variant border border-white/[0.04] gap-3 text-xs">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#38f2a0]"></div>
+<span class="text-on-surface font-medium">Supabase: Connected • Realtime Sync Active</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[15px] text-secondary">lock</span>
+<span>Zero-Knowledge AES-256 Journal Encryption</span>
+</div>
+</section>
+</div>
+</main>
+<!-- Clean Footer -->
+<footer class="w-full border-t border-white/[0.05] bg-surface-container-lowest py-8 sm:py-10">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs text-on-surface-variant">
+<div class="flex items-center gap-2 justify-center sm:justify-start">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<span class="font-medium text-on-surface">RISE JOURNAL — A Journal For A Better You</span>
+</div>
+<div class="text-outline">
+        Encrypted end-to-end • Clean &amp; Minimal Daily Habit Tracker
+      </div>
+</div>
+</footer>
+<!-- Vanilla JavaScript for Responsiveness and Interactivity -->
+<script>
+    // 1. Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // 2. Interactive Daily Quotes Cycler
+    const quotes = [
+      { text: "A small step today, leads to big results tomorrow.", author: "Unknown" },
+      { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+      { text: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+      { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Ryan Holiday" },
+      { text: "We do not rise to the level of our expectations, we fall to the level of our training.", author: "Archilochus" }
+    ];
+
+    let currentQuoteIndex = 0;
+    const quoteText = document.getElementById('quote-text');
+    const quoteAuthor = document.getElementById('quote-author');
+    const refreshBtn = document.getElementById('refresh-quote-btn');
+
+    if (refreshBtn && quoteText && quoteAuthor) {
+      refreshBtn.addEventListener('click', () => {
+        quoteText.style.opacity = '0';
+        quoteAuthor.style.opacity = '0';
+        setTimeout(() => {
+          currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+          quoteText.innerHTML = '&ldquo;' + quotes[currentQuoteIndex].text + '&rdquo;';
+          quoteAuthor.innerHTML = '&mdash; ' + quotes[currentQuoteIndex].author;
+          quoteText.style.opacity = '1';
+          quoteAuthor.style.opacity = '1';
+        }, 200);
+      });
+    }
+
+    // 3. Week Ribbon Interactive Selection
+    const weekStrip = document.getElementById('week-strip');
+    if (weekStrip) {
+      const dayButtons = weekStrip.querySelectorAll('button');
+      dayButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          dayButtons.forEach(b => {
+            b.className = "flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-surface-container-low hover:bg-surface-container border border-white/[0.03] transition-all group";
+            const label = b.querySelector('span:first-child');
+            if (label) label.className = "text-[11px] sm:text-xs font-medium text-on-surface-variant group-hover:text-on-surface";
+            const num = b.querySelector('span:nth-child(2)');
+            if (num) num.className = "text-sm sm:text-base font-semibold text-on-surface mt-0.5";
+            const dot = b.querySelector('span:last-child');
+            if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-outline-variant mt-1.5";
+          });
+
+          btn.className = "flex flex-col items-center py-2.5 sm:py-3.5 px-1 sm:px-2 rounded-xl bg-primary-container text-on-primary-container font-semibold shadow-[0_0_20px_rgba(56,242,160,0.3)] ring-1 ring-primary-container transition-all";
+          const activeLabel = btn.querySelector('span:first-child');
+          if (activeLabel) activeLabel.className = "text-[11px] sm:text-xs tracking-wide";
+          const activeNum = btn.querySelector('span:nth-child(2)');
+          if (activeNum) activeNum.className = "text-sm sm:text-base font-bold mt-0.5";
+          const activeDot = btn.querySelector('span:last-child');
+          if (activeDot) activeDot.className = "w-1.5 h-1.5 rounded-full bg-on-primary-container mt-1.5";
+        });
+      });
+    }
+
+    // 4. Habits Compliance and Interactive Checkbox Logic
+    function updateCompliance() {
+      const tasks = document.querySelectorAll('#protocol-tasks-list .task-card');
+      const completed = document.querySelectorAll('#protocol-tasks-list .task-card[data-completed="true"]');
+      const total = tasks.length;
+      const count = completed.length;
+      const counter = document.getElementById('compliance-counter');
+      const pct = document.getElementById('compliance-pct');
+      const bar = document.getElementById('compliance-bar');
+      
+      if (counter) counter.textContent = count + ' / ' + total + ' Completed';
+      const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+      if (pct) pct.textContent = percentage + '%';
+      if (bar) bar.style.width = percentage + '%';
+    }
+
+    function attachTaskListeners(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('form')) return;
+        const isDone = card.getAttribute('data-completed') === 'true';
+        const nextState = !isDone;
+        card.setAttribute('data-completed', nextState ? 'true' : 'false');
+        
+        const btn = card.querySelector('.task-checkbox');
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const title = card.querySelector('.task-title');
+        
+        if (nextState) {
+          btn.className = 'task-checkbox w-5 h-5 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container flex-shrink-0 transition-transform active:scale-90';
+          icon.classList.remove('hidden');
+          title.classList.add('line-through', 'opacity-70');
+        } else {
+          btn.className = 'task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline/50 bg-transparent flex-shrink-0 transition-transform active:scale-90';
+          icon.classList.add('hidden');
+          title.classList.remove('line-through', 'opacity-70');
+        }
+        updateCompliance();
+      });
+    }
+
+    document.querySelectorAll('#protocol-tasks-list .task-card').forEach(attachTaskListeners);
+
+    // 5. Add Custom Habit Form Toggle & Submit
+    const toggleBtn = document.getElementById('toggle-add-task');
+    const addFormContainer = document.getElementById('add-task-container');
+    if (toggleBtn && addFormContainer) {
+      toggleBtn.addEventListener('click', function() {
+        addFormContainer.classList.toggle('hidden');
+        const input = document.getElementById('new-task-input');
+        if (!addFormContainer.classList.contains('hidden') && input) {
+          input.focus();
+        }
+      });
+    }
+
+    const addForm = document.getElementById('add-task-form');
+    if (addForm) {
+      addForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = document.getElementById('new-task-input');
+        const category = document.getElementById('new-task-category');
+        if (!input || !input.value.trim()) return;
+        
+        const titleText = input.value.trim();
+        const catText = category ? category.value : 'Custom';
+        
+        const newCard = document.createElement('div');
+        newCard.className = 'task-card flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group';
+        newCard.setAttribute('data-completed', 'false');
+        newCard.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <button class="task-checkbox w-5 h-5 rounded-full flex items-center justify-center border border-outline/50 bg-transparent flex-shrink-0 transition-transform active:scale-90">
+              <span class="material-symbols-outlined text-[14px] font-bold hidden">check</span>
+            </button>
+            <span class="task-title text-xs sm:text-sm text-on-surface group-hover:text-primary transition-colors truncate">${titleText}</span>
+          </div>
+          <span class="text-[11px] sm:text-xs text-primary-container bg-primary-container/10 px-2.5 py-0.5 rounded-full flex-shrink-0 ml-2">${catText}</span>
+        `;
+        
+        attachTaskListeners(newCard);
+        document.getElementById('protocol-tasks-list').appendChild(newCard);
+        input.value = '';
+        addFormContainer.classList.add('hidden');
+        updateCompliance();
+      });
+    }
+  </script>
+</body></html>

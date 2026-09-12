@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+@layer base{
+  html,body{margin:0;padding:0;}
+  body{overscroll-behavior:none;}
+  main>:first-child{margin-top:0!important;}
+  main>:last-child{margin-bottom:0!important;}
+}
+::-webkit-scrollbar{display:none;}
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary-container": "#4bf1a6",
+        "on-primary": "#003921",
+        "on-error": "#690005",
+        "surface-dim": "#0f1512",
+        "surface-container-lowest": "#090f0d",
+        "inverse-surface": "#dee4e0",
+        "on-primary-fixed": "#002111",
+        "on-surface-variant": "#bacbbd",
+        "surface-container-highest": "#303633",
+        "primary": "#c7ffda",
+        "error-container": "#93000a",
+        "primary-fixed-dim": "#15e292",
+        "surface": "#0f1512",
+        "surface-container-high": "#252b29",
+        "on-secondary-fixed": "#002114",
+        "tertiary-fixed": "#5bfeb2",
+        "surface-container-low": "#171d1a",
+        "tertiary": "#c8ffdc",
+        "on-secondary-fixed-variant": "#19503b",
+        "secondary-fixed-dim": "#9bd2b6",
+        "on-error-container": "#ffdad6",
+        "inverse-primary": "#006d43",
+        "outline-variant": "#3b4a40",
+        "outline": "#859588",
+        "on-surface": "#dee4e0",
+        "secondary": "#9bd2b6",
+        "surface-container": "#1b211e",
+        "on-tertiary-container": "#006a44",
+        "on-tertiary": "#003822",
+        "surface-variant": "#303633",
+        "primary-container": "#38f2a0",
+        "background": "#0f1512",
+        "on-secondary": "#003826",
+        "error": "#ffb4ab",
+        "on-primary-container": "#006a42",
+        "secondary-fixed": "#b7efd2",
+        "on-secondary-container": "#8ac1a6",
+        "on-primary-fixed-variant": "#005231",
+        "on-background": "#dee4e0",
+        "on-tertiary-fixed-variant": "#005233",
+        "surface-tint": "#15e292",
+        "surface-bright": "#343b38",
+        "secondary-container": "#19503b",
+        "primary-fixed": "#51ffad",
+        "on-tertiary-fixed": "#002112",
+        "tertiary-fixed-dim": "#33e198",
+        "inverse-on-surface": "#2b322f"
+      },
+      "borderRadius": {
+        "DEFAULT": "1rem",
+        "lg": "2rem",
+        "xl": "3rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-lg": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin": "2rem",
+        "space-md": "1rem",
+        "space-xl": "2.5rem",
+        "gutter-sm": "1rem",
+        "margin-sm": "1rem",
+        "gutter": "1.5rem",
+        "space-sm": "0.5rem"
+      },
+      "fontFamily": {
+        "headline-sm": ["Inter", "sans-serif"],
+        "label-lg": ["Inter", "sans-serif"],
+        "display-lg-mobile": ["Inter", "sans-serif"],
+        "body-md": ["Inter", "sans-serif"],
+        "label-md": ["Inter", "sans-serif"],
+        "headline-lg-mobile": ["Inter", "sans-serif"],
+        "body-sm": ["Inter", "sans-serif"],
+        "display-lg": ["Inter", "sans-serif"],
+        "body-lg": ["Inter", "sans-serif"],
+        "label-sm": ["Inter", "sans-serif"],
+        "headline-lg": ["Inter", "sans-serif"],
+        "headline-md": ["Inter", "sans-serif"]
+      },
+      "fontSize": {
+        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+        "body-md": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+        "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+        "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+        "body-sm": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+        "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+      }
+    }
+  }
+}
+</script>
+</head>
+<body class="bg-surface-container-lowest font-body-md text-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- Atmospheric ambient lighting -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[780px] h-[360px] bg-surface-tint/10 rounded-full blur-[140px]"></div>
+<div class="absolute top-1/3 left-1/4 w-[420px] h-[420px] bg-primary-container/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 right-0 h-96 opacity-10 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div>
+</div>
+<!-- Main Top Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-surface-container-high/40">
+<div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">RISE JOURNAL</span>
+</div>
+<div class="hidden lg:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low border border-surface-container-high/40">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Supabase Cloud: Synced</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-space-sm flex-1 max-w-md mx-gutter px-space-md py-space-xs rounded-full bg-surface-container-low border border-surface-container-high/40">
+<span class="material-symbols-outlined text-primary text-[18px]">format_quote</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Dawn brings clarity to what was quiet chaos.</p>
+</div>
+<div class="flex items-center gap-space-md">
+<nav class="hidden sm:flex items-center gap-space-xs">
+<a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Home</a>
+<a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Journal</a>
+<a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg bg-surface-container-high text-primary transition-colors" href="#">Avatar</a>
+<a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Stats</a>
+<a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Profile</a>
+</nav>
+<a class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.25)]" href="#">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>New Entry
+      </a>
+<div class="flex items-center gap-space-sm pl-space-xs">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+<span class="hidden lg:block font-label-md text-label-md text-on-surface">Rahul S.</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="relative z-10 w-full pt-28 pb-space-xl bg-transparent">
+<div class="max-w-7xl mx-auto w-full px-margin space-y-space-xl">
+<!-- Top Introduction & Arc Stage Context -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_10px_#38f2a0]"></span>
+<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-wider">Character Evolution • Your Winter Arc Avatar</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Watch Yourself Transform</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your 3D character evolves physically as you log daily journals, maintain habits, and win challenges. Every day of discipline sculpts your avatar.</p>
+</div>
+<!-- Day Counter & Streak Card -->
+<div class="flex items-center gap-space-md px-space-lg py-space-sm rounded-full bg-surface-container-low border border-surface-container-high/40 shadow-sm self-start md:self-auto">
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Active Arc</span>
+<span class="font-headline-sm text-headline-sm text-primary">Day 42 of 90</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_0_14px_rgba(56,242,160,0.3)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+</div>
+<!-- Main Dual Column Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left / Center Feature: High-Fidelity Realistic Avatar Showcase (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Showcase Stage Container with Futuristic Pedestal & Atmospheric Lighting -->
+<div class="relative w-full rounded-2xl bg-surface-container-low/90 border border-surface-container-high/60 p-space-lg overflow-hidden flex flex-col shadow-2xl backdrop-blur-md">
+<!-- Background Atmospheric Glow Disc behind 3D Model -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary-container/10 blur-[110px] pointer-events-none"></div>
+<div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-80 h-28 bg-surface-tint/20 rounded-full blur-[70px] pointer-events-none"></div>
+<!-- Top Stage Badges -->
+<div class="relative z-10 flex flex-wrap items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high/90 border border-outline-variant/30 text-on-surface backdrop-blur-md">
+<span class="material-symbols-outlined text-[16px] text-primary-container">view_in_ar</span>
+<span class="font-label-md text-label-md">360° Realistic Character Sanctuary</span>
+<span class="text-outline">•</span>
+<span class="font-label-sm text-label-sm text-primary">Synced to Day 42 / 90</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high/90 border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#38f2a0]"></span>
+<span class="font-label-sm text-label-sm text-primary-fixed">Unreal Engine 5 Fidelity</span>
+</div>
+</div>
+<!-- 3D Realistic Character Viewport & Pedestal Display -->
+<div class="relative w-full min-h-[520px] rounded-xl overflow-hidden flex flex-col items-center justify-center bg-gradient-to-b from-surface-container-lowest/80 via-surface-container-lowest/95 to-surface-container-low/60 border border-surface-container-high/30">
+<!-- Sleek Glass Pedestal Floor Grid Reflection -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_75%,rgba(56,242,160,0.12),transparent_70%)] pointer-events-none"></div>
+<!-- High-Fidelity Character Render Image -->
+<div class="relative z-10 w-full flex items-center justify-center py-2">
+<img alt="Realistic 3D Character Avatar" class="h-[520px] w-auto mx-auto object-contain drop-shadow-[0_20px_40px_rgba(56,242,160,0.3)] transition-all duration-500 select-none" id="avatarDisplay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvJZLkvC4FBnOwPYrn2cr2dhDY6q_Z3Nl_jlT7H7HxzK8aIFnUeUcfCfNx8Xo6e0Eo66JX53MGHMt5M57sO0_VIY61-Ax2rNiY2blIxWHSBfbmQbuZsQ7chbOtBajh1AAkXBS6GiapDfD2GtKv_HuShbCK7ih9atqwe9w3Qw_riZpso1gd1q-wHJoYgxlxENjgzRd6Tca2_i5M8CnnGaRoF3g3jy4CpVMkXzhyTYX6vpIY8OPDtmm0rw"/>
+</div>
+<!-- Floating Stage Pill over Canvas -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 px-space-lg py-space-xs rounded-full bg-surface-container-high/90 border border-outline-variant/40 backdrop-blur-md shadow-lg text-center z-20 whitespace-nowrap">
+<p class="font-label-lg text-label-lg text-primary tracking-wide" id="current-physique-label">
+                Current Physique: Level 2 — Athletic &amp; Building (Day 42)
+              </p>
+</div>
+</div>
+<!-- Interactive Morph Journey Selector (Bottom of Viewer) -->
+<div class="relative z-10 mt-space-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Interactive Morph Journey Selector</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Click phase to preview character evolution</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs pt-space-xs" id="morphPillsContainer">
+<!-- Phase 01 Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high border border-surface-container-high hover:border-primary/40 hover:bg-surface-bright transition-all text-center group cursor-pointer" id="btn-stage-1" onclick="window.switchAvatarStage(1)" type="button">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Phase 01</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5 text-on-surface">🌱 Day 1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Starting Soft</span>
+</button>
+<!-- Phase 02 Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high border border-surface-container-high hover:border-primary/40 hover:bg-surface-bright transition-all text-center group cursor-pointer" id="btn-stage-2" onclick="window.switchAvatarStage(2)" type="button">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Phase 02</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5 text-on-surface">⚡ Day 30</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Getting Lean</span>
+</button>
+<!-- Phase 03 Button (Active Default - Level 2 / Day 42-60) -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-primary-container text-on-primary-container border border-primary/50 shadow-[0_0_18px_rgba(56,242,160,0.35)] transition-all text-center cursor-pointer" id="btn-stage-3" onclick="window.switchAvatarStage(3)" type="button">
+<span class="font-label-sm text-label-sm text-on-primary-container/80 font-medium">Phase 03 (Current)</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5">🔥 Day 60</span>
+<span class="font-label-sm text-label-sm text-on-primary-container/90">Athletic &amp; Fit</span>
+</button>
+<!-- Final Goal Button -->
+<button class="stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high border border-surface-container-high hover:border-primary/40 hover:bg-surface-bright transition-all text-center group cursor-pointer" id="btn-stage-4" onclick="window.switchAvatarStage(4)" type="button">
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">Final Goal</span>
+<span class="font-label-md text-label-md font-semibold mt-0.5 text-on-surface">👑 Day 90</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Peak Winter Arc</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Lore & Transformation Philosophy -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low border border-surface-container-high/40 flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Auto-Sync Dynamic Body Physics</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every completed workout and meal log recalculates fat mesh parameters and muscle volume.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[22px] shrink-0" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<!-- Right Column: Stats, Archetype, & Unlocks (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Card 1: Evolution Progress Tracker -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low border border-surface-container-high/40 flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Evolution Progress</h2>
+</div>
+<span class="font-label-md text-label-md text-primary font-semibold">Stage 2 → Stage 3</span>
+</div>
+<!-- Circular Metric & Bar Breakdown -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Overall Progress</span>
+<span class="font-label-lg text-label-lg text-primary font-semibold">68%</span>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary-container rounded-full shadow-[0_0_12px_#38f2a0]" style="width: 68%;"></div>
+</div>
+<p class="font-label-sm text-label-sm text-outline">18 days of consistency remaining until Athletic &amp; Fit morph</p>
+</div>
+<!-- Clear Requirements List -->
+<div class="space-y-space-sm pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">What Evolves Your Character?</span>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container border border-surface-container-high/30">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">10 Daily Habits Completed</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tones muscle tissue &amp; trims midsection fat</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container border border-surface-container-high/30">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">Daily Dawn Journal Log</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Unlocks glowing aura, sharp eye focus &amp; posture</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded-xl bg-surface-container border border-surface-container-high/30">
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-medium">Push-up Duels Won</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expands chest breadth &amp; shoulder width</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Starting Character Archetype -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low border border-surface-container-high/40 flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">person_outline</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Base Archetype</h2>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container-high hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors border border-surface-container-highest" onclick="window.cycleArchetype()">
+              Change Base
+            </button>
+</div>
+<div class="flex items-center gap-space-md p-space-md rounded-xl bg-surface-container border border-surface-container-high/30">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shrink-0 shadow-[0_0_12px_rgba(56,242,160,0.25)]">
+<span class="material-symbols-outlined text-[24px]" id="archetype-icon">hiking</span>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold truncate" id="archetype-title">The Comeback</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="archetype-desc">Starting soft &amp; builds into an elite, disciplined athlete over 90 days.</p>
+</div>
+</div>
+</div>
+<!-- Card 3: Recent & Upcoming Body Unlocks -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low border border-surface-container-high/40 flex flex-col gap-space-md shadow-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">stars</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Physical Morph Milestones</h2>
+</div>
+<div class="space-y-space-xs">
+<!-- Unlocked 1 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container border border-surface-container-high/30">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 40: Waistline Morph</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">-15% body fat avatar compression</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">Active</span>
+</div>
+<!-- Unlocked 2 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container border border-surface-container-high/30">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 35: Arc Core Halo</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Luminescent green chest aura enabled</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">Active</span>
+</div>
+<!-- Locked Next -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container border border-surface-container-high/20 opacity-60">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Day 60: Broad V-Taper Frame</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Wider shoulders, pronounced lats</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">18d left</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Bar & Navigation -->
+<div class="p-space-lg rounded-2xl bg-surface-container-low border border-surface-container-high/50 flex flex-col md:flex-row items-center justify-between gap-space-md shadow-xl">
+<div class="flex items-center gap-space-md text-left w-full md:w-auto">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Keep Sculpting Today</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3 habits remaining before tonight avatar sync.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm w-full md:w-auto justify-end">
+<a class="px-space-lg py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-space-xs border border-surface-container-highest" href="#">
+<span class="material-symbols-outlined text-[18px]">sports_kabaddi</span>
+          Duel a Friend
+        </a>
+<a class="px-space-lg py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-space-xs border border-surface-container-highest" href="#">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+          Open Journal
+        </a>
+<a class="px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-all shadow-[0_0_20px_rgba(56,242,160,0.3)] flex items-center gap-space-xs font-semibold" href="#">
+<span>Go to Today's Habits (7/10 done)</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="relative z-10 w-full bg-surface-container-lowest py-space-xl border-t border-surface-container-high/30">
+<div class="max-w-7xl mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_6px_#38f2a0]"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">RISE JOURNAL — A Journal For A Better You</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline">Encrypted end-to-end with nocturnal calm • Synced in Realtime</div>
+</div>
+</footer>
+<!-- Interactive Scripts -->
+<script>
+  // Dynamic Realistic Avatar Phase Switcher Data
+  const avatarPhases = {
+    1: {
+      imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuDWlIpP-QA0bMfzgvcdr_W1Ix4H7Hu8K2ImpCFz9kA4GelC-PjXqQt035bKCamvuooYGqDLMeaxocgdFD_JCdWLRU-E7WVLkKlu2kZFtct9QecEgJIdZ5Juzsy7jOyPK-4ai7oJCK5LIuZLsqAhHCvJbQB0q2op9gintsPP1pJnZGg9PHp85hZgbMfvqwSKS6ZUZHvIVdvBHKwFfAzx8H5esmfzJb0gG4yZZny9w3uXA4eAsJ7T3n_daQ",
+      badgeText: "Current Physique: Level 1 — Starting Heavy & Soft (Day 1)",
+      phaseName: "Phase 01",
+      alt: "Phase 1 - Starting Soft 3D Avatar"
+    },
+    2: {
+      imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuB6AxVOmw-xQzgaxU-Kogf6yZEyvXuvpFO02ciDoT2rWLTDbloTSyxxCrTfLnx8AWEpAGzoQAkzDp6404obN2pOsXTmfK2UHGC5q0ypuuXml1oeoH9K0xVvxiuRf-Kg7_2hXisxmPxX18nwd7-9CRlUdew14NyAFJDL_l3WNM613hAauPG4hHQd9ibRE4K7DLNJ9fO1AW5FbkI9ZFJ2iZCLLGCBcFC3IaB6Ixvo6952hqP7tvhLjuPHMg",
+      badgeText: "Current Physique: Level 1.5 — Slimming & Getting Lean (Day 30)",
+      phaseName: "Phase 02",
+      alt: "Phase 2 - Getting Lean 3D Avatar"
+    },
+    3: {
+      imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuDvJZLkvC4FBnOwPYrn2cr2dhDY6q_Z3Nl_jlT7H7HxzK8aIFnUeUcfCfNx8Xo6e0Eo66JX53MGHMt5M57sO0_VIY61-Ax2rNiY2blIxWHSBfbmQbuZsQ7chbOtBajh1AAkXBS6GiapDfD2GtKv_HuShbCK7ih9atqwe9w3Qw_riZpso1gd1q-wHJoYgxlxENjgzRd6Tca2_i5M8CnnGaRoF3g3jy4CpVMkXzhyTYX6vpIY8OPDtmm0rw",
+      badgeText: "Current Physique: Level 2 — Athletic & Building (Day 42)",
+      phaseName: "Phase 03 (Current)",
+      alt: "Phase 3 - Athletic & Fit Realistic 3D Avatar"
+    },
+    4: {
+      imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCc7HNEuf_D0rwQUofvi1_wAT6wlUNJjssm5KfCDzR9pCf8xQqJXHEW-GjTdvqoPKmpmEIYE6xqqDyGQkSwBlvy6VyIBX6f15eZNOWA6wt9rrklazcW1K5UKRs1Xh0a3Db9siTs0dlqUAZsJ-WEPgTDkAsSEOJ0CXFoDq1yb5AwzHtft5Z8shT8UoiTkHdYMnwRyGBNN_dE8-sNhVpHHb5Aic-JYdVG4rQu3FMRw75s9PscP9YU65RMLA",
+      badgeText: "Current Physique: Level 3 — Peak Winter Arc Mastery (Day 90)",
+      phaseName: "Final Goal",
+      alt: "Final Goal - Peak Winter Arc Shredded Avatar"
+    }
+  };
+
+  window.switchAvatarStage = function(stageNum) {
+    const phase = avatarPhases[stageNum];
+    if (!phase) return;
+
+    const avatarImg = document.getElementById('avatarDisplay');
+    const labelEl = document.getElementById('current-physique-label');
+
+    if (avatarImg) {
+      // Smooth fade transition
+      avatarImg.classList.add('opacity-0', 'scale-[0.98]');
+      setTimeout(() => {
+        avatarImg.src = phase.imgSrc;
+        avatarImg.alt = phase.alt;
+        avatarImg.classList.remove('opacity-0', 'scale-[0.98]');
+      }, 150);
+    }
+
+    if (labelEl) {
+      labelEl.innerText = phase.badgeText;
+    }
+
+    // Update Stage Buttons Style
+    for (let i = 1; i <= 4; i++) {
+      const btn = document.getElementById('btn-stage-' + i);
+      if (!btn) continue;
+
+      const subLabel = btn.querySelector('span:first-child');
+
+      if (i === stageNum) {
+        btn.className = "stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-primary-container text-on-primary-container border border-primary/50 shadow-[0_0_18px_rgba(56,242,160,0.35)] transition-all text-center cursor-pointer";
+        if (subLabel) {
+          subLabel.className = "font-label-sm text-label-sm text-on-primary-container/80 font-medium";
+          subLabel.innerText = i === 3 ? "Phase 03 (Current)" : (i === 4 ? "Final Goal (Selected)" : "Phase 0" + i + " (Preview)");
+        }
+      } else {
+        btn.className = "stage-btn flex flex-col items-center justify-center p-space-sm rounded-xl bg-surface-container-high border border-surface-container-high hover:border-primary/40 hover:bg-surface-bright transition-all text-center group cursor-pointer";
+        if (subLabel) {
+          subLabel.className = "font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors";
+          subLabel.innerText = i === 4 ? "Final Goal" : "Phase 0" + i;
+        }
+      }
+    }
+  };
+
+  // Archetypes rotation
+  const archetypes = [
+    { title: "The Comeback", desc: "Starting soft & builds into an elite, disciplined athlete over 90 days.", icon: "hiking" },
+    { title: "The Dawn Runner", desc: "Agile, endurance-focused frame with speed-glow boots and lightweight build.", icon: "directions_run" },
+    { title: "The Iron Monk", desc: "Heavy strength-focused physique built for push-ups, calisthenics & cold discipline.", icon: "self_improvement" }
+  ];
+  let currentArchetypeIndex = 0;
+
+  window.cycleArchetype = function() {
+    currentArchetypeIndex = (currentArchetypeIndex + 1) % archetypes.length;
+    const arch = archetypes[currentArchetypeIndex];
+    document.getElementById('archetype-title').innerText = arch.title;
+    document.getElementById('archetype-desc').innerText = arch.desc;
+    document.getElementById('archetype-icon').innerText = arch.icon;
+  };
+</script>
+</body></html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary": "#003826",
+            "tertiary-fixed": "#5bfeb2",
+            "surface-container-highest": "#303633",
+            "on-surface": "#dee4e0",
+            "on-tertiary": "#003822",
+            "surface-dim": "#0f1512",
+            "surface-container": "#1b211e",
+            "error-container": "#93000a",
+            "outline": "#859588",
+            "outline-variant": "#3b4a40",
+            "primary-fixed": "#51ffad",
+            "on-error": "#690005",
+            "on-primary-fixed-variant": "#005231",
+            "background": "#0f1512",
+            "on-secondary-fixed-variant": "#19503b",
+            "surface-container-lowest": "#090f0d",
+            "surface-container-low": "#171d1a",
+            "on-secondary-container": "#8ac1a6",
+            "on-primary-fixed": "#002111",
+            "on-error-container": "#ffdad6",
+            "primary": "#c7ffda",
+            "surface-tint": "#15e292",
+            "tertiary-fixed-dim": "#33e198",
+            "surface-container-high": "#252b29",
+            "on-secondary-fixed": "#002114",
+            "on-tertiary-fixed-variant": "#005233",
+            "tertiary-container": "#4bf1a6",
+            "secondary-container": "#19503b",
+            "secondary-fixed": "#b7efd2",
+            "on-tertiary-fixed": "#002112",
+            "secondary": "#9bd2b6",
+            "inverse-surface": "#dee4e0",
+            "inverse-on-surface": "#2b322f",
+            "surface-variant": "#303633",
+            "secondary-fixed-dim": "#9bd2b6",
+            "on-primary": "#003921",
+            "primary-container": "#38f2a0",
+            "on-primary-container": "#006a42",
+            "on-surface-variant": "#bacbbd",
+            "surface": "#0f1512",
+            "inverse-primary": "#006d43",
+            "on-background": "#dee4e0",
+            "on-tertiary-container": "#006a44",
+            "tertiary": "#c8ffdc",
+            "surface-bright": "#343b38",
+            "primary-fixed-dim": "#15e292",
+            "error": "#ffb4ab"
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "1.5rem",
+            "xl": "2rem",
+            "2xl": "2.5rem",
+            "full": "9999px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary-container antialiased">
+<!-- Subtle Background Glows -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[340px] sm:w-[600px] lg:w-[840px] h-[320px] bg-primary-container/10 rounded-full blur-[140px]"></div>
+<div class="absolute bottom-0 left-0 right-0 h-80 opacity-20 bg-gradient-to-t from-secondary-container via-surface-container-lowest to-transparent"></div>
+</div>
+<!-- Responsive Navigation Header -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-white/[0.05]">
+<div class="h-16 sm:h-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-4">
+<!-- Logo & Cloud Status -->
+<div class="flex items-center gap-3 sm:gap-4">
+<a class="flex items-center gap-2.5" href="#">
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#38f2a0]"></div>
+<span class="font-semibold text-base sm:text-lg text-primary tracking-tight">RISE JOURNAL</span>
+</a>
+<div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-white/[0.04]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-xs text-on-surface-variant font-medium">Supabase Synced</span>
+</div>
+</div>
+<!-- Center Quote (Desktop only) -->
+<div class="hidden xl:flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low/70 border border-white/[0.04] max-w-xs">
+<span class="material-symbols-outlined text-primary text-[16px]">format_quote</span>
+<p class="text-xs text-on-surface-variant truncate">One mindful step each dawn.</p>
+</div>
+<!-- Nav Links & Profile -->
+<div class="flex items-center gap-2 sm:gap-4">
+<nav class="hidden md:flex items-center gap-1">
+<a class="px-3.5 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Home</a>
+<a class="px-3.5 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Journal</a>
+<a class="px-3.5 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Stats</a>
+<a class="px-3.5 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" href="#">Profile</a>
+</nav>
+<a class="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container text-xs sm:text-sm font-semibold hover:bg-primary-fixed transition-all shadow-[0_0_16px_rgba(56,242,160,0.2)]" href="#">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>New Entry</span>
+</a>
+<!-- User avatar / Mobile menu button -->
+<div class="flex items-center gap-2 pl-1 sm:pl-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-white/[0.08] flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<span class="hidden lg:block text-xs sm:text-sm font-medium text-on-surface">Rahul S.</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Wrapper with responsive padding -->
+<main class="relative z-10 w-full pt-20 sm:pt-24 pb-16 sm:pb-24">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 flex flex-col gap-8 sm:gap-10">
+<!-- Breadcrumbs & Step Progress Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+<div class="flex items-center gap-3 sm:gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-white/[0.06] flex items-center justify-center text-primary shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-semibold tracking-widest text-primary uppercase">Setup Phase</span>
+<span class="text-outline-variant text-xs">•</span>
+<span class="text-xs text-on-surface-variant font-medium">Step 2 of 3</span>
+</div>
+<h2 class="text-lg sm:text-xl font-semibold text-on-surface tracking-tight">Color &amp; Appearance</h2>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-4">
+<div class="flex items-center gap-2 bg-surface-container-low border border-white/[0.05] px-3.5 py-1.5 rounded-full">
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-2/3 h-full bg-primary-container rounded-full shadow-[0_0_8px_#38f2a0]"></div>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">66%</span>
+</div>
+<button class="text-xs sm:text-sm font-medium text-outline hover:text-primary transition-colors inline-flex items-center gap-1" id="skip-default-btn">
+<span>Skip to default</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Hero Header Text -->
+<div class="max-w-3xl space-y-2 sm:space-y-3">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-white/[0.06] text-xs font-medium text-secondary">
+<span class="material-symbols-outlined text-primary text-[15px]">tune</span>
+<span>Theme Personalization</span>
+</div>
+<h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-on-surface">Choose Your App Color</h1>
+<p class="text-sm sm:text-base lg:text-lg text-on-surface-variant leading-relaxed">Pick your favorite accent hue for your buttons, streaks, and focus highlights. You can customize or switch this anytime.</p>
+</div>
+<!-- Responsive 2-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+<!-- Left Column: Controls & Configuration -->
+<div class="lg:col-span-7 flex flex-col space-y-8 sm:space-y-10">
+<!-- Section 1: Curated Arc Accents -->
+<div class="space-y-4">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<h3 class="text-base sm:text-lg font-semibold text-on-surface">Curated Arc Accents</h3>
+<span class="text-[11px] font-medium text-primary px-2 py-0.5 rounded-full bg-surface-container-high border border-white/[0.04]">Dark Balanced</span>
+</div>
+<span class="text-xs text-outline">Tap to preview</span>
+</div>
+<!-- Responsive Swatch Grid: 2-col on phone, 3-col on tablet/desktop -->
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4" id="palette-grid">
+<!-- Mint Green (Default) -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(56,242,160,0.35)" data-hex="#38F2A0" data-name="Mint Green" style="outline: 2px solid #38F2A0; outline-offset: -2px;" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 shadow-md" style="background-color: #38F2A0;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon">check</span>
+</div>
+<span class="text-[10px] font-semibold text-primary bg-surface-container-low px-1.5 py-0.5 rounded">Default</span>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Mint Green</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#38F2A0</div>
+</div>
+</button>
+<!-- Sky Blue -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(56,216,242,0.35)" data-hex="#38D8F2" data-name="Sky Blue" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #38D8F2;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Sky Blue</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#38D8F2</div>
+</div>
+</button>
+<!-- Warm Amber / Orange -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(242,184,56,0.35)" data-hex="#F2B838" data-name="Warm Amber" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #F2B838;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Warm Amber</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#F2B838</div>
+</div>
+</button>
+<!-- Coral Fire -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(242,78,56,0.35)" data-hex="#F24E38" data-name="Coral Fire" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #F24E38;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Coral Fire</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#F24E38</div>
+</div>
+</button>
+<!-- Iris Purple -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(168,85,247,0.35)" data-hex="#A855F7" data-name="Iris Purple" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #A855F7;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Iris Purple</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#A855F7</div>
+</div>
+</button>
+<!-- Pure Light -->
+<button class="palette-card group text-left p-3.5 sm:p-4 rounded-2xl bg-surface-container border border-white/[0.06] hover:bg-surface-container-high transition-all flex flex-col justify-between min-h-[100px] relative shadow-sm" data-glow="rgba(226,232,240,0.35)" data-hex="#E2E8F0" data-name="Clean White" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #E2E8F0;">
+<span class="material-symbols-outlined text-[18px] text-surface-container-lowest font-bold check-icon hidden">check</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-xs sm:text-sm font-semibold text-on-surface truncate">Clean White</div>
+<div class="text-[11px] text-on-surface-variant font-mono">#E2E8F0</div>
+</div>
+</button>
+</div>
+<!-- Custom Hex Input / Color Picker -->
+<div class="p-4 sm:p-5 rounded-2xl bg-surface-container-low border border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-3">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high border border-white/[0.08] flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">colorize</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-on-surface">Custom Color</h4>
+<p class="text-xs text-on-surface-variant">Input any hex code or pick from palette</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+<div class="relative flex items-center">
+<input class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" id="native-color-picker" type="color" value="#38F2A0"/>
+<div class="w-8 h-8 rounded-full border border-white/20 shadow-inner cursor-pointer" id="custom-color-bubble" style="background-color: #38F2A0;"></div>
+</div>
+<div class="flex items-center bg-surface-container border border-white/[0.08] px-3 py-1.5 rounded-full">
+<span class="text-outline font-mono text-xs mr-1">#</span>
+<input class="w-20 bg-transparent text-on-surface font-mono text-xs font-medium uppercase focus:outline-none" id="custom-hex-input" maxlength="6" type="text" value="38F2A0"/>
+<button class="ml-2 px-3 py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-primary text-xs font-semibold transition-colors" id="apply-custom-btn" type="button">
+                    Set
+                  </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Canvas Dark Depth -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-base sm:text-lg font-semibold text-on-surface">Canvas Dark Depth</h3>
+<span class="text-xs text-outline">OLED optimized</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4" id="depth-selector">
+<!-- Pitch Black -->
+<label class="depth-card relative flex items-start gap-3.5 p-4 rounded-2xl bg-surface-container border border-white/[0.06] cursor-pointer transition-all hover:bg-surface-container-high min-h-[72px]" style="outline: 2px solid #38F2A0; outline-offset: -2px;">
+<input checked="" class="hidden depth-radio" name="depth-theme" type="radio" value="void"/>
+<div class="w-5 h-5 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0" style="background-color: #38F2A0;">
+<span class="w-2 h-2 rounded-full bg-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-on-surface">Pitch Black</span>
+<span class="text-[10px] font-mono text-primary font-medium">#020805</span>
+</div>
+<span class="text-xs text-on-surface-variant mt-0.5">True OLED • Maximizes battery life</span>
+</div>
+</label>
+<!-- Dark Gray -->
+<label class="depth-card relative flex items-start gap-3.5 p-4 rounded-2xl bg-surface-container border border-white/[0.06] cursor-pointer transition-all hover:bg-surface-container-high min-h-[72px]">
+<input class="hidden depth-radio" name="depth-theme" type="radio" value="charcoal"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-high border border-white/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-on-surface">Dark Gray</span>
+<span class="text-[10px] font-mono text-on-surface-variant font-medium">#0B120F</span>
+</div>
+<span class="text-xs text-on-surface-variant mt-0.5">Soft muted slate • Gentle on eyes</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Bottom Action Buttons: Mobile Friendly Stacking -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+<button class="h-12 sm:h-14 px-8 rounded-full text-sm sm:text-base font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:brightness-105 active:scale-[0.98]" id="apply-continue-btn" style="background-color: #38F2A0; color: #020805; box-shadow: 0 0 24px -4px rgba(56, 242, 160, 0.35);" type="button">
+<span>Save &amp; Continue</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<button class="h-12 sm:h-14 px-6 rounded-full bg-surface-container border border-white/[0.06] text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-2 active:scale-[0.98]" id="reset-default-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Reset to Default</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Live Atmosphere Mockup (Scales cleanly) -->
+<div class="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none flex flex-col gap-4 lg:sticky lg:top-24">
+<!-- Mockup Header -->
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full animate-pulse shadow-sm" id="preview-status-dot" style="background-color: #38F2A0;"></span>
+<span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Live Atmosphere Mockup</span>
+</div>
+<span class="text-xs font-mono font-semibold" id="preview-active-name" style="color: #38F2A0;">Mint Green (#38F2A0)</span>
+</div>
+<!-- Phone/Canvas Frame -->
+<div class="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 overflow-hidden transition-colors duration-500 shadow-2xl border border-white/[0.08]" id="mockup-container" style="background-color: #020805;">
+<!-- Ambient Glow Orb -->
+<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full blur-[80px] opacity-25 pointer-events-none transition-all duration-700" id="ambient-glow-orb" style="background-color: #38F2A0;"></div>
+<!-- Card Content Stack -->
+<div class="relative flex flex-col gap-5 sm:gap-6 z-10">
+<!-- Top Bar in App -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full" id="mockup-indicator-dot" style="background-color: #38F2A0;"></div>
+<span class="text-xs font-bold tracking-wider text-on-surface">RISE // SANCTUARY</span>
+</div>
+<div class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+<span>Encrypted</span>
+</div>
+</div>
+<!-- Greeting -->
+<div class="space-y-1">
+<span class="text-xs text-on-surface-variant font-medium">05:42 AM • Dawn Horizon</span>
+<h4 class="text-xl sm:text-2xl font-bold text-on-surface tracking-tight">Good Morning, Rahul.</h4>
+<p class="text-xs sm:text-sm text-on-surface-variant">Keep your daily habit going strong.</p>
+</div>
+<!-- 2 Mini Stats / Highlights Grid -->
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Current Momentum</span>
+<div class="flex items-baseline gap-1.5 my-1">
+<span class="text-2xl sm:text-3xl font-extrabold" id="mockup-streak-val" style="color: #38F2A0;">7</span>
+<span class="text-xs text-on-surface font-medium">Days Active</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden mt-1">
+<div class="w-4/5 h-full rounded-full transition-all duration-500" id="mockup-progress-bar" style="background-color: #38F2A0;"></div>
+</div>
+</div>
+<div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Ritual Status</span>
+<div class="flex items-center gap-2 my-1">
+<span class="material-symbols-outlined text-[20px]" id="mockup-status-icon" style="color: #38F2A0;">wb_twilight</span>
+<span class="text-xs sm:text-sm font-semibold text-on-surface">Ready to write</span>
+</div>
+<span class="text-[11px] text-outline truncate">Write about your day</span>
+</div>
+</div>
+<!-- Quote Card -->
+<div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.06] relative overflow-hidden pl-5 sm:pl-6" id="mockup-quote-card">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 transition-colors duration-500" id="mockup-quote-accent" style="background-color: #38F2A0;"></div>
+<p class="text-xs sm:text-sm text-on-surface italic leading-relaxed">
+                  "Silence is not the absence of sound, but the presence of undisturbed intention."
+                </p>
+<span class="text-[11px] text-on-surface-variant block mt-2 font-medium">— Daily Contemplation</span>
+</div>
+<!-- Interactive Mockup Button -->
+<button class="w-full h-12 sm:h-13 rounded-full text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-95 shadow-md" id="mockup-primary-cta" style="background-color: #38F2A0; color: #020805; box-shadow: 0 0 20px rgba(56, 242, 160, 0.35);" type="button">
+<span>Write Today's Entry</span>
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<!-- Footer info in frame -->
+<div class="flex items-center justify-between text-outline text-[11px] font-medium pt-1">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+<span>Auto-synced</span>
+</span>
+<span class="font-mono text-[10px]">ChronoID: #89F-AURORA</span>
+</div>
+</div>
+</div>
+<!-- Note below mockup -->
+<div class="p-4 rounded-2xl bg-surface-container-low border border-white/[0.05] flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-white/[0.08] flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface font-medium">Universal Application:</strong> Your selected color accent seamlessly styles buttons, streak counters, and ambient glows across all devices.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Responsive Footer -->
+<footer class="relative z-10 w-full bg-surface-container-lowest border-t border-white/[0.05] py-8 sm:py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<span class="text-xs sm:text-sm text-on-surface-variant font-medium">RISE JOURNAL — A Mindful Space For Growth</span>
+</div>
+<div class="text-xs text-outline font-medium">
+        Encrypted end-to-end with nocturnal calm • Synced in Realtime
+      </div>
+</div>
+</footer>
+<!-- Dynamic Theme & Swatch Controller Script -->
+<script>
+    (function() {
+      let currentAccent = '#38F2A0';
+      let currentGlow = 'rgba(56,242,160,0.35)';
+      let currentName = 'Mint Green';
+      let currentDepth = '#020805';
+
+      const paletteButtons = document.querySelectorAll('.palette-card');
+      const nativeColorPicker = document.getElementById('native-color-picker');
+      const customHexInput = document.getElementById('custom-hex-input');
+      const customColorBubble = document.getElementById('custom-color-bubble');
+      const applyCustomBtn = document.getElementById('apply-custom-btn');
+      
+      const depthCards = document.querySelectorAll('.depth-card');
+      const depthRadios = document.querySelectorAll('.depth-radio');
+
+      const mockupContainer = document.getElementById('mockup-container');
+      const ambientGlowOrb = document.getElementById('ambient-glow-orb');
+      const previewStatusDot = document.getElementById('preview-status-dot');
+      const previewActiveName = document.getElementById('preview-active-name');
+      const mockupIndicatorDot = document.getElementById('mockup-indicator-dot');
+      const mockupStreakVal = document.getElementById('mockup-streak-val');
+      const mockupProgressBar = document.getElementById('mockup-progress-bar');
+      const mockupStatusIcon = document.getElementById('mockup-status-icon');
+      const mockupQuoteAccent = document.getElementById('mockup-quote-accent');
+      const mockupPrimaryCta = document.getElementById('mockup-primary-cta');
+      const applyContinueBtn = document.getElementById('apply-continue-btn');
+      const resetDefaultBtn = document.getElementById('reset-default-btn');
+      const skipDefaultBtn = document.getElementById('skip-default-btn');
+
+      function getContrastTextColor(hexColor) {
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16) || 0;
+        const g = parseInt(hex.substring(2, 4), 16) || 0;
+        const b = parseInt(hex.substring(4, 6), 16) || 0;
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return (yiq >= 150) ? '#020805' : '#dee4e0';
+      }
+
+      function updateTheme(hex, name, glowRgba) {
+        currentAccent = hex;
+        currentName = name;
+        currentGlow = glowRgba || `rgba(${parseInt(hex.slice(1,3),16)}, ${parseInt(hex.slice(3,5),16)}, ${parseInt(hex.slice(5,7),16)}, 0.35)`;
+
+        const contrastText = getContrastTextColor(hex);
+
+        if (previewStatusDot) previewStatusDot.style.backgroundColor = hex;
+        if (previewActiveName) {
+          previewActiveName.innerText = `${name} (${hex.toUpperCase()})`;
+          previewActiveName.style.color = hex;
+        }
+        if (ambientGlowOrb) ambientGlowOrb.style.backgroundColor = hex;
+        if (mockupIndicatorDot) mockupIndicatorDot.style.backgroundColor = hex;
+        if (mockupStreakVal) mockupStreakVal.style.color = hex;
+        if (mockupProgressBar) mockupProgressBar.style.backgroundColor = hex;
+        if (mockupStatusIcon) mockupStatusIcon.style.color = hex;
+        if (mockupQuoteAccent) mockupQuoteAccent.style.backgroundColor = hex;
+        
+        if (mockupPrimaryCta) {
+          mockupPrimaryCta.style.backgroundColor = hex;
+          mockupPrimaryCta.style.color = contrastText;
+          mockupPrimaryCta.style.boxShadow = `0 0 20px ${currentGlow}`;
+        }
+
+        if (applyContinueBtn) {
+          applyContinueBtn.style.backgroundColor = hex;
+          applyContinueBtn.style.color = contrastText;
+          applyContinueBtn.style.boxShadow = `0 0 24px -4px ${currentGlow}`;
+        }
+
+        if (customColorBubble) customColorBubble.style.backgroundColor = hex;
+        if (customHexInput) customHexInput.value = hex.replace('#', '').toUpperCase();
+        if (nativeColorPicker) nativeColorPicker.value = hex;
+
+        paletteButtons.forEach(btn => {
+          const btnHex = btn.getAttribute('data-hex');
+          const checkIcon = btn.querySelector('.check-icon');
+          if (btnHex && btnHex.toLowerCase() === hex.toLowerCase()) {
+            btn.style.outline = `2px solid ${hex}`;
+            btn.style.outlineOffset = '-2px';
+            btn.classList.add('bg-surface-container-high');
+            if (checkIcon) checkIcon.classList.remove('hidden');
+          } else {
+            btn.style.outline = 'none';
+            btn.classList.remove('bg-surface-container-high');
+            if (checkIcon) checkIcon.classList.add('hidden');
+          }
+        });
+
+        depthCards.forEach(dc => {
+          const radio = dc.querySelector('input');
+          const bullet = dc.querySelector('div');
+          if (radio && radio.checked) {
+            dc.style.outline = `2px solid ${hex}`;
+            dc.style.outlineOffset = '-2px';
+            if (bullet) bullet.style.backgroundColor = hex;
+          } else {
+            dc.style.outline = 'none';
+            if (bullet) bullet.style.backgroundColor = '';
+          }
+        });
+      }
+
+      function updateDepth(depthType) {
+        if (depthType === 'void') {
+          currentDepth = '#020805';
+        } else {
+          currentDepth = '#0B120F';
+        }
+        if (mockupContainer) mockupContainer.style.backgroundColor = currentDepth;
+      }
+
+      paletteButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const hex = btn.getAttribute('data-hex');
+          const name = btn.getAttribute('data-name');
+          const glow = btn.getAttribute('data-glow');
+          if (hex) updateTheme(hex, name || 'Custom Hue', glow);
+        });
+      });
+
+      if (nativeColorPicker) {
+        nativeColorPicker.addEventListener('input', (e) => {
+          updateTheme(e.target.value, 'Custom Hue');
+        });
+      }
+
+      if (applyCustomBtn) {
+        applyCustomBtn.addEventListener('click', () => {
+          let val = customHexInput.value.trim();
+          if (!val.startsWith('#')) val = '#' + val;
+          if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+            updateTheme(val, 'Custom Hue');
+          }
+        });
+      }
+
+      if (customHexInput) {
+        customHexInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            applyCustomBtn.click();
+          }
+        });
+      }
+
+      depthRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          depthCards.forEach(dc => {
+            dc.style.outline = 'none';
+            const dotContainer = dc.querySelector('div');
+            if (dotContainer) dotContainer.style.backgroundColor = '';
+          });
+
+          const parentCard = e.target.closest('.depth-card');
+          if (parentCard) {
+            parentCard.style.outline = `2px solid ${currentAccent}`;
+            parentCard.style.outlineOffset = '-2px';
+            const activeDot = parentCard.querySelector('div');
+            if (activeDot) activeDot.style.backgroundColor = currentAccent;
+          }
+
+          updateDepth(e.target.value);
+        });
+      });
+
+      function resetToDefault() {
+        updateTheme('#38F2A0', 'Mint Green', 'rgba(56,242,160,0.35)');
+        const voidRadio = document.querySelector('input[value="void"]');
+        if (voidRadio) {
+          voidRadio.checked = true;
+          voidRadio.dispatchEvent(new Event('change'));
+        }
+      }
+
+      if (resetDefaultBtn) resetDefaultBtn.addEventListener('click', resetToDefault);
+      if (skipDefaultBtn) skipDefaultBtn.addEventListener('click', resetToDefault);
+
+      if (applyContinueBtn) {
+        applyContinueBtn.addEventListener('click', () => {
+          applyContinueBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+            <span>Configuring Sanctuary...</span>
+          `;
+          setTimeout(() => {
+            applyContinueBtn.innerHTML = `
+              <span class="material-symbols-outlined text-[18px]">done</span>
+              <span>Atmosphere Saved</span>
+            `;
+            setTimeout(() => {
+              window.location.hash = '#journal';
+            }, 600);
+          }, 800);
+        });
+      }
+
+      // Initialize
+      updateTheme('#38F2A0', 'Mint Green', 'rgba(56,242,160,0.35)');
+    })();
+  </script>
+</body></html>

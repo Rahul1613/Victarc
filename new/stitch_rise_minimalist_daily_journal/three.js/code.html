@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_24 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_24" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_24');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Interactive 3D Low-Poly Character Avatar with Body Morphing (Fat to Fit/Athletic) & Arc Glow
+const containerEl = typeof container !== 'undefined' ? container : document.body;
+const width = containerEl.clientWidth || 400;
+const height = containerEl.clientHeight || 450;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+camera.position.set(0, 1.4, 3.8);
+camera.lookAt(0, 1.1, 0);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.shadowMap.enabled = true;
+containerEl.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+scene.add(ambientLight);
+
+const dirLight = new THREE.DirectionalLight(0x38f2a0, 1.8);
+dirLight.position.set(3, 4, 3);
+scene.add(dirLight);
+
+const rimLight = new THREE.DirectionalLight(0x38d8f2, 1.2);
+rimLight.position.set(-3, 2, -2);
+scene.add(rimLight);
+
+const groundGlowLight = new THREE.PointLight(0x38f2a0, 1.5, 5);
+groundGlowLight.position.set(0, 0.1, 0);
+scene.add(groundGlowLight);
+
+// Pedestal / Circular platform
+const platformGeo = new THREE.CylinderGeometry(1.2, 1.3, 0.12, 32);
+const platformMat = new THREE.MeshStandardMaterial({ 
+    color: 0x141f1a, 
+    roughness: 0.3, 
+    metalness: 0.6 
+});
+const platform = new THREE.Mesh(platformGeo, platformMat);
+platform.position.y = 0.06;
+scene.add(platform);
+
+// Neon ring on platform
+const ringGeo = new THREE.TorusGeometry(1.22, 0.025, 16, 64);
+ringGeo.rotateX(Math.PI / 2);
+const ringMat = new THREE.MeshBasicMaterial({ color: 0x38f2a0 });
+const ring = new THREE.Mesh(ringGeo, ringMat);
+ring.position.y = 0.12;
+scene.add(ring);
+
+// Character Root Group
+const charGroup = new THREE.Group();
+scene.add(charGroup);
+
+// Materials
+const skinMat = new THREE.MeshPhongMaterial({ color: 0xdb9b7b, flatShading: true });
+const suitMat = new THREE.MeshStandardMaterial({ color: 0x18241e, roughness: 0.4, metalness: 0.3, flatShading: true });
+const accentMat = new THREE.MeshBasicMaterial({ color: 0x38f2a0 });
+const hairMat = new THREE.MeshLambertMaterial({ color: 0x1a1a1a, flatShading: true });
+const shoeMat = new THREE.MeshLambertMaterial({ color: 0x090f0d, flatShading: true });
+
+// HEAD & FACE
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 1.85, 0);
+
+const headGeo = new THREE.BoxGeometry(0.38, 0.42, 0.38);
+const headMesh = new THREE.Mesh(headGeo, skinMat);
+headGroup.add(headMesh);
+
+const hairGeo = new THREE.BoxGeometry(0.42, 0.18, 0.42);
+const hairMesh = new THREE.Mesh(hairGeo, hairMat);
+hairMesh.position.set(0, 0.18, -0.02);
+headGroup.add(hairMesh);
+
+// Glowing visor / arc headband
+const bandGeo = new THREE.BoxGeometry(0.41, 0.06, 0.4);
+const bandMesh = new THREE.Mesh(bandGeo, accentMat);
+bandMesh.position.set(0, 0.08, 0.01);
+headGroup.add(bandMesh);
+
+charGroup.add(headGroup);
+
+// TORSO (with scalable morph targets for Fat -> Athletic -> Shredded)
+const torsoGeo = new THREE.CylinderGeometry(0.28, 0.24, 0.7, 8);
+const torsoMesh = new THREE.Mesh(torsoGeo, suitMat);
+torsoMesh.position.set(0, 1.25, 0);
+charGroup.add(torsoMesh);
+
+// Chest / Arc Core Light
+const chestCoreGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.04, 16);
+chestCoreGeo.rotateX(Math.PI / 2);
+const chestCoreMesh = new THREE.Mesh(chestCoreGeo, accentMat);
+chestCoreMesh.position.set(0, 1.35, 0.22);
+charGroup.add(chestCoreMesh);
+
+// BELLY (morphable sphere/cylinder that represents fat/heavy vs lean/six-pack)
+const bellyGeo = new THREE.SphereGeometry(0.32, 12, 10);
+const bellyMesh = new THREE.Mesh(bellyGeo, suitMat);
+bellyMesh.position.set(0, 1.15, 0.08);
+charGroup.add(bellyMesh);
+
+// LEGS
+const legGeo = new THREE.CylinderGeometry(0.12, 0.1, 0.65, 8);
+
+const leftLeg = new THREE.Mesh(legGeo, suitMat);
+leftLeg.position.set(-0.2, 0.58, 0);
+charGroup.add(leftLeg);
+
+const rightLeg = new THREE.Mesh(legGeo, suitMat);
+rightLeg.position.set(0.2, 0.58, 0);
+charGroup.add(rightLeg);
+
+// FEET / SHOES
+const shoeGeo = new THREE.BoxGeometry(0.16, 0.14, 0.28);
+
+const leftShoe = new THREE.Mesh(shoeGeo, shoeMat);
+leftShoe.position.set(-0.2, 0.14, 0.06);
+charGroup.add(leftShoe);
+
+const rightShoe = new THREE.Mesh(shoeGeo, shoeMat);
+rightShoe.position.set(0.2, 0.14, 0.06);
+charGroup.add(rightShoe);
+
+// ARMS
+const armGeo = new THREE.CylinderGeometry(0.1, 0.08, 0.6, 8);
+
+const leftArm = new THREE.Mesh(armGeo, suitMat);
+leftArm.position.set(-0.42, 1.25, 0);
+leftArm.rotation.z = 0.15;
+charGroup.add(leftArm);
+
+const rightArm = new THREE.Mesh(armGeo, suitMat);
+rightArm.position.set(0.42, 1.25, 0);
+rightArm.rotation.z = -0.15;
+charGroup.add(rightArm);
+
+// Evolution Stage Morph Parameters
+// stage 1: Fat/Soft (belly big, arms/legs thick, posture slouched)
+// stage 2: Steady/Slimming (belly reduced, posture upright)
+// stage 3: Athletic/Fit (wide shoulders, trim waist, defined chest)
+// stage 4: Winter Arc Peak / Titanium Beast (broad, neon cyber lines, aura)
+let currentEvolutionStage = 1; // Default starting character
+
+window.setAvatarStage = function(stage) {
+    currentEvolutionStage = stage;
+};
+
+// Evolution transition smoothing state
+let targetBellyScaleX = 1.45;
+let targetBellyScaleZ = 1.4;
+let targetTorsoScaleX = 1.25;
+let targetTorsoScaleY = 0.95;
+let targetShoulderWidth = 1.0;
+let targetCoreGlow = 0x38f2a0;
+
+function updateMorphTargets() {
+    if (currentEvolutionStage === 1) {
+        // Stage 1: Fat / Starting Point
+        targetBellyScaleX = 1.55;
+        targetBellyScaleZ = 1.5;
+        targetTorsoScaleX = 1.35;
+        targetTorsoScaleY = 0.92;
+        targetShoulderWidth = 0.9;
+        headGroup.position.y = 1.78;
+        chestCoreMesh.position.z = 0.28;
+    } else if (currentEvolutionStage === 2) {
+        // Stage 2: 15-30 Days Consistent (Leaner)
+        targetBellyScaleX = 1.15;
+        targetBellyScaleZ = 1.1;
+        targetTorsoScaleX = 1.1;
+        targetTorsoScaleY = 1.0;
+        targetShoulderWidth = 1.05;
+        headGroup.position.y = 1.84;
+        chestCoreMesh.position.z = 0.23;
+    } else if (currentEvolutionStage === 3) {
+        // Stage 3: 45-60 Days (Athletic & Strong)
+        targetBellyScaleX = 0.85;
+        targetBellyScaleZ = 0.85;
+        targetTorsoScaleX = 1.2;
+        targetTorsoScaleY = 1.08;
+        targetShoulderWidth = 1.22;
+        headGroup.position.y = 1.88;
+        chestCoreMesh.position.z = 0.21;
+    } else {
+        // Stage 4: Day 90 Winter Arc Master (Peak Muscular / Cyber Arc)
+        targetBellyScaleX = 0.72;
+        targetBellyScaleZ = 0.75;
+        targetTorsoScaleX = 1.4;
+        targetTorsoScaleY = 1.12;
+        targetShoulderWidth = 1.35;
+        headGroup.position.y = 1.9;
+        chestCoreMesh.position.z = 0.22;
+    }
+}
+
+// Interactive Rotation Dragging
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+
+containerEl.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener('mouseup', () => { isDragging = false; });
+
+window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - previousMousePosition.x;
+    charGroup.rotation.y += deltaX * 0.015;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+// Touch controls for mobile
+containerEl.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+});
+window.addEventListener('touchend', () => { isDragging = false; });
+window.addEventListener('touchmove', (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const deltaX = e.touches[0].clientX - previousMousePosition.x;
+    charGroup.rotation.y += deltaX * 0.015;
+    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+});
+
+// Animation Loop
+let clock = new THREE.Clock();
+function animate() {
+    requestAnimationFrame(animate);
+    const time = clock.getElapsedTime();
+
+    updateMorphTargets();
+
+    // Smooth Lerp of body shapes
+    bellyMesh.scale.x += (targetBellyScaleX - bellyMesh.scale.x) * 0.08;
+    bellyMesh.scale.z += (targetBellyScaleZ - bellyMesh.scale.z) * 0.08;
+    torsoMesh.scale.x += (targetTorsoScaleX - torsoMesh.scale.x) * 0.08;
+    torsoMesh.scale.y += (targetTorsoScaleY - torsoMesh.scale.y) * 0.08;
+
+    leftArm.position.x = -0.32 - (targetShoulderWidth * 0.12);
+    rightArm.position.x = 0.32 + (targetShoulderWidth * 0.12);
+
+    // Idle breathing & gentle floating/rotation
+    if (!isDragging) {
+        charGroup.rotation.y += 0.006;
+    }
+    charGroup.position.y = Math.sin(time * 2) * 0.03;
+    ring.rotation.z = time * 0.5;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    const w = containerEl.clientWidth || 400;
+    const h = containerEl.clientHeight || 450;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_24 -->
+</body>
+</html>

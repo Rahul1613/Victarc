@@ -1,53 +1,17 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { AuthProvider } from '@/context/AuthContext'
+import { SettingsProvider } from '@/context/SettingsContext'
+import { JournalProvider } from '@/context/JournalContext'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.victarc.in'),
   title: {
-    default: 'VICTARC — Solo Leveling Fitness & Gamified Daily Quests',
-    template: '%s | VICTARC',
+    default: 'arise by victarc — Daily Reflection & Growth',
+    template: '%s | arise by victarc',
   },
   description:
-    'Arise and become the Shadow Monarch. Victarc is a gamified Solo Leveling fitness platform featuring daily quests, penalty alerts, real-time leaderboard, and rank upgrades.',
-  keywords: [
-    'Victarc',
-    'Solo Leveling Fitness',
-    'Solo Leveling Workout',
-    'Arise Fitness',
-    'Shadow Monarch workout tracker',
-    'fitness gamification',
-    'daily challenges',
-    'RPG fitness app',
-    'gamified workout leaderboard',
-    'level up fitness',
-    'workout tracker',
-  ],
-  alternates: {
-    canonical: '/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  openGraph: {
-    title: 'VICTARC — Solo Leveling Fitness & Gamified Daily Quests',
-    description: 'Arise and become the Shadow Monarch. Daily fitness challenges. Rank up from E to SSS. Compete on the global leaderboard.',
-    type: 'website',
-    url: 'https://www.victarc.in',
-    siteName: 'VICTARC',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'VICTARC — Solo Leveling Fitness',
-    description: 'Arise and become the Shadow Monarch. Daily fitness challenges and leaderboard.',
-  },
+    'Your personal growth journal. Write freely, reflect deeply, build streaks, and become a better you every day.',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -66,9 +30,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="antialiased min-h-screen" style={{ background: 'var(--bg-primary)' }}>
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
+      <body className="antialiased">
+        <AuthProvider>
+          <SettingsProvider>
+            <JournalProvider>
+              {children}
+            </JournalProvider>
+          </SettingsProvider>
+        </AuthProvider>
       </body>
     </html>
   )
