@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
-import { QUOTES, getRandomQuote } from '@/lib/quotes'
 
 type Screen = 'hero' | 'signin' | 'signup'
 
@@ -51,43 +50,6 @@ function FloatingOrbs() {
           50% { transform: translate(-15px,-25px) scale(1.08); }
         }
       `}</style>
-    </div>
-  )
-}
-
-function QuoteCard({ quoteIdx }: { quoteIdx: number }) {
-  const q = QUOTES[quoteIdx]
-  return (
-    <div
-      style={{
-        background: 'var(--card)',
-        border: '1px solid var(--border)',
-        borderRadius: 14,
-        padding: '16px 18px',
-        marginBottom: 28,
-        position: 'relative',
-      }}
-    >
-      <span
-        style={{
-          position: 'absolute',
-          top: -8,
-          left: 16,
-          fontSize: 28,
-          lineHeight: 1,
-          color: 'var(--green)',
-          opacity: 0.6,
-          fontFamily: 'Georgia, serif',
-        }}
-      >
-        &ldquo;
-      </span>
-      <p style={{ fontSize: 14, color: 'var(--secondary)', fontStyle: 'italic', lineHeight: 1.6, marginTop: 6 }}>
-        {q.text}
-      </p>
-      <p style={{ fontSize: 12, color: 'var(--green)', marginTop: 8, fontWeight: 600 }}>
-        &mdash; {q.author}
-      </p>
     </div>
   )
 }

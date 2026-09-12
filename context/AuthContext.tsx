@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [supabase])
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }: { data: { session: { user?: { id: string; email?: string | null; user_metadata?: Record<string, unknown> } } | null } }) => {
       if (session?.user) {
         setUser({ id: session.user.id, email: session.user.email || '' })
         await ensureUserRow(session.user)
@@ -79,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event: string, session: { user?: { id: string; email?: string | null; user_metadata?: Record<string, unknown> } } | null) => {
       if (session?.user) {
         setUser({ id: session.user.id, email: session.user.email || '' })
         await ensureUserRow(session.user)

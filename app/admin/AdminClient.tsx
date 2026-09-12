@@ -558,7 +558,7 @@ export default function AdminClient({
                         {/* Actions */}
                         <div className="flex gap-2 mt-6 pt-4 border-t border-white/5">
                           <button
-                            onClick={() => handleToggleActive(c.id, c.is_active)}
+                            onClick={() => handleToggleActive(c.id, Boolean(c.is_active))}
                             className={`flex-1 py-1.5 rounded font-exo2 font-black text-[10px] uppercase tracking-wider transition-all ${
                               c.is_active
                                 ? 'bg-amber-500/10 border border-amber-500/40 text-amber-400 hover:bg-amber-500/20'
@@ -646,7 +646,7 @@ export default function AdminClient({
                             </td>
                             <td className="p-4 text-right">
                               <button
-                                onClick={() => handleToggleAdmin(u.id, u.is_admin)}
+                                onClick={() => handleToggleAdmin(u.id, Boolean(u.is_admin))}
                                 className={`px-3 py-1 rounded font-exo2 font-black text-[10px] uppercase tracking-wider transition-colors ${
                                   u.is_admin
                                     ? 'bg-slate-500/10 border border-slate-500/40 text-slate-400 hover:bg-slate-500/20'
@@ -898,7 +898,7 @@ export default function AdminClient({
                               <td className="p-4 font-mono font-bold text-yellow-500">₹{r.amount}</td>
                               <td className="p-4 font-mono text-xs">{r.upi_transaction_id || 'N/A'}</td>
                               <td className="p-4">
-                                <ScreenshotThumbnail path={r.screenshot_url} onClick={setSelectedScreenshot} />
+                                <ScreenshotThumbnail path={r.screenshot_url || ''} onClick={setSelectedScreenshot} />
                               </td>
                               <td className="p-4">
                                 <span
@@ -922,13 +922,13 @@ export default function AdminClient({
                                 </span>
                               </td>
                               <td className="p-4 font-bold text-xs">
-                                {r.ai_confidence !== null ? (
+                                {typeof r.ai_confidence === 'number' ? (
                                   <span
                                     style={{
-                                      color: r.ai_confidence >= 90 
-                                        ? '#10b981' 
-                                        : r.ai_confidence >= 70 
-                                        ? '#f59e0b' 
+                                      color: r.ai_confidence >= 90
+                                        ? '#10b981'
+                                        : r.ai_confidence >= 70
+                                        ? '#f59e0b'
                                         : '#ef4444'
                                     }}
                                   >
@@ -1308,6 +1308,11 @@ function ScreenshotThumbnail({ path, onClick }: { path: string; onClick: (url: s
   const supabase = createClient()
 
   useEffect(() => {
+    if (!path) {
+      setUrl(null)
+      return
+    }
+
     const getUrl = async () => {
       const { data, error } = await supabase.storage
         .from('payment-proofs')

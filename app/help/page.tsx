@@ -1,5 +1,4 @@
 import RiseNavbar from '@/components/RiseNavbar'
-import Link from 'next/link'
 
 export default function HelpPage() {
   return (
@@ -11,7 +10,7 @@ export default function HelpPage() {
           <div className="bg-[#0D1916] rounded-2xl p-5 md:p-6 border border-[rgba(100,255,190,0.12)]">
             <h3 className="text-lg font-bold text-[#32E89A] mb-2">How do I write a journal entry?</h3>
             <p className="text-sm md:text-base text-[#AAB5B1]">
-              Go to the Journal page and click the "Write Entry" button, or use the "Write Today's Entry" button on the Home page.
+              Go to the Journal page and click the Write Entry button, or use the Write Today&apos;s Entry button on the Home page.
             </p>
           </div>
 
@@ -32,7 +31,7 @@ export default function HelpPage() {
           <div className="bg-[#0D1916] rounded-2xl p-5 md:p-6 border border-[rgba(100,255,190,0.12)]">
             <h3 className="text-lg font-bold text-[#32E89A] mb-2">How do I export my journal?</h3>
             <p className="text-sm md:text-base text-[#AAB5B1]">
-              Go to Profile and click "Export Journal" to download all your entries as a JSON file.
+              Go to Profile and click Export Journal to download all your entries as a JSON file.
             </p>
           </div>
 

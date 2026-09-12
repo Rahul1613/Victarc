@@ -3,14 +3,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
-import Link from 'next/link'
 import VideoIntroOverlay from '@/components/VideoIntroOverlay'
-import { useRouter } from 'next/navigation'
 
 type AuthMode = 'signin' | 'signup'
 
 export default function LoginPage() {
-  const router = useRouter()
   const supabase = createClient()
   const [mode, setMode] = useState<AuthMode>('signin')
   const [email, setEmail] = useState('')
@@ -162,7 +159,7 @@ export default function LoginPage() {
                     <span className="text-[#38F2A0] text-lg shrink-0 mt-0.5">❄️</span>
                     <div className="flex flex-col gap-2">
                       <p className="text-sm text-[#F5F7F6] italic">
-                        "Discipline creates freedom. Every sunrise journal entry is a victory against nocturnal quiet chaos."
+                        “Discipline creates freedom. Every sunrise journal entry is a victory against nocturnal quiet chaos.”
                       </p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#38F2A0]" />

@@ -136,7 +136,7 @@ export default async function DashboardPage() {
     const now = new Date()
 
     // 1. Check if the active commit has expired
-    if (activeCommit && new Date(activeCommit.expires_at) < now) {
+    if (activeCommit && activeCommit.expires_at && new Date(activeCommit.expires_at) < now) {
       await supabase
         .from('committed_quests')
         .update({ status: 'failed' })
@@ -179,13 +179,13 @@ export default async function DashboardPage() {
     }
 
     // 2. Check if active penalty has expired/failed
-    if (activePenalty && new Date(activePenalty.deadline) < now) {
+    if (activePenalty && activePenalty.deadline && new Date(activePenalty.deadline) < now) {
       await supabase
         .from('penalty_quests')
         .update({ status: 'failed' })
         .eq('id', activePenalty.id)
 
-      const xpLoss = activePenalty.xp_loss
+      const xpLoss = activePenalty.xp_loss ?? 0
       const newXp = Math.max(0, finalUser.xp - xpLoss)
       const newLevel = Math.floor(newXp / 100) + 1
 

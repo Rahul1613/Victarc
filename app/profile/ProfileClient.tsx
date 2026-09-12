@@ -172,7 +172,7 @@ export default function ProfileClient() {
             </div>
           ) : (
             <div>
-              <p className="text-sm md:text-base text-[#F5F7F6] italic mb-3">"{quote}"</p>
+              <p className="text-sm md:text-base text-[#F5F7F6] italic mb-3">“{quote}”</p>
               <button
                 onClick={() => setEditingQuote(true)}
                 className="text-[#32E89A]"

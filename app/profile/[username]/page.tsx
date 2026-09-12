@@ -51,6 +51,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   const globalRank = rankData?.position ?? null
   const rankColors = RANK_COLORS[user.rank]
+  const profileCreatedAt = (user as User).created_at
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -121,7 +122,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               </div>
 
               <p className="text-sm text-muted-foreground font-rajdhani mb-4">
-                Hunter since {new Date((user as User).created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+                Hunter since {profileCreatedAt ? new Date(profileCreatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : 'Recently'}
               </p>
 
               {/* XP bar */}

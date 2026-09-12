@@ -248,18 +248,31 @@ export default function LeaderboardClient({
           }
         })
 
-        const weekly = Array.from(userMap.entries())
-          .map(([id, { xp, user }]) => ({
-            id,
-            xp,
-            ...(user as object),
-            total_completions: completions.filter((c: { user_id: string }) => c.user_id === id).length,
-            position: 0,
-          }))
-          .sort((a, b) => b.xp - a.xp)
-          .map((entry, i) => ({ ...entry, position: i + 1 }))
+        const weekly: LeaderboardEntry[] = Array.from(userMap.entries())
+          .map(([id, { xp, user }]) => {
+            const baseUser = user as Partial<LeaderboardEntry> & {
+              username?: string
+              rank?: string
+              level?: number
+              avatar_url?: string | null
+              streak?: number
+            }
 
-        setWeeklyData(weekly as LeaderboardEntry[])
+            return {
+              id,
+              username: baseUser.username || 'Unknown Hunter',
+              rank: (baseUser.rank as LeaderboardEntry['rank']) || 'E',
+              level: baseUser.level || 1,
+              xp,
+              streak: baseUser.streak || 0,
+              avatar_url: baseUser.avatar_url || null,
+              total_completions: completions.filter((c: { user_id: string }) => c.user_id === id).length,
+            }
+          })
+          .sort((a, b) => b.xp - a.xp)
+          .map((entry, i) => ({ ...entry, position: i + 1 })) as unknown as LeaderboardEntry[]
+
+        setWeeklyData(weekly)
       } finally {
         setLoadingWeekly(false)
       }

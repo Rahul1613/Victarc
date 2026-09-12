@@ -53,7 +53,6 @@ export default function HomeClient() {
   }
 
   const userName = profile?.name || profile?.email?.split('@')[0] || 'Friend'
-  const userInitial = userName.charAt(0).toUpperCase()
 
   const handleAddTask = async () => {
     if (authLoading) {
@@ -135,7 +134,7 @@ export default function HomeClient() {
             className="w-full md:w-auto md:min-w-[300px] py-4 rounded-full bg-[#32E89A] text-[#020B08] flex items-center justify-center gap-3 font-bold text-base shadow-[0_0_30px_rgba(56,242,160,0.3)] hover:shadow-[0_0_40px_rgba(56,242,160,0.4)] transition-all mx-auto"
           >
             <span className="text-xl">✎</span>
-            Write Today's Entry
+            Write Today&apos;s Entry
           </button>
         </div>
 
@@ -253,10 +252,10 @@ export default function HomeClient() {
             <div className="bg-[#0D1916] rounded-2xl p-5 md:p-6 border border-[rgba(100,255,190,0.12)]">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[#32E89A]">☀</span>
-                <h3 className="text-sm font-bold text-[#F5F7F6]">Today's Inspiration</h3>
+                <h3 className="text-sm font-bold text-[#F5F7F6]">Today&apos;s Inspiration</h3>
               </div>
               <p className="text-sm md:text-base text-[#AAB5B1] italic leading-relaxed">
-                "{currentQuote.text}"
+                “{currentQuote.text}”
               </p>
               <p className="text-xs md:text-sm text-[#68746F] mt-2">— {currentQuote.author}</p>
             </div>

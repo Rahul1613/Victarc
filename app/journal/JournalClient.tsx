@@ -5,12 +5,13 @@ import { useRouter } from 'next/navigation'
 import { format, parseISO } from 'date-fns'
 import { useJournal } from '@/context/JournalContext'
 import RiseNavbar from '@/components/RiseNavbar'
+import type { JournalEntry } from '@/lib/types'
 
 export default function JournalClient() {
   const router = useRouter()
   const { entries } = useJournal()
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedMonth, setSelectedMonth] = useState(new Date())
+  const [selectedMonth] = useState(new Date())
 
   const entriesArray = Object.values(entries).sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -97,7 +98,7 @@ export default function JournalClient() {
               </button>
             </div>
           ) : (
-            filteredEntries.map((entry: any) => (
+            filteredEntries.map((entry: JournalEntry) => (
               <div
                 key={entry.id}
                 onClick={() => router.push(`/journal/${entry.id}`)}

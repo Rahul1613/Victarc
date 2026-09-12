@@ -13,14 +13,12 @@ const navItems = [
 
 export default function RiseNavbar() {
   const pathname = usePathname()
-  const { profile, signOut } = useAuth()
+  const { signOut } = useAuth()
 
   const handleSignOut = async () => {
     await signOut()
     window.location.href = '/login'
   }
-
-  const userName = profile?.name || profile?.email?.split('@')[0] || 'Friend'
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#07130F]/95 backdrop-blur-xl border-t border-[#153A2D] md:top-0 md:bottom-auto md:border-t-0 md:border-b">

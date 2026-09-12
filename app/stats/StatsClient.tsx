@@ -84,8 +84,8 @@ export default function StatsClient() {
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
-          <ChartCard title="Writing Activity" dropdown="This Month" type="bar" />
-          <ChartCard title="Mood Tracker" dropdown="This Month" type="line" />
+          <ChartCard title="Writing Activity" dropdown="This Month" />
+          <ChartCard title="Mood Tracker" dropdown="This Month" />
         </div>
 
         {/* Writing Topics */}
@@ -123,7 +123,7 @@ function StatCard({ icon, value, label, message }: { icon: string; value: number
   )
 }
 
-function ChartCard({ title, dropdown, type }: { title: string; dropdown: string; type: 'bar' | 'line' }) {
+function ChartCard({ title, dropdown }: { title: string; dropdown: string }) {
   return (
     <div className="bg-[#0D1916] rounded-2xl p-5 md:p-6 border border-[rgba(100,255,190,0.12)]">
       <div className="flex items-center justify-between mb-4">
@@ -207,7 +207,7 @@ function InsightCard({ title, value, message }: { title: string; value: string; 
 function QuoteCard({ text, author }: { text: string; author: string }) {
   return (
     <div className="bg-[#0D1916] rounded-2xl p-6 border border-[rgba(100,255,190,0.12)] relative overflow-hidden">
-      <div className="absolute top-4 right-4 text-4xl text-[#32E89A]/20 font-serif">"</div>
+      <div className="absolute top-4 right-4 text-4xl text-[#32E89A]/20 font-serif">“</div>
       <p className="text-sm md:text-base text-[#F5F7F6] italic mb-3 leading-relaxed">{text}</p>
       <p className="text-xs md:text-sm text-[#68746F]">— {author}</p>
     </div>
@@ -215,7 +215,7 @@ function QuoteCard({ text, author }: { text: string; author: string }) {
 }
 
 // Helper functions
-function calculateCurrentStreak(entries: any[]): number {
+function calculateCurrentStreak(entries: Array<{ date: string }>): number {
   if (entries.length === 0) return 0
   const sortedEntries = [...entries].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   let streak = 0
@@ -238,7 +238,7 @@ function calculateCurrentStreak(entries: any[]): number {
   return streak
 }
 
-function calculateLongestStreak(entries: any[]): number {
+function calculateLongestStreak(entries: Array<{ date: string }>): number {
   if (entries.length === 0) return 0
   const sortedEntries = [...entries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   let longestStreak = 0
@@ -267,7 +267,7 @@ function calculateLongestStreak(entries: any[]): number {
   return longestStreak
 }
 
-function calculateDaysThisMonth(entries: any[]): number {
+function calculateDaysThisMonth(entries: Array<{ date: string }>): number {
   const now = new Date()
   const currentMonth = now.getMonth()
   const currentYear = now.getFullYear()
